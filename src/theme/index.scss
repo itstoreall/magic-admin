@@ -1,0 +1,50 @@
+$light: #f6f0e7;
+$dark: #1f232c;
+$lightBlur: #f7f1e9cc;
+$darkBlur: #1f232ccc;
+$lightHover: #e5dfd7;
+$darkHover: #2f3441;
+$contrstLight: #e36858;
+$contrstLightHover: #de4444;
+$contrstDark: #96abad;
+$contrstDarkHover: #66a5ac;
+$middleGrey: rgba(133, 133, 133, 0.666);
+$middleGreyHover: rgba(133, 133, 133, 0.865);
+$colorWhite: #ffffff;
+$colorGreen: teal;
+$colorRed: red;
+$reactBackground: #282c34;
+
+@mixin theme($theme) {
+  @if $theme == dark {
+    --background: #{$light};
+    --background-blur: #{$lightBlur};
+    --background-hover: #{$lightHover};
+    --secondary-background: #{$light};
+    --contrast-background: #{$contrstLight};
+    --contrast-background-hover: #{$contrstLightHover};
+    --text: #{$dark};
+    --text-invert: #{$light};
+    --button: #{$contrstLight};
+    --button-hover: #{$contrstLightHover};
+    --middleGrey: #{$middleGrey};
+    --inputFocus: #{$colorGreen};
+    --background-react: #{$reactBackground};
+  }
+
+  @if $theme == light {
+    --background: #{$dark};
+    --background-blur: #{$darkBlur};
+    --background-hover: #{$darkHover};
+    --secondary-background: #{$dark};
+    --contrast-background: #{$contrstDark};
+    --contrast-background-hover: #{$contrstDarkHover};
+    --text: #{$light};
+    --text-invert: #{$dark};
+    --button: #{$contrstDark};
+    --button-hover: #{$contrstDarkHover};
+    --middleGrey: #{$middleGrey};
+    --inputFocus: #{$colorGreen};
+    --background-react: #{$reactBackground};
+  }
+}

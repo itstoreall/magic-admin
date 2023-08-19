@@ -1,0 +1,15 @@
+export const light = '#f6f0e7';
+export const dark = '#1f232c';
+export const lightBlur = '#f7f1e9cc';
+export const darkBlur = '#1f232ccc';
+export const lightHover = '#e5dfd7';
+export const darkHover = '#2f3441';
+export const contrstLight = '#e36858';
+export const contrstLightHover = '#de4444';
+export const contrstDark = '#96abad';
+export const contrstDarkHover = '#66a5ac';
+export const middleGrey = 'rgba(133, 133, 133, 0.666)';
+export const middleGreyHover = 'rgba(133, 133, 133, 0.865)';
+export const colorWhite = '#ffffff';
+export const colorRed = 'red';
+export const reactBackground = '#282c34';

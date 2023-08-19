@@ -1,0 +1,20 @@
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .logo {
+    width: 40px;
+    height: 40px;
+    pointer-events: none;
+
+    &.admin {
+      animation: logo-spin infinite 20s linear;
+    }
+  }
+}

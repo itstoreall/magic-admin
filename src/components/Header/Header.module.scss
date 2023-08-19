@@ -1,0 +1,47 @@
+@import '../../theme/index.scss';
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.header {
+  .container {
+    width: 100%;
+    margin: 0 auto;
+
+    .content {
+      display: flex;
+      align-items: center;
+      min-height: 45px;
+      color: grey;
+
+      .value {
+        color: palevioletred;
+
+        &.button {
+          cursor: pointer;
+        }
+      }
+    }
+    .admin {
+      .value {
+        color: #61dafb;
+      }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .logo {
+        width: 40px;
+        height: 40px;
+        pointer-events: none;
+        fill: palevioletred;
+        animation: logo-spin infinite 20s linear;
+      }
+    }
+  }
+}
