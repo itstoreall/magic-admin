@@ -117,7 +117,7 @@ const Login = () => {
         <p className={s.loginError}>
           {error.message === 'Access denied!'
             ? 'Неверный логин или пароль'
-            : 'Login error: сообщите разработчику'}
+            : `${error.message}`}
         </p>
       )}
     </div>
