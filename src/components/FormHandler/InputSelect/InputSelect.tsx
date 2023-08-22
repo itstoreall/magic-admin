@@ -2,8 +2,8 @@ import Select, { StylesConfig, components } from 'react-select';
 import {
   IInputSelectProps as IISP,
   ISelectOption as ISO,
-} from '../../interfaces/login';
-import * as theme from '../../theme/index';
+} from '../../../interfaces/login';
+import * as theme from '../../../theme/index';
 
 const NoOptions = (props: any) => (
   <components.NoOptionsMessage {...props}>
@@ -11,7 +11,12 @@ const NoOptions = (props: any) => (
   </components.NoOptionsMessage>
 );
 
-const InputSelect = ({ options, selectedValue, setSelectedValue }: IISP) => {
+const InputSelect = ({
+  options,
+  selectedValue,
+  setSelectedValue,
+  placeholder,
+}: IISP) => {
   const handleChange = (selectedOption: ISO | null) => {
     setSelectedValue(selectedOption);
   };
@@ -102,7 +107,7 @@ const InputSelect = ({ options, selectedValue, setSelectedValue }: IISP) => {
   return (
     <Select
       styles={customSelectStyles}
-      placeholder={'Блог'}
+      placeholder={placeholder}
       options={options}
       onChange={handleChange}
       value={selectedValue}
