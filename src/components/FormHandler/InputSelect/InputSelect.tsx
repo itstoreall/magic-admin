@@ -11,7 +11,12 @@ const NoOptions = (props: any) => (
   </components.NoOptionsMessage>
 );
 
-const InputSelect = ({ options, selectedValue, setSelectedValue }: IISP) => {
+const InputSelect = ({
+  options,
+  selectedValue,
+  setSelectedValue,
+  placeholder,
+}: IISP) => {
   const handleChange = (selectedOption: ISO | null) => {
     setSelectedValue(selectedOption);
   };
@@ -102,7 +107,7 @@ const InputSelect = ({ options, selectedValue, setSelectedValue }: IISP) => {
   return (
     <Select
       styles={customSelectStyles}
-      placeholder={'Блог'}
+      placeholder={placeholder}
       options={options}
       onChange={handleChange}
       value={selectedValue}

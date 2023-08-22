@@ -87,6 +87,7 @@ const Login = () => {
             options={options}
             selectedValue={blog}
             setSelectedValue={setBlog}
+            placeholder={'Блог'}
           />
 
           <input

@@ -5,12 +5,13 @@ import Form from './Form';
 const FormHandler = ({
   children,
   handleSubmit,
+  title,
   isError,
 }: IFormHandlerProps) => {
   return (
-    <div className={s.wrap}>
-      <div className={`${s.login} ${s['dark']}`}>
-        <span className={s.title}>Add new author</span>
+    <div className={`${s.wrap} ${s['dark']}`}>
+      <div className={s.form}>
+        <span className={s.title}>{title}</span>
 
         <Form handleSubmit={handleSubmit}>{children}</Form>
       </div>

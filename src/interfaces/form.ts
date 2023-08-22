@@ -6,5 +6,6 @@ export interface IFormProps {
 }
 
 export interface IFormHandlerProps extends IFormProps {
+  title: string;
   isError: boolean;
 }

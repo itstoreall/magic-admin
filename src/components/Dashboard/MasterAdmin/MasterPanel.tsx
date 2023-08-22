@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useGlobalContext } from '../../../context/GlobalContext';
-import s from './MasterAdmin.module.scss';
+import s from './MasterPanel.module.scss';
 import AddAuthor from './AddAuthor';
 
 const MasterAdminPanel = () => {
@@ -9,7 +9,7 @@ const MasterAdminPanel = () => {
   const { access } = useGlobalContext();
 
   return (
-    <div className={s.adminPanel}>
+    <div className={s.masterPanel}>
       <h3 className={s.title}>Master panel</h3>
 
       <button className={s.button} onClick={() => setIsOpenForm(!isOpenForm)}>
