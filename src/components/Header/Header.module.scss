@@ -1,18 +1,21 @@
 @import '../../theme/index.scss';
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .header {
   .container {
     width: 100%;
     margin: 0 auto;
+
+    // -------------- scrolling Header
+
+    scrollbar-width: none; // Firefox
+    -ms-overflow-style: none; // Internet Explorer/Edge
+    &::-webkit-scrollbar {
+      width: 0; // Chrome/Safari/Opera
+    }
+
+    white-space: nowrap;
+    overflow: scroll;
+    text-overflow: ellipsis;
 
     .content {
       display: flex;
@@ -31,16 +34,6 @@
     .admin {
       .value {
         color: #61dafb;
-      }
-    }
-
-    @media (prefers-reduced-motion: no-preference) {
-      .logo {
-        width: 40px;
-        height: 40px;
-        pointer-events: none;
-        fill: palevioletred;
-        animation: logo-spin infinite 20s linear;
       }
     }
   }
