@@ -1,9 +1,13 @@
+@import '../../styles/vars.scss';
+@import '../../styles/mixins';
+
 .dashboard {
+  padding: 0 20px;
   margin: 0 auto;
   max-width: 1440px;
-  background-color: pink;
+  // background-color: pink;
 
   .content {
-    background-color: teal;
+    // background-color: teal;
   }
 }

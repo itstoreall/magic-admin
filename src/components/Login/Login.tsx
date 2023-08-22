@@ -5,7 +5,7 @@ import { useGlobalContext } from '../../context/GlobalContext';
 import setUpperFirstChar from '../../utils/setUpperFirstChar';
 import UPDATE_ADMIN from '../../gql/updateAdmin';
 import s from './Login.module.scss';
-import InputSelect from '../InputSelect';
+import InputSelect from '../FormHandler/InputSelect';
 import Button from '../Button';
 import Spinner from '../Loading/Spinner';
 
