@@ -8,7 +8,10 @@ import Input from '../../../FormHandler/Input/Input';
 import Button from '../../../Button';
 import FormHandler from '../../../FormHandler';
 import Spinner from '../../../Loading/Spinner';
-import { useGlobalContext } from '../../../../context/GlobalContext';
+
+export interface IAddAuthorProps {
+  setIsOpenForm: (b: boolean) => void;
+}
 
 const opts = process.env.REACT_APP_OPTIONS;
 const adm = process.env.REACT_APP_ADMIN_ACCESS;
@@ -17,17 +20,25 @@ const options = opts
   ? opts.split(' ').map(el => ({ value: el, label: setUpperFirstChar(el) }))
   : [];
 
-const AddAuthor = () => {
+const AddAuthor = ({ setIsOpenForm }: IAddAuthorProps) => {
   const [blog, setBlog] = useState<ISO | null>(null);
   const [authorName, setAuthorName] = useState<string>('');
   const [login, setLogin] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  // const [masterKey, setMasterKey] = useState<string>('');
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
 
-  const { access } = useGlobalContext();
+  // const { access } = useGlobalContext();
 
   const [addAdmin, { loading, error }] = useMutation(ADD_NEW_AUTHOR);
+
+  const clearStates = () => {
+    setBlog(null);
+    setAuthorName('');
+    setLogin('');
+    setPassword('');
+    setIsOpenForm(false);
+  };
 
   // console.log('------->', access, ls.token);
   const handleInput = (event: any) => {
@@ -67,15 +78,19 @@ const AddAuthor = () => {
 
           console.log(1, 'sent data', AddAuthorInput);
 
-          const { author, blog } = data.addAdmin;
-
           if (data) {
-            // localStorage.setItem(adm, JSON.stringify({ token, blog: blog }));
-
             console.log(1, 'got data:', data);
 
-            // setAccess({ isAdmin: true, author: author, blog: blog });
-            // clearStates();
+            const { name, blogs, coauthors } = data.addAdmin;
+
+            if (
+              authorName === name &&
+              blogs.includes(blog?.value) &&
+              coauthors.includes(name)
+            ) {
+              clearStates();
+              setIsSuccess(true);
+            }
           }
         } catch (e) {
           console.error(e);
@@ -83,54 +98,63 @@ const AddAuthor = () => {
       }
       // */
     }
+
+    console.log(1, 'isSuccess:', isSuccess);
   };
 
   if (loading) return <Spinner />;
 
   return (
-    <FormHandler
-      handleSubmit={handleSubmit}
-      isError={isError}
-      title={'New author'}
-    >
-      <InputSelect
-        options={options}
-        selectedValue={blog}
-        setSelectedValue={setBlog}
-        placeholder={'Blog'}
-      />
-
-      <Input
-        type={'text'}
-        value={authorName}
-        name={'authorName'}
-        placeholder={'Author'}
-        handleInput={handleInput}
-      />
-
-      <Input
-        type={'text'}
-        value={login}
-        name={'login'}
-        placeholder={'Login'}
-        handleInput={handleInput}
-      />
-
-      <Input
-        type={'text'}
-        value={password}
-        name={'password'}
-        placeholder={'Password'}
-        handleInput={handleInput}
-      />
-
-      <Button
-        type={'submit'}
-        // disabled={loading}
+    <>
+      <FormHandler
+        handleSubmit={handleSubmit}
+        isError={isError}
+        title={'New author'}
       >
-        Add
-      </Button>
-    </FormHandler>
+        <InputSelect
+          options={options}
+          selectedValue={blog}
+          setSelectedValue={setBlog}
+          placeholder={'Blog'}
+        />
+
+        <Input
+          type={'text'}
+          value={authorName}
+          name={'authorName'}
+          placeholder={'Author'}
+          handleInput={handleInput}
+        />
+
+        <Input
+          type={'text'}
+          value={login}
+          name={'login'}
+          placeholder={'Login'}
+          handleInput={handleInput}
+        />
+
+        <Input
+          type={'text'}
+          value={password}
+          name={'password'}
+          placeholder={'Password'}
+          handleInput={handleInput}
+        />
+
+        <Button
+          type={'submit'}
+          // disabled={loading}
+        >
+          Add
+        </Button>
+      </FormHandler>
+
+      <div style={{ paddingTop: '20px', color: 'grey' }}>
+        isSuccess:
+        <span style={{ color: 'white' }}>{`${isSuccess}`}</span>
+      </div>
+    </>
   );
 };
 

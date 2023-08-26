@@ -58,15 +58,20 @@ const Login = () => {
 
         console.log(1, 'sent data', AccessInput);
 
-        const { token, author, blog } = data.updateAdmin;
+        const { token, name, blogs } = data.updateAdmin;
 
         if (data && adm) {
-          localStorage.setItem(adm, JSON.stringify({ token, blog: blog }));
+          console.log(1, 'data:', data);
 
-          console.log(1, 'got data:', data);
+          if (blogs.includes(blog?.value)) {
+            const curBlog = blogs[blogs.indexOf(blog?.value)];
+            console.log(1, 'curBlog:', curBlog);
 
-          setAccess({ isAdmin: true, author: author, blog: blog });
-          clearStates();
+            localStorage.setItem(adm, JSON.stringify({ token, blog: curBlog }));
+
+            setAccess({ isAdmin: true, author: name, blog: curBlog });
+            clearStates();
+          }
         }
       } catch (e) {
         console.error(e);
