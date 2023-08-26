@@ -4,8 +4,8 @@ const UPDATE_ADMIN = gql`
   mutation Admin($input: AccessInput) {
     updateAdmin(input: $input) {
       token
-      author
-      blog
+      name
+      blogs
     }
   }
 `;
