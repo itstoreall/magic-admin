@@ -15,7 +15,7 @@ const MasterAdminPanel = () => {
       <button className={s.button} onClick={() => setIsOpenForm(!isOpenForm)}>
         {access?.author}
       </button>
-      {isOpenForm && <AddAuthor />}
+      {isOpenForm && <AddAuthor setIsOpenForm={setIsOpenForm} />}
     </div>
   );
 };
