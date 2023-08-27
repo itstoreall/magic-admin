@@ -2,19 +2,14 @@
 @import '../../../styles/mixins';
 
 .masterPanel {
-  .title {
-    background-color: tomato;
-  }
+  @include themeHandler() {
+    .title {
+      background-color: tomato;
+    }
 
-  .button {
-    border: none;
-    padding: 7px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: grey;
-      color: white;
+    .button {
+      @include contrastSolidButtonPanel();
+      margin-bottom: 20px;
     }
   }
 }

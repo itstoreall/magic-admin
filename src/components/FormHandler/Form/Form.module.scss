@@ -4,6 +4,8 @@
 .form {
   @include flexDirection(column);
 
+  // ---> React-Select using inline styles!
+
   > input {
     @include padding(10px);
     @include marginB(20px);
@@ -46,16 +48,6 @@
   // }
 
   > button {
-    @include transition($s04);
-    @include padding(15px);
-    // @include fontSize(14px);
-    text-transform: uppercase;
-    color: var(--text-invert);
-    background-color: var(--contrast-background);
-    border: none;
-
-    &:hover {
-      background-color: var(--contrast-background-hover);
-    }
+    @include contrastSolidButtonForm();
   }
 }
