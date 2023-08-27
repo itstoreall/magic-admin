@@ -153,15 +153,9 @@
   }
 }
 
-// ------- Custom
+// ------- Buttons:
 
-@mixin crumbs() {
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--middleGrey);
-}
-
-@mixin buttonStyle() {
+@mixin defaultButtonStyle() {
   @include padding(5px 12px);
   font-weight: 600;
   @include fontSize(14px);
@@ -178,12 +172,10 @@
 }
 
 @mixin contrastSolidButton() {
-  @include padding(8px 15px);
   @include fontSize(14px);
   font-weight: 600;
   color: var(--text-invert);
   background-color: var(--contrast-background);
-  border-radius: 6px;
   cursor: pointer;
   @include transition($s04);
   user-select: none;
@@ -195,6 +187,19 @@
   // &:active {
   //   background-color: red;
   // }
+}
+
+@mixin contrastSolidButtonForm() {
+  @include contrastSolidButton();
+  @include padding(15px);
+  text-transform: uppercase;
+  border-radius: 6px;
+}
+
+@mixin contrastSolidButtonPanel() {
+  @include contrastSolidButton();
+  @include padding(8px 15px);
+  border-radius: 4px;
 }
 
 @mixin techButton() {

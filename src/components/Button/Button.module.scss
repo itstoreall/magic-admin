@@ -2,5 +2,5 @@
 // @import '../../theme/index.scss';
 
 .button {
-  @include buttonStyle();
+  @include defaultButtonStyle();
 }
