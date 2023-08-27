@@ -2,29 +2,31 @@
 @import '../../styles/mixins';
 
 .formWrap {
-  max-width: 320px;
-
   @include themeHandler() {
+    position: absolute;
+    @include width(100%);
+    max-width: 320px;
+
     .form {
       @include padding(25px 20px 30px);
       text-align: center;
       border: 1px solid $middleGrey;
+      background-color: $reactBackground;
       border-radius: 6px;
 
       .title {
-        display: block;
+        @include display(block);
         @include marginB(20px);
-        @include fontSize(24px);
-        font-weight: 600;
-        color: $middleGrey;
+        @include fontSW(24px, 600);
+        @include color($middleGrey);
       }
     }
 
     .submitError {
       text-align: center;
       @include paddingT(10px);
-      @include fontSize(14px);
-      color: $colorRed;
+      @include fontSW(14px);
+      @include color($colorRed);
     }
   }
 }
