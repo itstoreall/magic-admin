@@ -42,7 +42,14 @@ const Login = () => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
-    const AccessInput = { login, password, blog: blog?.value };
+    const AccessInput = {
+      credentials: {
+        login,
+        password,
+      },
+      blog: blog?.value,
+    };
+    // const AccessInput = { login, password, blog: blog?.value };
 
     if (Object.values(AccessInput).some(value => !value)) {
       setIsError(true);
