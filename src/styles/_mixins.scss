@@ -3,8 +3,8 @@
 
 // ------- display
 
-@mixin display($display: block) {
-  display: $display;
+@mixin display($d: block) {
+  display: $d;
 }
 
 @mixin flex() {
@@ -27,26 +27,20 @@
   align-items: $Y;
 }
 
-@mixin flexDirection($direction: row) {
+@mixin flexColumn() {
   display: flex;
-  flex-direction: $direction;
+  flex-direction: column;
 }
 
-@mixin flexDirectionY($direction: row, $Y: flex-start) {
+@mixin flexColumnX($x: flex-start) {
   display: flex;
-  flex-direction: $direction;
-  align-items: $Y;
+  flex-direction: column;
+  align-items: $x;
 }
 
-@mixin flexDirectionX($direction: row, $X: start) {
+@mixin flexWrap($fw: wrap) {
   display: flex;
-  flex-direction: $direction;
-  justify-content: $X;
-}
-
-@mixin flexWrap($wrap: wrap) {
-  display: flex;
-  flex-wrap: $wrap;
+  flex-wrap: $fw;
 }
 
 // ------- padding
@@ -106,8 +100,45 @@
   font-size: $size;
 }
 
-@mixin uppercase() {
-  text-transform: uppercase;
+@mixin fontSW($s: 16px, $w: 400) {
+  font-size: $s;
+  font-weight: $w;
+}
+
+@mixin letterSpacing($ls: 1.2px) {
+  letter-spacing: $ls;
+}
+
+@mixin lineHeight($lh: 1) {
+  line-height: $lh;
+}
+
+@mixin textTransform($tt: none) {
+  text-transform: $tt;
+}
+
+@mixin color($c: tomato) {
+  color: $c;
+}
+
+// --- overflow:
+
+@mixin overflow($o: visible) {
+  overflow: $o;
+}
+
+@mixin overflowX($o: visible) {
+  overflow-x: $o;
+}
+
+@mixin overflowY($o: visible) {
+  overflow-y: $o;
+}
+
+// --- opacity:
+
+@mixin opacity($o: 1) {
+  opacity: $o;
 }
 
 // ------- transition
@@ -189,14 +220,14 @@
   // }
 }
 
-@mixin contrastSolidButtonForm() {
+@mixin formContrastSolidButton() {
   @include contrastSolidButton();
   @include padding(15px);
   text-transform: uppercase;
   border-radius: 6px;
 }
 
-@mixin contrastSolidButtonPanel() {
+@mixin panelContrastSolidButton() {
   @include contrastSolidButton();
   @include padding(8px 15px);
   border-radius: 4px;
