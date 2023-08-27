@@ -1,3 +1,4 @@
+import { ApolloError } from '@apollo/client';
 import { FormEvent, ReactNode } from 'react';
 
 export interface IFormProps {
@@ -7,5 +8,7 @@ export interface IFormProps {
 
 export interface IFormHandlerProps extends IFormProps {
   title: string;
-  isError: boolean;
+  isSubmitError: boolean;
+  apolloError: ApolloError | null;
+  isSuccess: boolean;
 }

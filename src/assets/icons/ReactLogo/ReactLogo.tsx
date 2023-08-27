@@ -1,4 +1,5 @@
 import { useGlobalContext } from '../../../context/GlobalContext';
+import * as theme from '../../../theme/index';
 import s from './ReactLogo.module.scss';
 
 const ReactLogo = () => {
@@ -6,7 +7,7 @@ const ReactLogo = () => {
 
   const admin = !access || !access.isAdmin ? '' : access.isAdmin && 'admin';
 
-  const color = admin ? '#61DAFB' : 'palevioletred';
+  const color = admin ? theme.reactColor : theme.paleColor;
 
   return (
     <svg

@@ -1,30 +1,38 @@
 import { IFormHandlerProps } from '../../interfaces/form';
-import s from './FormHandler.module.scss';
 import Form from './Form';
+import Success from '../../assets/icons/Success';
+import * as theme from '../../theme';
+import s from './FormHandler.module.scss';
 
 const FormHandler = ({
   children,
   handleSubmit,
   title,
-  isError,
+  isSubmitError,
+  apolloError,
+  isSuccess,
 }: IFormHandlerProps) => {
   return (
-    <div className={`${s.wrap} ${s['dark']}`}>
+    <div className={`${s.formWrap} ${s['dark']}`}>
       <div className={s.form}>
         <span className={s.title}>{title}</span>
 
-        <Form handleSubmit={handleSubmit}>{children}</Form>
+        {isSuccess ? (
+          <Success fill={theme.reactColor} />
+        ) : (
+          <Form handleSubmit={handleSubmit}>{children}</Form>
+        )}
       </div>
 
-      {isError && <p className={s.loginError}>Все поля обязательны</p>}
+      {isSubmitError && <p className={s.submitError}>Все поля обязательны</p>}
 
-      {/* {error && (
-        <p className={s.loginError}>
-          {error.message === 'Access denied!'
+      {apolloError && (
+        <p className={s.submitError}>
+          {apolloError.message === 'Access denied!'
             ? 'Неверный логин или пароль'
-            : `${error.message}`}
+            : `${apolloError.message}`}
         </p>
-      )} */}
+      )}
     </div>
   );
 };

@@ -24,7 +24,7 @@
       color: grey;
 
       .value {
-        color: palevioletred;
+        color: $paleColor;
 
         &.button {
           cursor: pointer;
@@ -33,7 +33,7 @@
     }
     .admin {
       .value {
-        color: #61dafb;
+        color: $reactColor;
       }
     }
   }

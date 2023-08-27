@@ -1,22 +1,30 @@
 @import '../../styles/vars.scss';
 @import '../../styles/mixins';
 
-.wrap {
+.formWrap {
+  max-width: 320px;
+
   @include themeHandler() {
     .form {
-      @include padding(30px 20px);
-      max-width: 320px;
+      @include padding(25px 20px 30px);
       text-align: center;
       border: 1px solid $middleGrey;
       border-radius: 6px;
 
       .title {
         display: block;
-        @include marginB(25px);
+        @include marginB(20px);
         @include fontSize(24px);
         font-weight: 600;
         color: $middleGrey;
       }
+    }
+
+    .submitError {
+      text-align: center;
+      @include paddingT(10px);
+      @include fontSize(14px);
+      color: $colorRed;
     }
   }
 }

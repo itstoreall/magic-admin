@@ -13,6 +13,8 @@ $middleGreyHover: rgba(133, 133, 133, 0.865);
 $colorWhite: #ffffff;
 $colorGreen: teal;
 $colorRed: red;
+$paleColor: palevioletred;
+$reactColor: #61dafb;
 $reactBackground: #282c34;
 
 @mixin theme($theme) {
@@ -45,6 +47,7 @@ $reactBackground: #282c34;
     --button-hover: #{$contrstDarkHover};
     --middleGrey: #{$middleGrey};
     --inputFocus: #{$colorGreen};
+    --color-react: #{$reactColor};
     --background-react: #{$reactBackground};
   }
 }
