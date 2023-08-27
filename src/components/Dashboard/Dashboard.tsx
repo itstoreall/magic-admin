@@ -11,6 +11,7 @@ const Dashboard = () => {
     <div className={s.dashboard}>
       <section className={s.content}>
         {access?.author === masterKey && <MasterAdminPanel />}
+        {access?.author === masterKey && <MasterAdminPanel />}
       </section>
     </div>
   );

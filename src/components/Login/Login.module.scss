@@ -22,7 +22,7 @@
 
     @include themeHandler() {
       .loginForm {
-        @include flexDirection(column);
+        @include flexColumn();
 
         > input {
           @include padding(10px);

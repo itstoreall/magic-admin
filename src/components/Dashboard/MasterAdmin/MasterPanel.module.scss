@@ -4,12 +4,21 @@
 .masterPanel {
   @include themeHandler() {
     .title {
-      background-color: tomato;
+      color: $middleGreyHover;
+      // background-color: tomato;
     }
 
-    .button {
-      @include contrastSolidButtonPanel();
-      margin-bottom: 20px;
+    .formWrap {
+      @include flex();
+
+      .formBlock {
+        @include marginR(20px);
+
+        .button {
+          @include panelContrastSolidButton();
+          @include marginB(20px);
+        }
+      }
     }
   }
 }

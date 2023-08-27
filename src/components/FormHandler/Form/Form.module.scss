@@ -2,7 +2,7 @@
 @import '../../../styles/mixins';
 
 .form {
-  @include flexDirection(column);
+  @include flexColumn();
 
   // ---> React-Select using inline styles!
 
@@ -48,6 +48,6 @@
   // }
 
   > button {
-    @include contrastSolidButtonForm();
+    @include formContrastSolidButton();
   }
 }

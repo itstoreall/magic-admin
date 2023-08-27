@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import ADD_NEW_AUTHOR from '../../../../gql/addNewAuthor';
 import InputSelect from '../../../FormHandler/InputSelect';
@@ -10,7 +10,9 @@ import FormHandler from '../../../FormHandler';
 import Spinner from '../../../Loading/Spinner';
 
 export interface IAddAuthorProps {
-  isOpenForm: boolean;
+  // isOpenForm: boolean;
+  title: string;
+  // formModalHandler: (v: boolean, c: string) => void;
 }
 
 const opts = process.env.REACT_APP_OPTIONS;
@@ -20,7 +22,7 @@ const options = opts
   ? opts.split(' ').map(el => ({ value: el, label: setUpperFirstChar(el) }))
   : [];
 
-const AddAuthor = ({ isOpenForm }: IAddAuthorProps) => {
+const AddAuthor = ({ title }: IAddAuthorProps) => {
   const [blog, setBlog] = useState<ISO | null>(null);
   const [authorName, setAuthorName] = useState<string>('');
   const [login, setLogin] = useState<string>('');
@@ -31,16 +33,16 @@ const AddAuthor = ({ isOpenForm }: IAddAuthorProps) => {
   const [addAdmin, { loading, error: apolloError }] =
     useMutation(ADD_NEW_AUTHOR);
 
-  const clearStates = () => {
-    setBlog(null);
-    setAuthorName('');
-    setLogin('');
-    setPassword('');
-  };
+  // const clearStates = () => {
+  //   setBlog(null);
+  //   setAuthorName('');
+  //   setLogin('');
+  //   setPassword('');
+  // };
 
-  useEffect(() => {
-    !isOpenForm && clearStates();
-  }, [isOpenForm]);
+  // useEffect(() => {
+  //   !isOpenForm && clearStates();
+  // }, [isOpenForm]);
 
   const handleInput = (event: any) => {
     const { name, value } = event.target;
@@ -59,8 +61,7 @@ const AddAuthor = ({ isOpenForm }: IAddAuthorProps) => {
       const AddAuthorInput = {
         blog: blog?.value,
         author: authorName,
-        login,
-        password,
+        credentials: { login, password },
         token: ls.token || '',
       };
 
@@ -100,14 +101,14 @@ const AddAuthor = ({ isOpenForm }: IAddAuthorProps) => {
       // */
     }
   };
-  console.log(1, 'isSuccess:', isSuccess);
+  // console.log(1, 'isSuccess:', isSuccess);
 
   if (loading) return <Spinner />;
 
   return (
     <FormHandler
       handleSubmit={handleSubmit}
-      title={'New author'}
+      title={title}
       isSubmitError={isSubmitError}
       apolloError={apolloError ? apolloError : null}
       isSuccess={isSuccess}
