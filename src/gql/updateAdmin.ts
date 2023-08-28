@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 const UPDATE_ADMIN = gql`
-  mutation Admin($input: AccessInput) {
+  mutation UpdateAdmin($input: AccessInput) {
     updateAdmin(input: $input) {
       token
       name

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 // import { useGlobalContext } from '../../../context/GlobalContext';
 import s from './MasterPanel.module.scss';
-import AddAuthor from './AddAuthor';
+import AdminAction from './AdminAction';
 
 const MasterAdminPanel = () => {
   // const [isOpenForm, setIsOpenForm] = useState<boolean>(false);
@@ -42,24 +42,20 @@ const MasterAdminPanel = () => {
           </button>
 
           {formContent === 'add_author' && (
-            <AddAuthor
-              title={'New author'}
-              // isOpenForm={isOpenForm}
-              // formModalHandler={formModalHandler}
-            />
+            <AdminAction title={'Create author'} />
           )}
         </div>
 
         <div className={s.formBlock}>
           <button
             className={s.button}
-            onClick={() => formModalHandler('delete_author')}
+            onClick={() => formModalHandler('del_author')}
           >
             Delete author
           </button>
 
-          {formContent === 'delete_author' && (
-            <AddAuthor title={'Delete author'} />
+          {formContent === 'del_author' && (
+            <AdminAction title={'Delete author'} />
           )}
         </div>
       </div>

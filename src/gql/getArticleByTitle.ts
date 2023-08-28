@@ -7,7 +7,6 @@ const GET_ARTICLE_BY_TITLE = gql`
       title
       article
       author
-      #image
       ipfs
       views
       tags
