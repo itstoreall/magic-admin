@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 const ADD_NEW_AUTHOR = gql`
-  mutation NewAuthor($input: AddAuthorInput) {
+  mutation NewAuthor($input: HandleAuthorInput) {
     addAdmin(input: $input) {
       name
       blogs
