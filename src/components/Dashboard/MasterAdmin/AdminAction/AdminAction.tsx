@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import ADD_NEW_AUTHOR from '../../../../gql/addNewAuthor';
+import DELETE_ADMIN from '../../../../gql/deleteAdmin';
 import InputSelect from '../../../FormHandler/InputSelect';
 import { ISelectOption as ISO } from '../../../../interfaces/login';
 import setUpperFirstChar from '../../../../utils/setUpperFirstChar';
@@ -22,7 +23,8 @@ const options = opts
   ? opts.split(' ').map(el => ({ value: el, label: setUpperFirstChar(el) }))
   : [];
 
-const AddAuthor = ({ title }: IAddAuthorProps) => {
+const AdminAction = ({ title }: IAddAuthorProps) => {
+  const [content, setContent] = useState<string>('');
   const [blog, setBlog] = useState<ISO | null>(null);
   const [authorName, setAuthorName] = useState<string>('');
   const [login, setLogin] = useState<string>('');
@@ -30,8 +32,50 @@ const AddAuthor = ({ title }: IAddAuthorProps) => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [isSubmitError, setIsSubmitError] = useState<boolean>(false);
 
-  const [addAdmin, { loading, error: apolloError }] =
+  const [addAdmin, { loading: addLoading, error: addError }] =
     useMutation(ADD_NEW_AUTHOR);
+
+  const [deleteAdmin, { loading: delLoading, error: delError }] =
+    useMutation(DELETE_ADMIN);
+
+  // ---
+
+  const createAdmin = async (AddAuthorInput: any) => {
+    const { data } = await addAdmin({
+      variables: { input: AddAuthorInput },
+    });
+
+    console.log(1, 'sent data', AddAuthorInput);
+
+    if (data) {
+      console.log(1, 'got data:', data);
+
+      const { name, blogs, coauthors } = data.addAdmin;
+
+      if (
+        authorName === name &&
+        blogs.includes(blog?.value) &&
+        coauthors.includes(name)
+      ) {
+        console.log(111);
+        setIsSuccess(true);
+      }
+    }
+  };
+
+  const removeAdmin = async (DelAuthorInput: any) => {
+    const { data } = await deleteAdmin({
+      variables: { input: DelAuthorInput },
+    });
+
+    console.log(1, 'sent data', DelAuthorInput);
+
+    if (data) {
+      console.log(1, 'got data:', data);
+    }
+  };
+
+  // ---
 
   // const clearStates = () => {
   //   setBlog(null);
@@ -43,6 +87,15 @@ const AddAuthor = ({ title }: IAddAuthorProps) => {
   // useEffect(() => {
   //   !isOpenForm && clearStates();
   // }, [isOpenForm]);
+
+  useEffect(() => {
+    const incContent = (value: string) => title.includes(value);
+    setContent(
+      incContent('Create') ? 'Add' : incContent('Delete') ? 'Delete' : ''
+    );
+  }, [title]);
+
+  console.log('content', content);
 
   const handleInput = (event: any) => {
     const { name, value } = event.target;
@@ -65,7 +118,17 @@ const AddAuthor = ({ title }: IAddAuthorProps) => {
         token: ls.token || '',
       };
 
-      if (Object.values(AddAuthorInput).some(value => !value)) {
+      const DelAuthorInput = {
+        blog: blog?.value,
+        author: authorName,
+        credentials: { login, password },
+      };
+
+      if (
+        Object.values(content === 'add' ? AddAuthorInput : DelAuthorInput).some(
+          value => !value
+        )
+      ) {
         setIsSubmitError(true);
         return setTimeout(() => setIsSubmitError(false), 3000);
       }
@@ -74,26 +137,30 @@ const AddAuthor = ({ title }: IAddAuthorProps) => {
       if (!isSubmitError) {
         try {
           console.log(1, 'handleSubmit try');
-          const { data } = await addAdmin({
-            variables: { input: AddAuthorInput },
-          });
 
-          console.log(1, 'sent data', AddAuthorInput);
+          content === 'Add' && createAdmin(AddAuthorInput);
+          content === 'Delete' && removeAdmin(DelAuthorInput);
 
-          if (data) {
-            console.log(1, 'got data:', data);
+          // const { data } = await addAdmin({
+          //   variables: { input: AddAuthorInput },
+          // });
 
-            const { name, blogs, coauthors } = data.addAdmin;
+          // console.log(1, 'sent data', AddAuthorInput);
 
-            if (
-              authorName === name &&
-              blogs.includes(blog?.value) &&
-              coauthors.includes(name)
-            ) {
-              console.log(111);
-              setIsSuccess(true);
-            }
-          }
+          // if (data) {
+          //   console.log(1, 'got data:', data);
+
+          //   const { name, blogs, coauthors } = data.addAdmin;
+
+          //   if (
+          //     authorName === name &&
+          //     blogs.includes(blog?.value) &&
+          //     coauthors.includes(name)
+          //   ) {
+          //     console.log(111);
+          //     setIsSuccess(true);
+          //   }
+          // }
         } catch (e) {
           console.error(e);
         }
@@ -103,14 +170,14 @@ const AddAuthor = ({ title }: IAddAuthorProps) => {
   };
   // console.log(1, 'isSuccess:', isSuccess);
 
-  if (loading) return <Spinner />;
+  if (addLoading) return <Spinner />;
 
   return (
     <FormHandler
       handleSubmit={handleSubmit}
       title={title}
       isSubmitError={isSubmitError}
-      apolloError={apolloError ? apolloError : null}
+      apolloError={addError ? addError : null}
       isSuccess={isSuccess}
     >
       <InputSelect
@@ -148,10 +215,10 @@ const AddAuthor = ({ title }: IAddAuthorProps) => {
         type={'submit'}
         // disabled={loading}
       >
-        Add
+        {content}
       </Button>
     </FormHandler>
   );
 };
 
-export default AddAuthor;
+export default AdminAction;
