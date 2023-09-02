@@ -1,29 +1,21 @@
-import { useState } from 'react';
-// import { useGlobalContext } from '../../../context/GlobalContext';
+import { useEffect, useState } from 'react';
 import s from './MasterPanel.module.scss';
 import AdminAction from './AdminAction';
+import cfg from './config/masterPanel.config';
 
 const MasterAdminPanel = () => {
-  // const [isOpenForm, setIsOpenForm] = useState<boolean>(false);
   const [formContent, setFormContent] = useState<string>('');
+
+  const { addNewAuthor, delAuthorFromBlog } = cfg.content;
+  const { addNewAuthorBtn, delAuthorFromBlogBtn } = cfg.button;
+  const { addNewAuthorTitle, delAuthorFromBlogTitle } = cfg.title;
 
   // const { theme } = useGlobalContext();
 
   const formModalHandler = (content: string) => {
-    // setIsOpenForm(true);
     setFormContent(
       formContent !== content ? content : !formContent ? content : ''
-
-      // setFormContent(
-      //   isOpenForm && formContent !== content
-      //     ? content
-      //     : !isOpenForm && !formContent
-      //     ? content
-      //     : ''
     );
-
-    // setIsOpenForm(!formContent ? true : true);
-    // setFormContent(isOpenForm && formContent !== content ? content : '');
   };
 
   // console.log('isOpenForm', isOpenForm);
@@ -36,26 +28,29 @@ const MasterAdminPanel = () => {
         <div className={s.formBlock}>
           <button
             className={s.button}
-            onClick={() => formModalHandler('add_author')}
+            onClick={() => formModalHandler(addNewAuthor)}
           >
-            Add new author
+            {addNewAuthorBtn}
           </button>
 
-          {formContent === 'add_author' && (
-            <AdminAction title={'Create author'} />
+          {formContent === addNewAuthor && (
+            <AdminAction formContent={formContent} title={addNewAuthorTitle} />
           )}
         </div>
 
         <div className={s.formBlock}>
           <button
             className={s.button}
-            onClick={() => formModalHandler('del_author')}
+            onClick={() => formModalHandler(delAuthorFromBlog)}
           >
-            Delete author
+            {delAuthorFromBlogBtn}
           </button>
 
-          {formContent === 'del_author' && (
-            <AdminAction title={'Delete author'} />
+          {formContent === delAuthorFromBlog && (
+            <AdminAction
+              formContent={formContent}
+              title={delAuthorFromBlogTitle}
+            />
           )}
         </div>
       </div>
