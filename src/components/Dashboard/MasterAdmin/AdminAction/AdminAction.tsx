@@ -2,13 +2,31 @@ import { useEffect, useState } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import ADD_NEW_AUTHOR from '../../../../gql/addNewAuthor';
 import DELETE_ADMIN from '../../../../gql/deleteAdmin';
-import { ISelectOption as ISO } from '../../../../interfaces/login';
+import {
+  ISelectOption as ISO,
+  ISelectOption,
+} from '../../../../interfaces/login';
 import setUpperFirstChar from '../../../../utils/setUpperFirstChar';
 import Spinner from '../../../Loading/Spinner';
 import GET_ALL_ADMINS from '../../../../gql/getAllAdmins';
 import cfg from '../config/masterPanel.config';
 import AddNewAuthor from './Actions/AddNewAuthor';
 import DelAuthorFromBlog from './Actions/DelAuthorFromBlog';
+
+// export interface ISelectOption {
+//   value: string;
+//   label: string;
+// }
+
+export interface IDelAuthorFromBlog {
+  admins: ISelectOption[];
+  blogs: { [key: string]: ISelectOption[] };
+}
+
+// export interface IDelAuthorFromBlog {
+//   admins: ISelectOption[];
+//   blogs: { name: string; blogs: ISelectOption[] }[];
+// }
 
 export interface IAllAdmsRes {
   name: string;
@@ -25,13 +43,14 @@ export interface IAddAuthorProps {
 const opts = process.env.REACT_APP_OPTIONS;
 const adm = process.env.REACT_APP_ADMIN_ACCESS;
 
-const options = opts
-  ? opts.split(' ').map(el => ({ value: el, label: setUpperFirstChar(el) }))
-  : [];
+// const options = opts
+//   ? opts.split(' ').map(el => ({ value: el, label: setUpperFirstChar(el) }))
+//   : [];
 
 const AdminAction = ({ formContent, title }: IAddAuthorProps) => {
   const [content, setContent] = useState<string>('');
   const [blog, setBlog] = useState<ISO | null>(null);
+  const [authorSelect, setAuthorSelect] = useState<ISO | null>(null);
   const [authorName, setAuthorName] = useState<string>('');
   const [login, setLogin] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -49,7 +68,6 @@ const AdminAction = ({ formContent, title }: IAddAuthorProps) => {
     useMutation(DELETE_ADMIN);
 
   const { addNewAuthor, delAuthorFromBlog } = cfg.content;
-  const { addNewAuthorBtn, delAuthorFromBlogBtn } = cfg.button;
 
   // ---
 
@@ -73,8 +91,6 @@ const AdminAction = ({ formContent, title }: IAddAuthorProps) => {
       data && setAllAdmins(cleanedData);
     }
   };
-
-  console.log('allAdmins', allAdmins);
 
   const createAdmin = async (AddAuthorInput: any) => {
     const { data } = await addAdmin({
@@ -184,10 +200,62 @@ const AdminAction = ({ formContent, title }: IAddAuthorProps) => {
   };
   // console.log(1, 'isSuccess:', isSuccess);
 
-  console.log('');
-  console.log('formContent', formContent);
-  console.log('cfg.content.addNewAuth', formContent === addNewAuthor);
-  console.log('options', options);
+  const setSelectOptions = () => {
+    console.log('');
+    console.log('formContent', formContent);
+    console.log('allAdmins', allAdmins);
+
+    // let options: { value: string; label: string }[] = [];
+
+    if (formContent === addNewAuthor && opts) {
+      return opts
+        .split(' ')
+        .map(el => ({ value: el, label: setUpperFirstChar(el) }));
+    }
+
+    if (formContent === delAuthorFromBlog) {
+      return allAdmins?.reduce(
+        (acc: IDelAuthorFromBlog, adm) => {
+          console.log('acc', acc);
+
+          acc.admins = [...acc.admins, { value: adm.name, label: adm.name }];
+
+          const blogs = adm.blogs.map(blog => {
+            return { value: blog, label: setUpperFirstChar(blog) };
+          });
+
+          acc.blogs = { ...acc.blogs, [adm.name]: blogs };
+
+          return acc;
+        },
+        { admins: [], blogs: {} }
+      );
+    }
+
+    /*
+    if (formContent === delAuthorFromBlog) {
+      return allAdmins?.reduce(
+        (acc: IDelAuthorFromBlog, adm) => {
+          console.log('acc', acc);
+
+          acc.admins = [
+            ...acc.admins,
+            { value: adm.name, label: setUpperFirstChar(adm.name) },
+          ];
+
+          const blogs = adm.blogs.map(blog => {
+            return { value: blog, label: setUpperFirstChar(blog) };
+          });
+
+          acc.blogs = [...acc.blogs, { name: adm.name, blogs: blogs }];
+
+          return acc;
+        },
+        { admins: [], blogs: [] }
+      );
+    }
+    */
+  };
 
   if (addLoading) return <Spinner />;
 
@@ -200,7 +268,7 @@ const AdminAction = ({ formContent, title }: IAddAuthorProps) => {
           isSubmitError={isSubmitError}
           addError={addError ? addError : null}
           isSuccess={isSuccess}
-          options={options}
+          options={setSelectOptions()}
           blog={blog}
           setBlog={setBlog}
           authorName={authorName}
@@ -215,9 +283,11 @@ const AdminAction = ({ formContent, title }: IAddAuthorProps) => {
           isSubmitError={isSubmitError}
           addError={addError ? addError : null}
           isSuccess={isSuccess}
-          options={options}
+          options={setSelectOptions()}
           blog={blog}
           setBlog={setBlog}
+          authorSelect={authorSelect}
+          setAuthorSelect={setAuthorSelect}
         />
       )}
     </>

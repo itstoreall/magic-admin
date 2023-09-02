@@ -114,6 +114,7 @@ const InputSelect = ({
       components={{
         NoOptionsMessage: NoOptions,
       }}
+      // isDisabled={true}
     />
   );
 };
