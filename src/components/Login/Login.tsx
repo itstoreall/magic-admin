@@ -63,6 +63,8 @@ const Login = () => {
           variables: { input: AccessInput },
         });
 
+        console.log(7, AccessInput);
+
         console.log(1, 'sent data', AccessInput);
 
         const { token, name, blogs } = data.updateAdmin;

@@ -6,6 +6,13 @@
 
   // ---> React-Select using inline styles!
 
+  > div {
+    // it may be React-Select
+    &:nth-last-child(2) {
+      @include marginB(30px);
+    }
+  }
+
   > input {
     @include padding(10px);
     @include marginB(20px);
