@@ -15,8 +15,8 @@ export interface IDelAuthorFromBlogProps {
   options: any;
   authorSelect: ISelectOption | null;
   setAuthorSelect(opt: ISelectOption | null): void;
-  blog: ISelectOption | null;
-  setBlog(opt: ISelectOption | null): void;
+  blogSelect: ISelectOption | null;
+  setBlogSelect(opt: ISelectOption | null): void;
 }
 
 export interface IDelAuthorFromBlogCurrentOpts {
@@ -33,27 +33,21 @@ const DelAuthorFromBlog = ({
   options,
   authorSelect,
   setAuthorSelect,
-  blog,
-  setBlog,
+  blogSelect,
+  setBlogSelect,
 }: IDelAuthorFromBlogProps) => {
-  // const [selectedAdm, setSelectedAdm] = useState<string>('');
   const [currentOpts, setCurrentOpts] = useState<ISelectOption[]>([]);
 
   useEffect(() => {
-    // setCurrentOpts();
-    if (authorSelect) {
-      // console.log('authorSelect --------->', authorSelect.value);
-      // console.log(
-      //   'options.blogs --------->',
-      //   options.blogs[authorSelect.value]
-      // );
-
+    if (authorSelect && options)
       setCurrentOpts(options.blogs[authorSelect.value]);
-    }
-  }, [authorSelect]);
+  }, [authorSelect, options]);
 
-  console.log('currentOpts --------->', currentOpts);
-  console.log('options ---->', options);
+  useEffect(() => {
+    !currentOpts.find(opt => blogSelect && opt.value === blogSelect?.value) &&
+      setBlogSelect(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentOpts]);
 
   return (
     <>
@@ -74,9 +68,9 @@ const DelAuthorFromBlog = ({
 
           <InputSelect
             options={currentOpts}
-            selectedValue={blog}
-            setSelectedValue={setBlog}
-            placeholder={currentOpts.length ? 'Blog' : ''}
+            selectedValue={blogSelect}
+            setSelectedValue={setBlogSelect}
+            placeholder={currentOpts.length ? 'Blog' : '...'}
           />
 
           <Button
