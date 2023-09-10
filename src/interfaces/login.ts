@@ -1,7 +1,4 @@
-export interface ISelectOption {
-  value: string;
-  label: string;
-}
+import { ISelectOption } from '.';
 
 export interface IInputSelectProps {
   options: ISelectOption[];

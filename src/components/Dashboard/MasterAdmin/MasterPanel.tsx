@@ -6,9 +6,11 @@ import cfg from './config/masterPanel.config';
 const MasterAdminPanel = () => {
   const [formContent, setFormContent] = useState<string>('');
 
-  const { addNewAuthor, delAuthorFromBlog } = cfg.content;
-  const { addNewAuthorBtn, delAuthorFromBlogBtn } = cfg.button;
-  const { addNewAuthorTitle, delAuthorFromBlogTitle } = cfg.title;
+  const { addNewAuthor, delAuthorFromBlog, addAuthorToBlog } = cfg.content;
+  const { addNewAuthorBtn, delAuthorFromBlogBtn, addAuthorToBlogBtn } =
+    cfg.button;
+  const { addNewAuthorTitle, delAuthorFromBlogTitle, addAuthorToBlogTitle } =
+    cfg.title;
 
   // const { theme } = useGlobalContext();
 
@@ -18,7 +20,7 @@ const MasterAdminPanel = () => {
     );
   };
 
-  // console.log('isOpenForm', isOpenForm);
+  // console.log('formContent', formContent);
 
   return (
     <div className={`${s.masterPanel} ${s['dark']}`}>
@@ -50,6 +52,22 @@ const MasterAdminPanel = () => {
             <AdminAction
               formContent={formContent}
               title={delAuthorFromBlogTitle}
+            />
+          )}
+        </div>
+
+        <div className={s.formBlock}>
+          <button
+            className={s.button}
+            onClick={() => formModalHandler(addAuthorToBlog)}
+          >
+            {addAuthorToBlogBtn}
+          </button>
+
+          {formContent === addAuthorToBlog && (
+            <AdminAction
+              formContent={formContent}
+              title={addAuthorToBlogTitle}
             />
           )}
         </div>
