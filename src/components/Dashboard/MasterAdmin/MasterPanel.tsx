@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import s from './MasterPanel.module.scss';
 import AdminAction from './AdminAction';
 import cfg from './config/masterPanel.config';

@@ -11,7 +11,7 @@ export interface IAddNewAuthorProps {
   handleSubmit(e: React.FormEvent): void;
   title: string;
   isSubmitError: boolean;
-  createError: ApolloError | null;
+  apolloError: ApolloError | null;
   isSuccess: boolean;
   options: any;
   blog: ISelectOption | null;
@@ -26,7 +26,7 @@ const AddNewAuthor = ({
   handleSubmit,
   title,
   isSubmitError,
-  createError,
+  apolloError,
   isSuccess,
   options,
   blog,
@@ -41,7 +41,7 @@ const AddNewAuthor = ({
       handleSubmit={handleSubmit}
       title={title}
       isSubmitError={isSubmitError}
-      apolloError={createError}
+      apolloError={apolloError || null}
       isSuccess={isSuccess}
     >
       <InputSelect

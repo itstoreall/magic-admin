@@ -10,7 +10,7 @@ export interface IDelAuthorFromBlogProps {
   handleSubmit(e: React.FormEvent): void;
   title: string;
   isSubmitError: boolean;
-  addError: ApolloError | null;
+  apolloError: ApolloError | undefined;
   isSuccess: boolean;
   options: any;
   authorSelect: ISelectOption | null;
@@ -28,7 +28,7 @@ const DelAuthorFromBlog = ({
   handleSubmit,
   title,
   isSubmitError,
-  addError,
+  apolloError,
   isSuccess,
   options,
   authorSelect,
@@ -56,7 +56,7 @@ const DelAuthorFromBlog = ({
           handleSubmit={handleSubmit}
           title={title}
           isSubmitError={isSubmitError}
-          apolloError={addError}
+          apolloError={apolloError || null}
           isSuccess={isSuccess}
         >
           <InputSelect

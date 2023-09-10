@@ -9,7 +9,7 @@ export interface IAddAuthorToBlogProps {
   handleSubmit(e: React.FormEvent): void;
   title: string;
   isSubmitError: boolean;
-  addError: ApolloError | null;
+  apolloError: ApolloError | undefined;
   isSuccess: boolean;
   options: any;
   authorSelect: ISelectOption | null;
@@ -22,7 +22,7 @@ const AddAuthorToBlog = ({
   handleSubmit,
   title,
   isSubmitError,
-  addError,
+  apolloError,
   isSuccess,
   options,
   authorSelect,
@@ -37,7 +37,7 @@ const AddAuthorToBlog = ({
           handleSubmit={handleSubmit}
           title={title}
           isSubmitError={isSubmitError}
-          apolloError={addError}
+          apolloError={apolloError || null}
           isSuccess={isSuccess}
         >
           <InputSelect

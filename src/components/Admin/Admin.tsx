@@ -18,8 +18,6 @@ const AdminPage = () => {
     isFetching = true;
 
     try {
-      console.log('fetchIsAdmin - token blog', token, blog);
-
       const { data } = await isAdmin({ variables: { token, blog } });
 
       console.log(1, 'data', data);
@@ -42,8 +40,6 @@ const AdminPage = () => {
 
       if (isFetching) return;
 
-      console.log('ls', ls);
-
       ls
         ? fetchIsAdmin(ls)
         : setAccess({ isAdmin: false, author: '', blog: '' });
@@ -51,9 +47,9 @@ const AdminPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [access]);
 
-  access && console.log('access', access);
-
   if (!access) return <Spinner />;
+
+  access && console.log('access', access);
 
   return <section>{access.isAdmin ? <Dashboard /> : <Login />}</section>;
 };
