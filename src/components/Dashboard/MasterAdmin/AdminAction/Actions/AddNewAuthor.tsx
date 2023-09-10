@@ -4,14 +4,14 @@ import FormHandler from '../../../../FormHandler';
 import InputSelect from '../../../../FormHandler/InputSelect';
 import Input from '../../../../FormHandler/Input';
 import Button from '../../../../Button';
-import { ISelectOption } from '../../../../../interfaces/login';
+import { ISelectOption } from '../../../../../interfaces';
 import cfg from '../../config/masterPanel.config';
 
 export interface IAddNewAuthorProps {
   handleSubmit(e: React.FormEvent): void;
   title: string;
   isSubmitError: boolean;
-  addError: ApolloError | null;
+  apolloError: ApolloError | null;
   isSuccess: boolean;
   options: any;
   blog: ISelectOption | null;
@@ -26,7 +26,7 @@ const AddNewAuthor = ({
   handleSubmit,
   title,
   isSubmitError,
-  addError,
+  apolloError,
   isSuccess,
   options,
   blog,
@@ -41,7 +41,7 @@ const AddNewAuthor = ({
       handleSubmit={handleSubmit}
       title={title}
       isSubmitError={isSubmitError}
-      apolloError={addError}
+      apolloError={apolloError || null}
       isSuccess={isSuccess}
     >
       <InputSelect
@@ -79,7 +79,7 @@ const AddNewAuthor = ({
         type={'submit'}
         // disabled={loading}
       >
-        {cfg.submitButton.delete}
+        {cfg.submitButton.add}
       </Button>
     </FormHandler>
   );
