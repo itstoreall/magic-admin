@@ -1,12 +1,11 @@
 import { ApolloError } from '@apollo/client';
+import { ISelectOption } from '../../../../../interfaces';
+import cfg from '../../config/masterPanel.config';
 import FormHandler from '../../../../FormHandler';
 import InputSelect from '../../../../FormHandler/InputSelect';
 import Button from '../../../../Button';
-import { ISelectOption } from '../../../../../interfaces';
-import cfg from '../../config/masterPanel.config';
-import { useEffect, useState } from 'react';
 
-export interface IDelAuthorFromBlogProps {
+export interface IAddAuthorToBlogProps {
   handleSubmit(e: React.FormEvent): void;
   title: string;
   isSubmitError: boolean;
@@ -19,12 +18,7 @@ export interface IDelAuthorFromBlogProps {
   setBlogSelect(opt: ISelectOption | null): void;
 }
 
-export interface IDelAuthorFromBlogCurrentOpts {
-  admins: ISelectOption[];
-  blogs: ISelectOption[];
-}
-
-const DelAuthorFromBlog = ({
+const AddAuthorToBlog = ({
   handleSubmit,
   title,
   isSubmitError,
@@ -35,23 +29,10 @@ const DelAuthorFromBlog = ({
   setAuthorSelect,
   blogSelect,
   setBlogSelect,
-}: IDelAuthorFromBlogProps) => {
-  const [currentOpts, setCurrentOpts] = useState<ISelectOption[]>([]);
-
-  useEffect(() => {
-    if (authorSelect && options)
-      setCurrentOpts(options.blogs[authorSelect.value]);
-  }, [authorSelect, options]);
-
-  useEffect(() => {
-    !currentOpts.find(opt => blogSelect && opt.value === blogSelect?.value) &&
-      setBlogSelect(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentOpts]);
-
+}: IAddAuthorToBlogProps) => {
   return (
     <>
-      {options && (
+      {options && options?.admins && (
         <FormHandler
           handleSubmit={handleSubmit}
           title={title}
@@ -67,17 +48,17 @@ const DelAuthorFromBlog = ({
           />
 
           <InputSelect
-            options={currentOpts}
+            options={options.blogs}
             selectedValue={blogSelect}
             setSelectedValue={setBlogSelect}
-            placeholder={currentOpts.length ? 'Blog' : '...'}
+            placeholder={'Blog'}
           />
 
           <Button
             type={'submit'}
             // disabled={loading}
           >
-            {cfg.submitButton.delete}
+            {cfg.submitButton.add}
           </Button>
         </FormHandler>
       )}
@@ -85,4 +66,4 @@ const DelAuthorFromBlog = ({
   );
 };
 
-export default DelAuthorFromBlog;
+export default AddAuthorToBlog;

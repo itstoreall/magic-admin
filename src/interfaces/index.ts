@@ -46,6 +46,20 @@ export interface IChld {
   children: ReactNode;
 }
 
+// ----------------- gql
+
+export interface IDataTypename {
+  [x: string]: string | number | string[];
+  __typename: string;
+}
+
+// ----------------- Form (React-Select)
+
+export interface ISelectOption {
+  value: string;
+  label: string;
+}
+
 // ----------------- Themes
 
 // export interface ITheme {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { ISelectOption as ISO } from '../../interfaces/login';
+import { ISelectOption as ISO } from '../../interfaces';
 import { useGlobalContext } from '../../context/GlobalContext';
 import setUpperFirstChar from '../../utils/setUpperFirstChar';
 import UPDATE_ADMIN from '../../gql/updateAdmin';

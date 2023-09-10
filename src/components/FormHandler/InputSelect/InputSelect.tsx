@@ -1,8 +1,6 @@
 import Select, { StylesConfig, components } from 'react-select';
-import {
-  IInputSelectProps as IISP,
-  ISelectOption as ISO,
-} from '../../../interfaces/login';
+import { IInputSelectProps as IISP } from '../../../interfaces/login';
+import { ISelectOption as ISO } from '../../../interfaces';
 import * as theme from '../../../theme/index';
 
 const NoOptions = (props: any) => (

@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 const DELETE_AUTHOR_FROM_BLOG = gql`
-  mutation DeleteAuthorFromBlog($input: DeleteAuthorFromBlogInput) {
+  mutation DeleteAuthorFromBlog($input: HandleAuthorInBlogInput) {
     deleteAuthorFromBlog(input: $input)
   }
 `;
