@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactElement, ReactNode } from 'react';
+import { ChangeEvent, FC, ReactElement, ReactNode } from 'react';
 import { IArticleElement } from '../interfaces';
 
 export type Button = (props: {
@@ -9,6 +9,12 @@ export type Button = (props: {
   disabled?: boolean;
   children: ReactNode;
 }) => ReactElement;
+
+export type TitleType = FC<{
+  tag?: keyof JSX.IntrinsicElements;
+  text: string;
+  styles?: string;
+}>;
 
 // ----------------- Add article
 

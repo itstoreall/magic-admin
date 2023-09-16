@@ -94,14 +94,14 @@ const Login = () => {
   return (
     <div className={s.loginWrap}>
       <div className={`${s.login} ${s['dark']}`}>
-        <span className={s.title}>Вход</span>
+        <span className={s.title}>Login</span>
 
         <form className={s.loginForm} onSubmit={handleSubmit}>
           <InputSelect
             options={options}
             selectedValue={blog}
             setSelectedValue={setBlog}
-            placeholder={'Блог'}
+            placeholder={'Blog'}
           />
 
           <input
@@ -109,7 +109,7 @@ const Login = () => {
             value={login}
             onChange={e => handleInput(e)}
             name='login'
-            placeholder='Логин'
+            placeholder='Login'
           />
 
           <input
@@ -117,21 +117,21 @@ const Login = () => {
             value={password}
             onChange={e => handleInput(e)}
             name='password'
-            placeholder='Пароль'
+            placeholder='Password'
           />
 
           <Button type={'submit'} disabled={loading}>
-            Отправить
+            Submit
           </Button>
         </form>
       </div>
 
-      {isError && <p className={s.loginError}>Все поля обязательны</p>}
+      {isError && <p className={s.loginError}>All fields are required</p>}
 
       {error && (
         <p className={s.loginError}>
           {error.message === 'Access denied!'
-            ? 'Неверный логин или пароль'
+            ? 'Invalid login or password'
             : `${error.message}`}
         </p>
       )}
