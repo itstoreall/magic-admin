@@ -7,7 +7,6 @@ export interface IAccess {
 }
 
 export interface IArticleInput {
-  // image: string;
   ipfs: string;
   title: string;
   description: string;

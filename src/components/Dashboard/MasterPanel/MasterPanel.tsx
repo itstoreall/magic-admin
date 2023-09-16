@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import s from './MasterPanel.module.scss';
 import AdminAction from './AdminAction';
 import cfg from './config/masterPanel.config';
+import s from './MasterPanel.module.scss';
 
 const MasterAdminPanel = () => {
   const [formContent, setFormContent] = useState<string>('');

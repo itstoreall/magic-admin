@@ -1,6 +1,28 @@
 @import '../theme/index.scss';
 @import '../styles/vars.scss';
 
+// --- position:
+
+@mixin position($p: static) {
+  position: $p;
+}
+
+@mixin top($t: 0) {
+  top: $t;
+}
+
+@mixin right($r: 0) {
+  right: $r;
+}
+
+@mixin left($l: 0) {
+  left: $l;
+}
+
+@mixin bottom($b: 0) {
+  bottom: $b;
+}
+
 // ------- display
 
 @mixin display($d: block) {
@@ -119,6 +141,20 @@
 
 @mixin color($c: tomato) {
   color: $c;
+}
+
+// --- border:
+
+@mixin border($b) {
+  border: $b;
+}
+
+@mixin borderT($bt) {
+  border-top: $bt;
+}
+
+@mixin borderB($bb) {
+  border-bottom: $bb;
 }
 
 // --- overflow:
@@ -252,4 +288,19 @@
   &:hover {
     background-color: $middleGreyHover;
   }
+}
+
+@mixin lineClamp($lines: 2) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+}
+
+@mixin logo($size: 18px, $space: 4px) {
+  font-size: $size;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: $space;
+  text-transform: uppercase;
 }
