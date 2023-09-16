@@ -5,6 +5,7 @@ import GET_ARTICLES from '../../../gql/getArticles';
 import { removeDataTypename } from '../../../utils/removeDataTypename';
 import defaultImage from '../../../assets/images/defaultImage.jpg';
 import s from './ArticleList.module.scss';
+import Spinner from '../../Loading/Spinner';
 
 export const WEB3_STORAGE = 'ipfs.dweb.link/astraia-image.jpg';
 
@@ -19,7 +20,7 @@ const ipfs = WEB3_STORAGE;
 const ArticleList = () => {
   const [articles, setArticles] = useState<IArticle[]>([]);
 
-  const [isAdmin] = useLazyQuery(GET_ARTICLES);
+  const [isAdmin, { loading }] = useLazyQuery(GET_ARTICLES);
 
   const imgFilter = () => (true ? 50 : 0); // 'dark'
 
@@ -58,13 +59,13 @@ const ArticleList = () => {
     );
   };
 
+  if (loading) return <Spinner />;
+
   return (
-    // <div className={s.content}>
-    <div className={s.innerContainer}>
+    <div className={s.articleList}>
       <ul className={`${s.list} ${s['dark']}`}>
         {articles.map((art: IArticle) => (
           <li key={art.id} className={s.item}>
-            {/* <Link href={`/articles/${art.id}`}> */}
             <div className={s.card}>
               <div className={s.thumb}>
                 <ImageHandler
@@ -78,12 +79,10 @@ const ArticleList = () => {
                 <p className={s.description}>{art.description}</p>
               </div>
             </div>
-            {/* </Link> */}
           </li>
         ))}
       </ul>
     </div>
-    // </div>
   );
 };
 

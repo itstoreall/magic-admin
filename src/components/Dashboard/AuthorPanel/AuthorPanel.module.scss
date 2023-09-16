@@ -1,11 +1,12 @@
 @import '../../../styles/vars.scss';
 @import '../../../styles/mixins';
 
-.masterPanel {
+.authorPanel {
+  @include borderB(1px solid $middleDark);
+
   @include themeHandler() {
     .title {
-      color: $middleGreyHover;
-      // background-color: tomato;
+      color: $middleDark;
     }
 
     .formWrap {
