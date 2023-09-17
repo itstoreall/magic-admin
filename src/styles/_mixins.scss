@@ -60,6 +60,12 @@
   align-items: $x;
 }
 
+@mixin flexColumnY($y: flex-start) {
+  display: flex;
+  flex-direction: column;
+  justify-content: $y;
+}
+
 @mixin flexWrap($fw: wrap) {
   display: flex;
   flex-wrap: $fw;
@@ -143,6 +149,10 @@
   color: $c;
 }
 
+@mixin textTransform($tt) {
+  text-transform: $tt;
+}
+
 // --- border:
 
 @mixin border($b) {
@@ -182,6 +192,12 @@
 @mixin transition($tsn) {
   -webkit-transition: $tsn;
   transition: $tsn;
+}
+
+// ------- other
+
+@mixin cursor($c) {
+  cursor: $c;
 }
 
 // ------- theme
@@ -303,4 +319,63 @@
   line-height: 1;
   letter-spacing: $space;
   text-transform: uppercase;
+}
+
+// --- Buttons:
+
+@mixin buttonStyle() {
+  @include padding(5px 12px);
+  font-weight: 600;
+  @include fontSize(14px);
+  color: $colorWhite;
+  background-color: $middleGrey;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover,
+  &:focus {
+    background-color: $middleGreyHover;
+  }
+}
+
+@mixin contrastSolidButton() {
+  @include padding(8px 15px);
+  @include fontSize(14px);
+  font-weight: 600;
+  color: var(--text-invert);
+  background-color: var(--contrast-background);
+  border-radius: 6px;
+  cursor: pointer;
+  @include transition($s04);
+  user-select: none;
+
+  &:hover {
+    background-color: var(--contrast-background-hover);
+  }
+
+  // &:active {
+  //   background-color: red;
+  // }
+}
+
+@mixin techButton() {
+  @include flexXY(center, center);
+  @include padding(0 8px);
+  @include height(26px);
+  @include fontSize(12px);
+  font-weight: 400;
+  color: $colorWhite;
+  background-color: $middleGrey;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+
+  &:not(:last-child) {
+    margin-right: 5px;
+  }
+
+  &:hover {
+    background-color: $middleGreyHover;
+  }
 }

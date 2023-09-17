@@ -1,0 +1,118 @@
+@import '../../../../styles/vars.scss';
+@import '../../../../styles/_mixins.scss';
+
+.articleHandlerWrap {
+  position: relative;
+  @include marginB(10px);
+
+  .articlePreview {
+    // @include paddingB(35px);
+
+    .previewTitle {
+      @include display(inline-block);
+      @include marginB(20px);
+      @include fontSize(20px);
+      font-weight: 600;
+      color: $contrstLightHover;
+      border-radius: 6px;
+    }
+  }
+
+  .actionButton {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    transition: transform 0.5s ease;
+    cursor: pointer;
+
+    &.isReset {
+      transform: rotate(360deg);
+    }
+
+    &.isDelete {
+      @include padding(20px 20px 20px);
+      @include width(auto);
+      @include height(auto);
+      background-color: var(--background);
+      border: 1px solid $middleGrey;
+      border-radius: 6px;
+      cursor: auto;
+
+      .deleteText {
+        @include margin(0 auto);
+        margin-bottom: 20px;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .deleteButtonWrap {
+        display: flex;
+        justify-content: center;
+
+        > button {
+          cursor: pointer;
+
+          &:first-child {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  // .articleHandler {
+  // }
+
+  .mainButtons {
+    display: flex;
+
+    > button {
+      @include contrastSolidButton();
+      @include padding(15px);
+      @include textTransform(uppercase);
+
+      width: 50%;
+
+      &:nth-child(1) {
+        @include marginR(10px);
+      }
+    }
+  }
+
+  .submitErrors {
+    padding: 15px 10px;
+    text-align: center;
+    color: $colorRed;
+  }
+
+  .success {
+    @include flexY(center);
+    height: 60vh;
+
+    .successContent {
+      @include flexColumnY(center);
+      @include margin(0 auto);
+
+      > svg {
+        @include marginB(30px);
+      }
+    }
+  }
+}
+
+.deleted {
+  @include flexY(center);
+  height: 60vh;
+  // background-color: teal;
+
+  .deletedContent {
+    @include flexColumnY(center);
+    @include margin(0 auto);
+
+    > svg {
+      @include marginB(30px);
+    }
+  }
+}

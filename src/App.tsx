@@ -6,6 +6,7 @@ import Admin from './components/Admin';
 import Header from './components/Header/Header';
 
 const App = () => {
+  const [label, setLabel] = useState<string>('list');
   const [access, setAccess] = useState<IAccess | null>(null);
   const [theme, setTheme] = useState<string>('light');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -21,6 +22,8 @@ const App = () => {
   return (
     <GlobalContext.Provider
       value={{
+        label,
+        setLabel,
         articles,
         setArticles,
         access,

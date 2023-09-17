@@ -7,6 +7,7 @@ export interface IAccess {
 }
 
 export interface IArticleInput {
+  image: string;
   ipfs: string;
   title: string;
   description: string;
@@ -26,10 +27,12 @@ export interface IArticle extends IArticleInput {
 }
 
 export type GlobalContent = {
-  articles: any[];
-  setArticles: (articles: any[]) => void;
+  label: string;
+  setLabel: (str: string) => void;
   access: IAccess | null;
   setAccess: (access: IAccess | null) => void;
+  articles: any[];
+  setArticles: (articles: any[]) => void;
   theme: string;
   setTheme: (theme: string) => void;
   isLoading: boolean;

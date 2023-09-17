@@ -24,7 +24,7 @@ const MasterAdminPanel = () => {
 
   return (
     <div className={`${s.masterPanel} ${s['dark']}`}>
-      <h3 className={s.title}>Master panel</h3>
+      <h3 className={s.title}>Master</h3>
 
       <div className={s.formWrap}>
         <div className={s.formBlock}>

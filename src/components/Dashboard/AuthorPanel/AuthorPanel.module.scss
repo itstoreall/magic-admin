@@ -2,22 +2,20 @@
 @import '../../../styles/mixins';
 
 .authorPanel {
-  @include borderB(1px solid $middleDark);
-
   @include themeHandler() {
     .title {
-      color: $middleDark;
+      @include color($middleDark);
     }
 
     .formWrap {
       @include flex();
 
-      .formBlock {
-        @include marginR(20px);
+      .button {
+        @include panelContrastSolidButton();
+        @include marginB(20px);
 
-        .button {
-          @include panelContrastSolidButton();
-          @include marginB(20px);
+        &:not(:last-child) {
+          @include marginR(20px);
         }
       }
     }
