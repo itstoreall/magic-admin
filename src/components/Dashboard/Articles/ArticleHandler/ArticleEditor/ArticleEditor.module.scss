@@ -1,0 +1,208 @@
+@import '../../../../../styles/mixins';
+
+.articleEditor {
+  @include padding(15px 15px 25px);
+  @include marginB(20px);
+  border: 1px solid $middleGrey;
+  border-radius: 6px;
+
+  @include minWidth($tablet) {
+    @include padding(20px);
+  }
+
+  @include themeHandler() {
+    .infoText {
+      @include marginB(20px);
+      @include fontSize(16px);
+      font-weight: 600;
+      color: $middleGrey;
+      user-select: none;
+    }
+
+    .fildList {
+      list-style: none;
+      @include padding(0);
+      @include margin(0);
+      @include marginB(20px);
+      width: 100%;
+
+      .fildItem {
+        &:not(:last-child) {
+          @include marginB(5px);
+        }
+
+        &.edit {
+          .field {
+            @include padding(10px);
+            width: 100%;
+            font-family: Arial, sans-serif;
+            @include fontSize(16px);
+            color: var(--text);
+            background-color: transparent;
+            border: none;
+            @include transition($s04);
+            outline: none;
+
+            &.input {
+              margin-bottom: 8px;
+              max-width: calc(100% - 20px);
+              border-bottom: 1px solid $middleGrey;
+              border-radius: 0;
+            }
+
+            &.textarea {
+              margin-bottom: 6px;
+              max-width: calc(100% - 22px);
+              height: 300px;
+              border: 1px solid $middleGrey;
+              border-radius: 6px;
+              resize: none;
+
+              @include minWidth($tablet) {
+                height: 150px;
+              }
+
+              @include minWidth($desktop) {
+                height: 120px;
+              }
+            }
+
+            &:focus {
+              border-color: var(--inputFocus);
+
+              &::placeholder {
+                @include transition($s04);
+                color: transparent;
+              }
+            }
+          }
+
+          .techButtons {
+            @include flexWrap();
+
+            .techButton {
+              @include techButton();
+            }
+          }
+        }
+
+        &.element {
+          position: relative;
+
+          .elementPreview {
+            @include flexXY(space-between, center);
+
+            .field {
+              &.element {
+                @include width(295px);
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                -webkit-text-overflow: ellipsis;
+                -ms-text-overflow: ellipsis;
+                @include fontSize(16px);
+
+                @include minWidth($tablet) {
+                  @include width(630px);
+                }
+
+                @include minWidth($desktop) {
+                  @include width(800px);
+                }
+              }
+            }
+          }
+
+          .threeDotsButton {
+            @include flexXY(flex-end, center);
+            @include widthHeight(30px, 30px);
+            min-height: 30px;
+            cursor: pointer;
+            user-select: none;
+          }
+
+          .editElenemtMenu {
+            position: absolute;
+            right: 35px;
+            @include flex();
+            align-items: center;
+            @include paddingL(8px);
+            background-color: var(--background);
+            @include transition($s04);
+            z-index: 2;
+
+            > .techButton {
+              @include techButton();
+              min-width: 25px;
+            }
+          }
+        }
+      }
+    }
+
+    .addElement {
+      .field {
+        @include padding(10px);
+        width: 100%;
+        font-family: Arial, sans-serif;
+        @include fontSize(16px);
+        color: var(--text);
+        background-color: transparent;
+        border: none;
+        @include transition($s04);
+        outline: none;
+
+        &.input {
+          @include marginB(10px);
+          max-width: calc(100% - 20px);
+          border-bottom: 1px solid $middleGrey;
+          border-radius: 0;
+        }
+
+        &.textarea {
+          @include marginB(7px);
+          max-width: calc(100% - 22px);
+          height: 300px;
+          border: 1px solid $middleGrey;
+          border-radius: 6px;
+          resize: none;
+
+          @include minWidth($tablet) {
+            height: 150px;
+          }
+
+          @include minWidth($desktop) {
+            height: 120px;
+          }
+        }
+
+        &:focus {
+          border-color: var(--inputFocus);
+
+          &::placeholder {
+            @include transition($s04);
+            color: transparent;
+          }
+        }
+      }
+
+      .techButtons {
+        @include flexWrap();
+
+        .techButton {
+          @include techButton();
+        }
+      }
+    }
+
+    .addElementButtons {
+      > button {
+        @include contrastSolidButton();
+
+        &:nth-child(1) {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
