@@ -13,7 +13,7 @@ const FormHandler = ({
   isSuccess,
 }: IFormHandlerProps) => {
   return (
-    <div className={`${s.formWrap} ${s['dark']}`}>
+    <div className={`${s.formWrap}`}>
       <div className={s.form}>
         <span className={s.title}>{title}</span>
 
@@ -24,12 +24,12 @@ const FormHandler = ({
         )}
       </div>
 
-      {isSubmitError && <p className={s.submitError}>Все поля обязательны</p>}
+      {isSubmitError && <p className={s.submitError}>All fields required</p>}
 
       {apolloError && (
         <p className={s.submitError}>
           {apolloError.message === 'Access denied!'
-            ? 'Неверный логин или пароль'
+            ? 'Wrong login or password!'
             : `${apolloError.message}`}
         </p>
       )}

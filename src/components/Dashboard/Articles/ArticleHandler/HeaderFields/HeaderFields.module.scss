@@ -4,7 +4,7 @@
 .headerFields {
   @include marginB(20px);
   @include padding(15px 15px 20px);
-  border: 1px solid $middleGrey;
+  border: 1px solid $middleDark;
   border-radius: 6px;
 
   @include minWidth($tablet) {
@@ -16,7 +16,7 @@
     @include fontSize(16px);
     width: 85%;
     font-weight: 600;
-    color: $middleGrey;
+    color: $middleDark;
     user-select: none;
   }
 
@@ -32,7 +32,7 @@
       width: 100%;
       font-family: Arial, sans-serif;
       @include fontSize(16px);
-      color: var(--text);
+      color: $middleLight;
       background-color: transparent;
       border: none;
       @include transition($s04);
@@ -63,7 +63,7 @@
       }
 
       &:focus {
-        border-color: var(--inputFocus);
+        border-color: $colorGreen;
 
         &::placeholder {
           @include transition($s04);

@@ -8,7 +8,6 @@ import Header from './components/Header/Header';
 const App = () => {
   const [label, setLabel] = useState<string>('list');
   const [access, setAccess] = useState<IAccess | null>(null);
-  const [theme, setTheme] = useState<string>('light');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [articles, setArticles] = useState<IArticle[]>([]);
 
@@ -28,8 +27,6 @@ const App = () => {
         setArticles,
         access,
         setAccess,
-        theme,
-        setTheme,
         isLoading,
         setIsLoading,
       }}

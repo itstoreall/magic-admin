@@ -18,7 +18,7 @@
     @include marginB(20px);
     font-family: Arial, sans-serif;
     @include fontSize(16px);
-    color: var(--text);
+    color: $middleDark;
     background-color: transparent;
     border: none;
     @include transition($s04);
@@ -32,13 +32,13 @@
     }
 
     &:-webkit-autofill {
-      box-shadow: 0 0 0 50px var(--background-react) inset;
-      -webkit-text-fill-color: var(--text);
+      box-shadow: 0 0 0 50px $reactBackground inset;
+      -webkit-text-fill-color: $middleDark;
       caret-color: $middleGrey;
     }
 
     &::-moz-placeholder {
-      background-color: var(--background);
+      background-color: $light;
     }
 
     &:nth-last-child(2) {

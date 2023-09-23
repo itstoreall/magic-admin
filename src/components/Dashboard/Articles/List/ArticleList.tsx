@@ -39,7 +39,7 @@ const ArticleList = ({ handleOpenDetails }: IArticleListProps) => {
 
   return (
     <div className={s.articleList}>
-      <ul className={`${s.list} ${s['dark']}`}>
+      <ul className={`${s.list}`}>
         {articles.map((art: IArticle) => (
           <li key={art.id} className={s.item} onClick={() => showDetails(art)}>
             <div className={s.card}>

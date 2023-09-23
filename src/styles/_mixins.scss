@@ -200,20 +200,8 @@
   cursor: $c;
 }
 
-// ------- theme
-
-@mixin themeHandler() {
-  &.dark {
-    @include theme('light');
-
-    @content;
-  }
-
-  &.light {
-    @include theme('dark');
-
-    @content;
-  }
+@mixin z($zi) {
+  z-index: $zi;
 }
 
 // ------- @media
@@ -257,14 +245,14 @@
 @mixin contrastSolidButton() {
   @include fontSize(14px);
   font-weight: 600;
-  color: var(--text-invert);
-  background-color: var(--contrast-background);
+  color: $light;
+  background-color: $contrastLight;
   cursor: pointer;
   @include transition($s04);
   user-select: none;
 
   &:hover {
-    background-color: var(--contrast-background-hover);
+    background-color: $contrastLightHover;
   }
 
   // &:active {
@@ -343,15 +331,15 @@
   @include padding(8px 15px);
   @include fontSize(14px);
   font-weight: 600;
-  color: var(--text-invert);
-  background-color: var(--contrast-background);
+  color: $dark;
+  background-color: $contrastDark;
   border-radius: 6px;
   cursor: pointer;
   @include transition($s04);
   user-select: none;
 
   &:hover {
-    background-color: var(--contrast-background-hover);
+    background-color: $contrastDarkHover;
   }
 
   // &:active {

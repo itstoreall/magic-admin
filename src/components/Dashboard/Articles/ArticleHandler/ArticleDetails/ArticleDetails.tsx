@@ -25,6 +25,8 @@ const ArticleDetails = (props: any) => {
     articleElements,
   } = props;
 
+  console.log('author', author);
+
   const { viewport } = useViewport();
   const { width, height } = useProportion(
     900,
@@ -48,7 +50,7 @@ const ArticleDetails = (props: any) => {
           <div className={s.thumb}>
             <img
               src={imageData ? imageData : setImageSrc(ipfs)}
-              alt='Uploaded 3'
+              alt='Uploaded'
               width={width}
               height={height}
             />
