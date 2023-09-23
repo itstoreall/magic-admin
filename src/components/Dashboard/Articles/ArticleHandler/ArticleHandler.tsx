@@ -14,7 +14,7 @@ import setImageSrc from '../../../../utils/setImageSrc';
 import s from './ArticleHandler.module.scss';
 import Button from '../../../Button';
 import Delete from '../../../../assets/icons/Delete';
-import { contrstDark, contrstLight, middleGrey } from '../../../../theme';
+import { middleDark, colorGreen } from '../../../../theme';
 import Reset from '../../../../assets/icons/Reset';
 import HeaderFields from './HeaderFields';
 import ArticleEditor from './ArticleEditor';
@@ -32,7 +32,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   const [ipfs, setIpfs] = useState<string>('');
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  const [author, setAuthor] = useState<string>('Mila');
+  const [author, setAuthor] = useState<string>('');
   const [submitError, setSubmitError] = useState<string>('');
 
   const [textareaValue, setTextareaValue] = useState('');
@@ -55,7 +55,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     setIsDelete(!isDelete);
   };
 
-  const { theme, label, setArticles } = useGlobalContext();
+  const { label, setArticles, access } = useGlobalContext();
 
   const [addArticle, { loading, error }] = useMutation(ADD_ARTICLE);
   const [editArticle, { loading: editLoading, error: editError }] =
@@ -76,6 +76,10 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   };
 
   useEffect(() => {
+    console.log('author =-=-=->>>', author);
+  }, [author]);
+
+  useEffect(() => {
     localStorage.removeItem(fls_edit);
     localStorage.removeItem(art_edit);
     clearStates();
@@ -84,7 +88,10 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
       const lsFields = JSON.parse(localStorage.getItem(fls_add) || 'null');
       const lsElements = JSON.parse(localStorage.getItem(art_add) || 'null');
 
-      console.log(2, 'label:', label);
+      // console.log(2, 'label:', label);
+      // console.log(2, 'lsFields:', lsFields);
+
+      access && !author && setAuthor(access?.author);
 
       if (lsFields) {
         setTitle(lsFields.title);
@@ -98,18 +105,13 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [label]);
 
-  // useLayoutEffect(() => {
-  //   if (label === 'add') {
-  //     if (articleElements?.length)
-  //       localStorage.setItem(art_add, JSON.stringify({ articleElements }));
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [articleElements]);
-
   useEffect(() => {
     if (label === 'add') {
       if (title?.length || description?.length) {
-        localStorage.setItem(fls_add, JSON.stringify({ title, description }));
+        localStorage.setItem(
+          fls_add,
+          JSON.stringify({ title, description, author })
+        );
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -134,6 +136,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
         setImageData(article.ipfs ? setImageSrc(article.ipfs) : '');
         setIpfs(article.ipfs);
         setArticleElements(articleElements);
+        setAuthor(article?.author);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -204,7 +207,9 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
       ipfs: ipfs,
       title: title,
       description: description,
-      author: 'Mila',
+      author: author,
+      // author:
+      //   access && label === 'add' ? access?.author : article && article?.author,
       text: text,
       tags: ['magic'],
     };
@@ -224,11 +229,12 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
 
     if (!isSubmitError) {
       setSubmitError('');
-    } else return setSubmitError('Проверьте правильность заполнения');
+    } else return setSubmitError('Check that it is filled in correctly');
 
     console.log('isSubmitError', isSubmitError);
     console.log('');
 
+    // /*
     try {
       label === 'add'
         ? addArticleRequest(articleInput)
@@ -238,6 +244,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     } catch (e) {
       console.error(e);
     }
+    // */
   };
 
   const handleDelete = async () => {
@@ -289,7 +296,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
       }}
     >
       {!isDeleted ? (
-        <div className={`${s.articleHandlerWrap} ${s[theme]}`}>
+        <div className={`${s.articleHandlerWrap} ${s['dark']}`}>
           {!isDisplayArticle && !isArticle && (
             <>
               {label === 'add' ? (
@@ -297,7 +304,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                   className={`${s.actionButton} ${isReset ? s.isReset : ''}`}
                   onClick={handleClickReset}
                 >
-                  <Reset fill={middleGrey} />
+                  <Reset fill={middleDark} />
                 </div>
               ) : (
                 <div
@@ -305,13 +312,13 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                   onClick={handleClickDelete}
                 >
                   {!isDelete ? (
-                    <Delete fill={middleGrey} el={'article'} />
+                    <Delete fill={middleDark} el={'article'} />
                   ) : (
                     <div>
-                      <p className={s.deleteText}>Удалить данную статью?</p>
+                      <p className={s.deleteText}>Delete this article?</p>
                       <div className={s.deleteButtonWrap}>
-                        <Button fn={() => handleDelete()}>Удалить</Button>
-                        <Button fn={handleClickDelete}>Отменить</Button>
+                        <Button fn={() => handleDelete()}>Delete</Button>
+                        <Button fn={handleClickDelete}>Cancel</Button>
                       </div>
                     </div>
                   )}
@@ -330,7 +337,6 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                   </>
                 ) : (
                   <div className={s.articlePreview}>
-                    <span className={s.previewTitle}>Предпросмотр статьи</span>
                     <ArticleDetails
                       imageData={imageData}
                       title={title}
@@ -351,11 +357,11 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                   // style={{ backgroundColor: 'teal' }}
                   // hover={{ backgroundColor: 'tomato' }}
                 >
-                  Сохранить
+                  Publish
                 </button>
 
                 <button onClick={() => setIsDisplayArticle(!isDisplayArticle)}>
-                  {isDisplayArticle ? 'Редактор' : 'Предпросмотр'}
+                  {isDisplayArticle ? 'Editor' : 'Preview'}
                 </button>
               </div>
               <div className={s.submitErrors}>
@@ -365,16 +371,14 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
               </div>
             </>
           ) : (
-            <div className={s.success}>
+            <div className={s.successPopup}>
               <div className={s.successContent}>
-                <Success
-                  fill={theme === 'light' ? contrstLight : contrstDark}
-                />
-                <span>
+                <Success fill={colorGreen} />
+                <span className={s.successMessage}>
                   {label === 'add'
-                    ? 'Статья успешно создана!'
+                    ? 'Article successfully created!'
                     : label === 'edit'
-                    ? 'Статья успешно изменена!'
+                    ? 'Article successfully modified!'
                     : null}
                 </span>
               </div>
@@ -382,10 +386,12 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
           )}
         </div>
       ) : (
-        <div className={s.deleted}>
-          <div className={s.deletedContent}>
-            <Success fill={theme === 'light' ? contrstLight : contrstDark} />
-            <span>Статья успешно удалена!</span>
+        <div className={s.successPopup}>
+          <div className={s.successContent}>
+            <Success fill={colorGreen} />
+            <span className={s.successMessage}>
+              Article successfully deleted!
+            </span>
           </div>
         </div>
       )}

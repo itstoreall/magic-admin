@@ -97,7 +97,7 @@ const InputSelect = ({
         borderBottom: `1px solid ${theme.reactBackground}`,
       },
       '&:hover': {
-        backgroundColor: theme.contrstDark,
+        backgroundColor: theme.contrastDark,
       },
     }),
   };

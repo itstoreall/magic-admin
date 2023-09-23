@@ -8,8 +8,6 @@ export const GlobalContext = createContext<GlobalContent>({
   setArticles: () => {},
   access: null,
   setAccess: () => null,
-  theme: 'light',
-  setTheme: () => 'light',
   isLoading: false,
   setIsLoading: () => false,
 });

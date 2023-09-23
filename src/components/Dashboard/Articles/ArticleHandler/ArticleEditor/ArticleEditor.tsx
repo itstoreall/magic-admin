@@ -4,8 +4,7 @@ import {
   ChangeTextareaValue,
   MoveElement,
 } from '../../../../../types';
-import { colorWhite, middleGrey } from '../../../../../theme';
-import { useGlobalContext } from '../../../../../context/GlobalContext';
+import { colorWhite, middleDark } from '../../../../../theme';
 import { useAddArticleContext } from '../../../../../context/AddArticleContext';
 import useViewport from '../../../../../hooks/useViewport';
 import s from './ArticleEditor.module.scss';
@@ -21,7 +20,6 @@ const ArticleEditor = () => {
   const [action, setAction] = useState<string | null>(null);
   const [isOpenEditMenu, setIsOpenEditMenu] = useState<boolean>(false);
 
-  const { theme } = useGlobalContext();
   const { viewport } = useViewport();
   const {
     textareaValue,
@@ -142,10 +140,10 @@ const ArticleEditor = () => {
   // console.log('viewport', viewport);
 
   return (
-    <div className={`${s.articleEditor} ${s[theme]}`}>
+    <div className={`${s.articleEditor}`}>
       {articleElements?.length ? (
         <>
-          <p className={`${s.infoText}`}>{'Редактор статьи'}</p>
+          <p className={`${s.infoText}`}>{'Article editor'}</p>
 
           <ul className={`${s.fildList}`}>
             {articleElements.map((el, index) => (
@@ -167,20 +165,20 @@ const ArticleEditor = () => {
                           value={textareaValue}
                           onChange={changeInputValue}
                           name='title'
-                          placeholder={'Заголовок'}
+                          placeholder={'Subtitle'}
                         />
                         <div className={`${s.techButtons}`}>
                           <div
                             className={`${s.techButton}`}
                             onClick={() => addElement('title')}
                           >
-                            {editIndex !== null ? 'Сохронить' : 'Добавить'}
+                            {editIndex !== null ? 'Save' : 'Add'}
                           </div>
                           <div
                             className={`${s.techButton}`}
                             onClick={() => cleanStates()}
                           >
-                            {'Отменить'}
+                            {'Cancel'}
                           </div>
                         </div>
                       </>
@@ -234,9 +232,9 @@ const ArticleEditor = () => {
                             onClick={() => editMenuHandler(index)}
                           >
                             {viewport === 'mobile' ? (
-                              <DotsVertical fill={middleGrey} />
+                              <DotsVertical fill={middleDark} />
                             ) : (
-                              <DotsHorizontal fill={middleGrey} />
+                              <DotsHorizontal fill={middleDark} />
                             )}
                           </div>
                         </div>
@@ -253,20 +251,20 @@ const ArticleEditor = () => {
                           className={`${s.field} ${s.textarea}`}
                           value={textareaValue}
                           onChange={changeTextareaValue}
-                          placeholder={'Параграф...'}
+                          placeholder={'Paragraph...'}
                         />
                         <div className={`${s.techButtons}`}>
                           <div
                             className={`${s.techButton}`}
                             onClick={() => addElement('paragraph')}
                           >
-                            {editIndex !== null ? 'Сохронить' : 'Добавить'}
+                            {editIndex !== null ? 'Save' : 'Add'}
                           </div>
                           <div
                             className={`${s.techButton}`}
                             onClick={() => cleanStates()}
                           >
-                            {'Отменить'}
+                            {'Cancel'}
                           </div>
                         </div>
                       </>
@@ -319,9 +317,9 @@ const ArticleEditor = () => {
                           onClick={() => editMenuHandler(index)}
                         >
                           {viewport === 'mobile' ? (
-                            <DotsVertical fill={middleGrey} />
+                            <DotsVertical fill={middleDark} />
                           ) : (
-                            <DotsHorizontal fill={middleGrey} />
+                            <DotsHorizontal fill={middleDark} />
                           )}
                         </div>
                       </div>
@@ -335,9 +333,7 @@ const ArticleEditor = () => {
       ) : null}
 
       <div className={s.addElement}>
-        <p className={`${s.infoText}`}>
-          {articleElements?.length ? 'Дополнить контент' : 'Основной контент'}
-        </p>
+        <p className={`${s.infoText}`}>{'Article content'}</p>
 
         {element && action === 'add' && (
           <>
@@ -348,14 +344,14 @@ const ArticleEditor = () => {
                 value={textareaValue}
                 onChange={changeInputValue}
                 name='title'
-                placeholder={'Заголовок'}
+                placeholder={'Subtitle'}
               />
             ) : (
               <textarea
                 className={`${s.field} ${s.textarea}`}
                 value={textareaValue}
                 onChange={changeTextareaValue}
-                placeholder={'Параграф...'}
+                placeholder={'Paragraph...'}
               />
             )}
 
@@ -366,10 +362,10 @@ const ArticleEditor = () => {
                   addElement(element === 'title' ? 'title' : 'paragraph')
                 }
               >
-                {editIndex !== null ? 'Сохронить' : 'Добавить'}
+                {editIndex !== null ? 'Save' : 'Add'}
               </div>
               <div className={`${s.techButton}`} onClick={() => cleanStates()}>
-                {'Отменить'}
+                {'Cancel'}
               </div>
             </div>
           </>
@@ -383,7 +379,7 @@ const ArticleEditor = () => {
                 setAction('add');
               }}
             >
-              Заголовок
+              Subtitle
             </Button>
             <Button
               fn={() => {
@@ -391,7 +387,7 @@ const ArticleEditor = () => {
                 setAction('add');
               }}
             >
-              Параграф
+              Paragraph
             </Button>
           </div>
         )}

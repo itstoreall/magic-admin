@@ -2,21 +2,24 @@
 @import '../../../styles/mixins';
 
 .authorPanel {
-  @include themeHandler() {
-    .title {
-      @include color($middleDark);
-    }
+  .title {
+    @include color($middleDark);
+  }
 
-    .formWrap {
-      @include flex();
+  .formWrap {
+    @include flex();
 
-      .button {
-        @include panelContrastSolidButton();
-        @include marginB(20px);
+    .button {
+      @include panelContrastSolidButton();
+      @include marginB(20px);
+      @include width(100%);
 
-        &:not(:last-child) {
-          @include marginR(20px);
-        }
+      @include minWidth($tablet) {
+        @include width(auto);
+      }
+
+      &:not(:last-child) {
+        @include marginR(20px);
       }
     }
   }

@@ -28,14 +28,14 @@ const HeaderFields = ({ article, label }: IArticleHandler) => {
   return (
     <div className={`${s.headerFields}`}>
       {isArticle ? (
-        <p className={`${s.infoText}`}>{'Статья успешно создана!'}</p>
+        <p className={`${s.infoText}`}>{'Article successfully created!'}</p>
       ) : (
         <p className={`${s.infoText}`}>
           {label === 'add'
-            ? 'Заполните все поля и добавьте изображение'
+            ? 'Fill in all fields and add an image'
             : label === 'edit'
-            ? 'Измените необходимые поля или изображение'
-            : 'Сообщите разработчику об ошибке'}
+            ? 'Title and description'
+            : 'Report a bug to the developer'}
         </p>
       )}
 
@@ -47,7 +47,7 @@ const HeaderFields = ({ article, label }: IArticleHandler) => {
             value={title}
             onChange={e => handleInput(e)}
             name='title'
-            placeholder='Название статьи'
+            placeholder='Article title'
           />
           <textarea
             className={`${s.field} ${s.textarea}`}
@@ -55,7 +55,7 @@ const HeaderFields = ({ article, label }: IArticleHandler) => {
             value={description}
             onChange={e => handleInput(e)}
             name='description'
-            placeholder='Краткое описание'
+            placeholder='Description'
           />
         </div>
       )}
