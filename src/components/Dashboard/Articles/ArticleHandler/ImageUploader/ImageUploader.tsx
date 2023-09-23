@@ -1,4 +1,3 @@
-import { useGlobalContext } from '../../../../../context/GlobalContext';
 import { useAddArticleContext } from '../../../../../context/AddArticleContext';
 import useProportion from '../../../../../hooks/useProportion';
 import s from './ImageUploader.module.scss';
@@ -6,7 +5,6 @@ import base64Converter from '../../../../../utils/uploadImageHandler';
 import { useEffect } from 'react';
 
 const ImageUploader = () => {
-  const { theme } = useGlobalContext();
   const { width, height } = useProportion(900, 450, 64);
 
   const { imageData, setImageData, submitError, setSubmitError } =
@@ -18,12 +16,12 @@ const ImageUploader = () => {
   }, [imageData]);
 
   return (
-    <div className={`${s.imageUploader} ${s[theme]}`}>
+    <div className={`${s.imageUploader}`}>
       {imageData && (
         <div className={s.thumb}>
           <img
             src={imageData}
-            alt='Загружаемое изображение'
+            alt='Article preview'
             width={width}
             height={height}
           />
@@ -31,7 +29,7 @@ const ImageUploader = () => {
       )}
 
       <label>
-        {imageData ? 'Изменить изображение' : 'Выбрать изображение'}
+        {imageData ? 'Change the image' : 'Download image'}
         <input
           className={s.fileInput}
           type='file'

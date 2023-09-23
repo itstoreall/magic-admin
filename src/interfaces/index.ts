@@ -33,8 +33,6 @@ export type GlobalContent = {
   setAccess: (access: IAccess | null) => void;
   articles: any[];
   setArticles: (articles: any[]) => void;
-  theme: string;
-  setTheme: (theme: string) => void;
   isLoading: boolean;
   setIsLoading: (b: boolean) => void;
 };
@@ -61,21 +59,6 @@ export interface ISelectOption {
   value: string;
   label: string;
 }
-
-// ----------------- Themes
-
-// export interface ITheme {
-//   background: string;
-//   backgroundBlur: string;
-//   backgroundHover: string;
-//   secondaryBackground: string;
-//   contrastBackground: string;
-//   contrastBackgroundHover: string;
-//   text: string;
-//   textInvert: string;
-//   button: string;
-//   buttonHover: string;
-// }
 
 // ----------------- Article Handler
 

@@ -2,31 +2,38 @@
 @import '../../styles/mixins';
 
 .formWrap {
-  @include themeHandler() {
-    position: absolute;
-    @include width(100%);
-    max-width: 320px;
+  @include position(absolute);
+  @include left(0);
+  @include width(100%);
+  @include z(1);
+  // background-color: pink;
 
-    .form {
-      @include padding(25px 20px 30px);
-      text-align: center;
-      border: 1px solid $middleGrey;
-      background-color: $reactBackground;
-      border-radius: 6px;
+  @include minWidth($tablet) {
+    @include left(auto);
+    max-width: 322px;
+  }
 
-      .title {
-        @include display(block);
-        @include marginB(20px);
-        @include fontSW(18px, 600);
-        @include color($middleGrey);
-      }
+  .form {
+    @include padding(25px 20px 30px);
+    @include margin(0 auto);
+    text-align: center;
+    border: 1px solid $middleGrey;
+    background-color: $reactBackground;
+    border-radius: 6px;
+    max-width: 280px;
+
+    .title {
+      @include display(block);
+      @include marginB(20px);
+      @include fontSW(18px, 600);
+      @include color($middleGrey);
     }
+  }
 
-    .submitError {
-      text-align: center;
-      @include paddingT(10px);
-      @include fontSW(14px);
-      @include color($colorRed);
-    }
+  .submitError {
+    text-align: center;
+    @include paddingT(10px);
+    @include fontSW(14px);
+    @include color($colorRed);
   }
 }

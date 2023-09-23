@@ -12,18 +12,14 @@ const MasterAdminPanel = () => {
   const { addNewAuthorTitle, delAuthorFromBlogTitle, addAuthorToBlogTitle } =
     cfg.title;
 
-  // const { theme } = useGlobalContext();
-
   const formModalHandler = (content: string) => {
     setFormContent(
       formContent !== content ? content : !formContent ? content : ''
     );
   };
 
-  // console.log('formContent', formContent);
-
   return (
-    <div className={`${s.masterPanel} ${s['dark']}`}>
+    <div className={`${s.masterPanel}`}>
       <h3 className={s.title}>Master</h3>
 
       <div className={s.formWrap}>

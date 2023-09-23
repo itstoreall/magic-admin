@@ -2,22 +2,27 @@
 @import '../../../styles/mixins';
 
 .masterPanel {
-  @include themeHandler() {
-    .title {
-      @include color($middleDark);
-      // background-color: tomato;
+  .title {
+    @include color($middleDark);
+    // background-color: tomato;
+  }
+
+  .formWrap {
+    @include minWidth($tablet) {
+      @include flex();
     }
 
-    .formWrap {
-      @include flex();
-
-      .formBlock {
-        @include marginR(20px);
-
-        .button {
-          @include panelContrastSolidButton();
-          @include marginB(20px);
+    .formBlock {
+      @include minWidth($tablet) {
+        &:not(:last-child) {
+          @include marginR(20px);
         }
+      }
+
+      .button {
+        @include panelContrastSolidButton();
+        @include marginB(15px);
+        width: 100%;
       }
     }
   }

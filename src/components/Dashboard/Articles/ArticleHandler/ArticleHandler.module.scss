@@ -3,20 +3,8 @@
 
 .articleHandlerWrap {
   position: relative;
-  @include marginB(10px);
 
-  .articlePreview {
-    // @include paddingB(35px);
-
-    .previewTitle {
-      @include display(inline-block);
-      @include marginB(20px);
-      @include fontSize(20px);
-      font-weight: 600;
-      color: $contrstLightHover;
-      border-radius: 6px;
-    }
-  }
+  // .articlePreview {} // *
 
   .actionButton {
     position: absolute;
@@ -35,24 +23,22 @@
       @include padding(20px 20px 20px);
       @include width(auto);
       @include height(auto);
-      background-color: var(--background);
+      background-color: $reactBackground;
       border: 1px solid $middleGrey;
       border-radius: 6px;
       cursor: auto;
 
       .deleteText {
         @include margin(0 auto);
+        @include color($middleGrey);
         margin-bottom: 20px;
         font-size: 14px;
         text-align: center;
       }
 
       .deleteButtonWrap {
-        display: flex;
-        justify-content: center;
-
         > button {
-          cursor: pointer;
+          @include color($light);
 
           &:first-child {
             margin-right: 10px;
@@ -61,9 +47,6 @@
       }
     }
   }
-
-  // .articleHandler {
-  // }
 
   .mainButtons {
     display: flex;
@@ -87,32 +70,39 @@
     color: $colorRed;
   }
 
-  .success {
-    @include flexY(center);
-    height: 60vh;
+  // .success {
+  //   @include flexY(center);
+  //   height: 60vh;
 
-    .successContent {
-      @include flexColumnY(center);
-      @include margin(0 auto);
+  //   .successContent {
+  //     @include flexColumnX(center);
+  //     @include margin(0 auto);
 
-      > svg {
-        @include marginB(30px);
-      }
-    }
-  }
+  //     > svg {
+  //       @include marginB(30px);
+  //     }
+
+  //     .successMessage {
+  //       color: $middleLight;
+  //     }
+  //   }
+  // }
 }
 
-.deleted {
+.successPopup {
   @include flexY(center);
   height: 60vh;
-  // background-color: teal;
 
-  .deletedContent {
-    @include flexColumnY(center);
+  .successContent {
+    @include flexColumnX(center);
     @include margin(0 auto);
 
     > svg {
       @include marginB(30px);
+    }
+
+    .successMessage {
+      color: $middleLight;
     }
   }
 }

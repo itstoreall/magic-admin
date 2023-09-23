@@ -12,77 +12,75 @@
   }
 
   .list {
-    @include themeHandler() {
-      list-style: none;
-      @include padding(0);
-      @include margin(0);
-      @include marginB(-20px);
+    list-style: none;
+    @include padding(0);
+    @include margin(0);
+    @include marginB(-20px);
+
+    @include minWidth($tablet) {
+      @include flexWrap(wrap);
+
+      @include maxWidth($desktop - 1) {
+        justify-content: space-between;
+      }
+    }
+
+    .item {
+      @include marginB(20px);
+      background-color: $darkHover;
+      border-radius: 8px;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      transition: 0.4s ease;
+      @include cursor(pointer);
+
+      &:hover {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
 
       @include minWidth($tablet) {
-        @include flexWrap(wrap);
+        @include width(49%);
+      }
 
-        @include maxWidth($desktop - 1) {
-          justify-content: space-between;
+      @include minWidth($desktop) {
+        @include width(32%);
+
+        &:not(:nth-child(3n + 3)) {
+          @include marginR(2%);
         }
       }
 
-      .item {
-        @include marginB(20px);
-        background-color: var(--background-hover);
-        border-radius: 8px;
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-        transition: 0.4s ease;
-        @include cursor(pointer);
-
-        &:hover {
-          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        }
-
-        @include minWidth($tablet) {
-          @include width(49%);
-        }
-
-        @include minWidth($desktop) {
-          @include width(32%);
-
-          &:not(:nth-child(3n + 3)) {
-            @include marginR(2%);
+      .card {
+        .thumb {
+          img {
+            border-radius: 6px 6px 0 0;
           }
         }
+        .meta {
+          @include padding(15px 15px 20px);
 
-        .card {
-          .thumb {
-            img {
-              border-radius: 6px 6px 0 0;
-            }
+          h3 {
+            @include margin(0 0 12px);
+            @include fontSize(15px);
+            color: $middleLight;
+            @include lineClamp(1);
+            transition: 0.4s ease;
           }
-          .meta {
-            @include padding(15px 15px 20px);
 
-            h3 {
-              @include margin(0 0 12px);
-              @include fontSize(15px);
-              color: var(--text);
-              @include lineClamp(1);
-              transition: 0.4s ease;
-            }
+          .description {
+            @include fontSize(13px);
+            @include margin(0);
+            color: $middleGreyHover;
+            line-height: 1.4;
+            @include lineClamp(2);
+            transition: 0.4s ease;
 
-            .description {
-              @include fontSize(13px);
-              @include margin(0);
-              color: var(--text-light);
-              line-height: 1.4;
-              @include lineClamp(2);
-              transition: 0.4s ease;
-
-              /*
+            /*
               overflow: hidden;
               white-space: nowrap;
               text-overflow: ellipsis;
               -webkit-text-overflow: ellipsis;
               -ms-text-overflow: ellipsis;
               */
-            }
           }
         }
       }

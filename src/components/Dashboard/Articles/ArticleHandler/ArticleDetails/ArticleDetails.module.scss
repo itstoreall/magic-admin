@@ -7,6 +7,7 @@
   .title {
     @include marginB(20px);
     @include fontSize(28px);
+    @include color($light);
 
     @include minWidth($tablet) {
       @include width(80%);
@@ -22,6 +23,7 @@
   .description {
     @include marginB(20px);
     line-height: 1.4;
+    @include color($middleLight);
 
     @include minWidth($tablet) {
       @include width(90%);
@@ -69,6 +71,7 @@
   .articleElements {
     .subTitle {
       // line-height: 3.5;
+      @include color($light);
 
       &:not(:last-child) {
         @include marginB(20px);
@@ -85,6 +88,8 @@
     }
 
     .paragraph {
+      @include color($middleLight);
+
       &:not(:last-child) {
         @include marginB(30px);
       }
