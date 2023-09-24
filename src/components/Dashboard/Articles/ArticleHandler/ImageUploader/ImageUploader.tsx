@@ -1,4 +1,4 @@
-import { useAddArticleContext } from '../../../../../context/AddArticleContext';
+import { useArticleHandlerContext } from '../../../../../context/ArticleHandlerContext';
 import useProportion from '../../../../../hooks/useProportion';
 import s from './ImageUploader.module.scss';
 import base64Converter from '../../../../../utils/uploadImageHandler';
@@ -8,7 +8,7 @@ const ImageUploader = () => {
   const { width, height } = useProportion(900, 450, 64);
 
   const { imageData, setImageData, submitError, setSubmitError } =
-    useAddArticleContext();
+    useArticleHandlerContext();
 
   useEffect(() => {
     submitError && setSubmitError('');

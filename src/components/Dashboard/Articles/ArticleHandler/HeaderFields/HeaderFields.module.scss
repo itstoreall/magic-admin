@@ -3,18 +3,17 @@
 
 .headerFields {
   @include marginB(20px);
-  @include padding(15px 15px 20px);
+  @include padding(0 15px 20px);
   border: 1px solid $middleDark;
   border-radius: 6px;
 
   @include minWidth($tablet) {
-    @include padding(20px 20px 25px);
+    @include padding(0 20px 25px);
   }
 
   .infoText {
-    @include marginB(20px);
     @include fontSize(16px);
-    width: 85%;
+    width: 80%;
     font-weight: 600;
     color: $middleDark;
     user-select: none;
@@ -42,14 +41,18 @@
         max-width: calc(100% - 20px);
         margin-bottom: 20px;
         width: 100%;
-        border-bottom: 1px solid $middleGrey;
+        border-bottom: 1px solid $middleDark;
         border-radius: 0;
+
+        &::placeholder {
+          color: $middleDark;
+        }
       }
 
       &.textarea {
         max-width: calc(100% - 22px);
         height: 300px;
-        border: 1px solid $middleGrey;
+        border: 1px solid $middleDark;
         border-radius: 6px;
         resize: none;
 
@@ -59,6 +62,10 @@
 
         @include minWidth($desktop) {
           height: 120px;
+        }
+
+        &::placeholder {
+          color: $middleDark;
         }
       }
 

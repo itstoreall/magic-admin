@@ -1,24 +1,25 @@
 import { IArticleHandler } from '../../../../../interfaces';
-import { useAddArticleContext } from '../../../../../context/AddArticleContext';
+import { useArticleHandlerContext } from '../../../../../context/ArticleHandlerContext';
 import s from './HeaderFields.module.scss';
 import ImageUploader from '../ImageUploader';
+import { useGlobalContext } from '../../../../../context/GlobalContext';
 
-const HeaderFields = ({ article, label }: IArticleHandler) => {
+const HeaderFields = ({ label }: IArticleHandler) => {
   const {
-    isArticle,
-    setIsArticle,
     title,
     setTitle,
     description,
     setDescription,
     submitError,
     setSubmitError,
-  } = useAddArticleContext();
+  } = useArticleHandlerContext();
+
+  const { isUpdatedArt, setIsUpdatedArt } = useGlobalContext();
 
   const handleInput = (event: any) => {
     submitError && setSubmitError('');
 
-    isArticle && setIsArticle(false);
+    isUpdatedArt && setIsUpdatedArt(false);
     const { name, value } = event.target;
 
     name === 'title' && setTitle(value);
@@ -27,7 +28,7 @@ const HeaderFields = ({ article, label }: IArticleHandler) => {
 
   return (
     <div className={`${s.headerFields}`}>
-      {isArticle ? (
+      {isUpdatedArt ? (
         <p className={`${s.infoText}`}>{'Article successfully created!'}</p>
       ) : (
         <p className={`${s.infoText}`}>
@@ -39,7 +40,7 @@ const HeaderFields = ({ article, label }: IArticleHandler) => {
         </p>
       )}
 
-      {!isArticle && (
+      {!isUpdatedArt && (
         <div className={`${s.fields}`}>
           <input
             className={`${s.field} ${s.input}`}

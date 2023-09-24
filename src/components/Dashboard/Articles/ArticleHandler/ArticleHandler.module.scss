@@ -69,29 +69,15 @@
     text-align: center;
     color: $colorRed;
   }
-
-  // .success {
-  //   @include flexY(center);
-  //   height: 60vh;
-
-  //   .successContent {
-  //     @include flexColumnX(center);
-  //     @include margin(0 auto);
-
-  //     > svg {
-  //       @include marginB(30px);
-  //     }
-
-  //     .successMessage {
-  //       color: $middleLight;
-  //     }
-  //   }
-  // }
 }
 
 .successPopup {
   @include flexY(center);
-  height: 60vh;
+  height: 40vh;
+
+  @include minWidth($tablet) {
+    height: 50vh;
+  }
 
   .successContent {
     @include flexColumnX(center);

@@ -4,6 +4,7 @@
 .dashboard {
   @include padding(0 20px);
   @include margin(0 auto);
+  @include marginB(100px);
   max-width: $max;
 
   .mainSection {

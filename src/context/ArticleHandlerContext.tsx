@@ -1,9 +1,7 @@
-import { IAddArticleContext } from '../interfaces';
+import { IArticleHandlerContext } from '../interfaces';
 import { createContext, useContext } from 'react';
 
-export const AddArticleContext = createContext<IAddArticleContext>({
-  isArticle: false,
-  setIsArticle: () => false,
+export const ArticleHandlerContext = createContext<IArticleHandlerContext>({
   imageData: '',
   setImageData: () => '',
   title: '',
@@ -26,4 +24,4 @@ export const AddArticleContext = createContext<IAddArticleContext>({
   setSubmitError: () => '',
 });
 
-export const useAddArticleContext = () => useContext(AddArticleContext);
+export const useArticleHandlerContext = () => useContext(ArticleHandlerContext);
