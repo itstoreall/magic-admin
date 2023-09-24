@@ -50,8 +50,8 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     access,
     isDeletedArt,
     setIsDeletedArt,
-    isCreatedArt,
-    setIsCreatedArt,
+    isUpdatedArt,
+    setIsUpdatedArt,
   } = useGlobalContext();
 
   const handleClickReset = () => setIsReset(!isReset);
@@ -181,7 +181,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     >
       {!isDeletedArt ? (
         <div className={`${s.articleHandlerWrap} ${s['dark']}`}>
-          {!isDisplayArticle && !isCreatedArt && (
+          {!isDisplayArticle && !isUpdatedArt && (
             <>
               {label === 'add' ? (
                 <div
@@ -223,7 +223,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
             </>
           )}
 
-          {!isCreatedArt ? (
+          {!isUpdatedArt ? (
             <>
               <div className={s.articleHandler}>
                 {!isDisplayArticle ? (
@@ -261,7 +261,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                       article,
                       addArticle,
                       editArticle,
-                      setIsCreatedArt,
+                      setIsUpdatedArt,
                       clearStates,
                       getArticles,
                       setArticles,

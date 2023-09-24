@@ -14,12 +14,12 @@ const HeaderFields = ({ label }: IArticleHandler) => {
     setSubmitError,
   } = useArticleHandlerContext();
 
-  const { isCreatedArt, setIsCreatedArt } = useGlobalContext();
+  const { isUpdatedArt, setIsUpdatedArt } = useGlobalContext();
 
   const handleInput = (event: any) => {
     submitError && setSubmitError('');
 
-    isCreatedArt && setIsCreatedArt(false);
+    isUpdatedArt && setIsUpdatedArt(false);
     const { name, value } = event.target;
 
     name === 'title' && setTitle(value);
@@ -28,7 +28,7 @@ const HeaderFields = ({ label }: IArticleHandler) => {
 
   return (
     <div className={`${s.headerFields}`}>
-      {isCreatedArt ? (
+      {isUpdatedArt ? (
         <p className={`${s.infoText}`}>{'Article successfully created!'}</p>
       ) : (
         <p className={`${s.infoText}`}>
@@ -40,7 +40,7 @@ const HeaderFields = ({ label }: IArticleHandler) => {
         </p>
       )}
 
-      {!isCreatedArt && (
+      {!isUpdatedArt && (
         <div className={`${s.fields}`}>
           <input
             className={`${s.field} ${s.input}`}

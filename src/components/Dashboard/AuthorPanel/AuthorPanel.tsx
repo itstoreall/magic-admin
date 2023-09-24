@@ -9,20 +9,17 @@ const AuthorPanel = () => {
 
   const {
     setLabel,
-    isCreatedArt,
-    setIsCreatedArt,
+    isUpdatedArt,
+    setIsUpdatedArt,
     isDeletedArt,
     setIsDeletedArt,
   } = useGlobalContext();
 
   const handleLabel = (str: string) => {
-    isCreatedArt && setIsCreatedArt(false);
+    isUpdatedArt && setIsUpdatedArt(false);
     isDeletedArt && setIsDeletedArt(false);
     setLabel(str);
   };
-
-  console.log('isCreatedArt', isCreatedArt);
-  console.log('isDeletedArt', isDeletedArt);
 
   return (
     <div className={`${s.authorPanel} ${s['dark']}`}>

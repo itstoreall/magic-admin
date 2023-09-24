@@ -39,7 +39,7 @@ export interface IUpdate {
 }
 
 export interface IOne extends IUpdate {
-  setIsCreatedArt(b: boolean): void;
+  setIsUpdatedArt(b: boolean): void;
   clearStates(): void;
 }
 
@@ -93,7 +93,7 @@ export const addArticleRequest = async (args: IAdd) => {
   console.log('addArticle:', title);
 
   if (title) {
-    args.setIsCreatedArt(true);
+    args.setIsUpdatedArt(true);
     args.clearStates();
     updateArticles({
       getArticles: args.getArticles,
@@ -120,7 +120,7 @@ export const editArticleRequest = async (args: IEdit) => {
   console.log('Article edited:', data.editArticle);
 
   if (data.editArticle) {
-    args.setIsCreatedArt(true);
+    args.setIsUpdatedArt(true);
     args.clearStates();
     updateArticles({
       getArticles: args.getArticles,
@@ -169,7 +169,7 @@ export const handleSubmit = async (args: ISubmit) => {
     article,
     addArticle,
     editArticle,
-    setIsCreatedArt,
+    setIsUpdatedArt,
     clearStates,
     getArticles,
     setArticles,
@@ -217,7 +217,7 @@ export const handleSubmit = async (args: ISubmit) => {
       addArticleRequest({
         articleInput,
         addArticle,
-        setIsCreatedArt,
+        setIsUpdatedArt,
         clearStates,
         getArticles,
         setArticles,
@@ -228,7 +228,7 @@ export const handleSubmit = async (args: ISubmit) => {
         articleInput,
         article,
         editArticle,
-        setIsCreatedArt,
+        setIsUpdatedArt,
         clearStates,
         getArticles,
         setArticles,

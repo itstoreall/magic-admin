@@ -39,8 +39,8 @@ export type GlobalContent = {
   // ------- ArticleHandler:
   isDeletedArt: boolean;
   setIsDeletedArt: (b: boolean) => void;
-  isCreatedArt: boolean;
-  setIsCreatedArt: (b: boolean) => void;
+  isUpdatedArt: boolean;
+  setIsUpdatedArt: (b: boolean) => void;
 };
 
 export interface IContainerProps {

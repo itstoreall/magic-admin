@@ -14,8 +14,8 @@ export const GlobalContext = createContext<GlobalContent>({
   // ------- ArticleHandler:
   isDeletedArt: false,
   setIsDeletedArt: () => false,
-  isCreatedArt: false,
-  setIsCreatedArt: () => false,
+  isUpdatedArt: false,
+  setIsUpdatedArt: () => false,
 });
 
 export const useGlobalContext = () => useContext(GlobalContext);

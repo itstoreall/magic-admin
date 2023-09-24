@@ -12,7 +12,7 @@ const App = () => {
   const [articles, setArticles] = useState<IArticle[]>([]);
 
   // ------- ArticleHandler:
-  const [isCreatedArt, setIsCreatedArt] = useState<boolean>(false);
+  const [isUpdatedArt, setIsUpdatedArt] = useState<boolean>(false);
   const [isDeletedArt, setIsDeletedArt] = useState<boolean>(false);
 
   const serverUrl = process.env.REACT_APP_APOLLO_CLIENT_URL;
@@ -35,8 +35,8 @@ const App = () => {
         setIsLoading,
         isDeletedArt,
         setIsDeletedArt,
-        isCreatedArt,
-        setIsCreatedArt,
+        isUpdatedArt,
+        setIsUpdatedArt,
       }}
     >
       <ApolloProvider client={client}>
