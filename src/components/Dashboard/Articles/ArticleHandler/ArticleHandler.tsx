@@ -2,9 +2,9 @@
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { IEditArticleProps } from '../../../../interfaces/editArticles';
-import { IArticleElement, IArticleInput } from '../../../../interfaces';
+import { IArticleElement } from '../../../../interfaces';
 import { useGlobalContext } from '../../../../context/GlobalContext';
-import { AddArticleContext } from '../../../../context/AddArticleContext';
+import { ArticleHandlerContext } from '../../../../context/ArticleHandlerContext';
 import ADD_ARTICLE from '../../../../gql/addArticle';
 import EDIT_ARTICLE from '../../../../gql/editArticle';
 import GET_ARTICLES from '../../../../gql/getArticles';
@@ -20,6 +20,7 @@ import HeaderFields from './HeaderFields';
 import ArticleEditor from './ArticleEditor';
 import ArticleDetails from './ArticleDetails';
 import Success from '../../../../assets/icons/Success';
+import * as utils from './utils';
 
 const fls_add = constants.ARTICLE_HEADER_FIELDS_ADD;
 const art_add = constants.ARTICLE_ELEMENTS_ADD;
@@ -27,42 +28,43 @@ const fls_edit = constants.ARTICLE_HEADER_FIELDS_EDIT;
 const art_edit = constants.ARTICLE_ELEMENTS_EDIT;
 
 const ArticleHandler = ({ article }: IEditArticleProps) => {
-  const [isArticle, setIsArticle] = useState<boolean>(false);
-  const [imageData, setImageData] = useState<string>('');
-  const [ipfs, setIpfs] = useState<string>('');
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [author, setAuthor] = useState<string>('');
-  const [submitError, setSubmitError] = useState<string>('');
-
+  const [imageData, setImageData] = useState<string>('');
+  const [ipfs, setIpfs] = useState<string>('');
   const [textareaValue, setTextareaValue] = useState('');
   const [editIndex, setEditIndex] = useState<number | null>(null);
-  const [isDisplayArticle, setIsDisplayArticle] = useState<boolean>(false);
-  const [isPreview, setIsPreview] = useState<boolean>(false);
   const [articleElements, setArticleElements] = useState<IArticleElement[]>([]);
 
-  // ---
+  const [isDisplayArticle, setIsDisplayArticle] = useState<boolean>(false);
+  const [isPreview, setIsPreview] = useState<boolean>(false);
+  const [submitError, setSubmitError] = useState<string>('');
 
   const [isReset, setIsReset] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [isDeleted, setIsDeleted] = useState<boolean>(false);
 
-  const handleClickReset = () => {
-    setIsReset(!isReset);
-  };
+  const {
+    label,
+    setArticles,
+    access,
+    isDeletedArt,
+    setIsDeletedArt,
+    isUpdatedArt,
+    setIsUpdatedArt,
+  } = useGlobalContext();
 
-  const handleClickDelete = () => {
-    setIsDelete(!isDelete);
-  };
+  const handleClickReset = () => setIsReset(!isReset);
+  const handleClickDelete = () => setIsDelete(!isDelete);
 
-  const { label, setArticles, access } = useGlobalContext();
-
-  const [addArticle, { loading, error }] = useMutation(ADD_ARTICLE);
-  const [editArticle, { loading: editLoading, error: editError }] =
+  const [addArticle, { loading: addLoad, error: addErr }] =
+    useMutation(ADD_ARTICLE);
+  const [editArticle, { loading: editLoad, error: editErr }] =
     useMutation(EDIT_ARTICLE);
+  const [deleteArticle, { loading: delLoad, error: delErr }] =
+    useMutation(DELETE_ARTICLE);
 
   const { refetch: getArticles } = useQuery(GET_ARTICLES);
-  const [DeleteArticle] = useMutation(DELETE_ARTICLE);
 
   const clearStates = () => {
     setImageData('');
@@ -73,11 +75,9 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     setEditIndex(null);
     setTextareaValue('');
     setArticleElements([]);
+    isPreview && setIsPreview(false);
+    isDisplayArticle && setIsDisplayArticle(false);
   };
-
-  useEffect(() => {
-    console.log('author =-=-=->>>', author);
-  }, [author]);
 
   useEffect(() => {
     localStorage.removeItem(fls_edit);
@@ -87,9 +87,6 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     if (label === 'add') {
       const lsFields = JSON.parse(localStorage.getItem(fls_add) || 'null');
       const lsElements = JSON.parse(localStorage.getItem(art_add) || 'null');
-
-      // console.log(2, 'label:', label);
-      // console.log(2, 'lsFields:', lsFields);
 
       access && !author && setAuthor(access?.author);
 
@@ -113,9 +110,13 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
           JSON.stringify({ title, description, author })
         );
       }
+
+      if (articleElements?.length) {
+        localStorage.setItem(art_add, JSON.stringify({ articleElements }));
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, description]);
+  }, [title, description, articleElements]);
 
   useEffect(() => {
     if (label === 'add' && isReset) {
@@ -153,126 +154,9 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDisplayArticle]);
 
-  const updateArticles = async () => {
-    const updatedArticles = await getArticles();
-    const { articles } = updatedArticles.data;
-    articles && setArticles(articles);
-  };
-
-  const addArticleRequest = async (articleInput: IArticleInput) => {
-    console.log('articleInput for add -->', articleInput);
-
-    // /*
-    const { data } = await addArticle({ variables: { input: articleInput } });
-
-    const { title } = data.addArticle;
-
-    console.log('addArticle:', title);
-
-    if (title) {
-      setIsArticle(true);
-      clearStates();
-      updateArticles();
-    }
-    // */
-  };
-
-  const editArticleRequest = async (articleInput: IArticleInput) => {
-    const id = article ? article.id : null;
-
-    if (articleInput.image.includes('https')) {
-      articleInput.image = '';
-    }
-
-    console.log('articleInput for edit -->', articleInput);
-
-    // /*
-    const { data } = await editArticle({ variables: { id, articleInput } });
-
-    console.log('Article edited:', data.editArticle);
-
-    if (data.editArticle) {
-      setIsArticle(true);
-      clearStates();
-      updateArticles();
-    }
-    // */
-  };
-
-  const handleSubmit = async () => {
-    const text = JSON.stringify({ articleElements });
-
-    const articleInput = {
-      image: imageData,
-      ipfs: ipfs,
-      title: title,
-      description: description,
-      author: author,
-      // author:
-      //   access && label === 'add' ? access?.author : article && article?.author,
-      text: text,
-      tags: ['magic'],
-    };
-
-    let isSubmitError: boolean = false;
-
-    // eslint-disable-next-line array-callback-return
-    Object.entries(articleInput).find(el => {
-      if (el[0] !== 'ipfs' && !el[1]) isSubmitError = true;
-      console.log(el[0]);
-      console.log(el[0] !== 'ipfs', !el[1]);
-
-      if (el[1].includes('articleElements')) {
-        if (!articleElements) isSubmitError = true;
-      }
-    });
-
-    if (!isSubmitError) {
-      setSubmitError('');
-    } else return setSubmitError('Check that it is filled in correctly');
-
-    console.log('isSubmitError', isSubmitError);
-    console.log('');
-
-    // /*
-    try {
-      label === 'add'
-        ? addArticleRequest(articleInput)
-        : label === 'edit'
-        ? editArticleRequest(articleInput)
-        : null;
-    } catch (e) {
-      console.error(e);
-    }
-    // */
-  };
-
-  const handleDelete = async () => {
-    if (!article) return;
-
-    try {
-      const { data } = await DeleteArticle({
-        variables: {
-          id: article.id,
-        },
-      });
-
-      const deleted = data?.deleteArticle;
-
-      console.log('deleteArticle:', deleted);
-
-      setIsDeleted(deleted);
-      updateArticles();
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   return (
-    <AddArticleContext.Provider
+    <ArticleHandlerContext.Provider
       value={{
-        isArticle,
-        setIsArticle,
         imageData,
         setImageData,
         title,
@@ -295,9 +179,9 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
         setSubmitError,
       }}
     >
-      {!isDeleted ? (
+      {!isDeletedArt ? (
         <div className={`${s.articleHandlerWrap} ${s['dark']}`}>
-          {!isDisplayArticle && !isArticle && (
+          {!isDisplayArticle && !isUpdatedArt && (
             <>
               {label === 'add' ? (
                 <div
@@ -317,7 +201,19 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                     <div>
                       <p className={s.deleteText}>Delete this article?</p>
                       <div className={s.deleteButtonWrap}>
-                        <Button fn={() => handleDelete()}>Delete</Button>
+                        <Button
+                          fn={() =>
+                            utils.deleteArticleRequest({
+                              article,
+                              deleteArticle,
+                              setIsDeletedArt,
+                              getArticles,
+                              setArticles,
+                            })
+                          }
+                        >
+                          Delete
+                        </Button>
                         <Button fn={handleClickDelete}>Cancel</Button>
                       </div>
                     </div>
@@ -327,12 +223,12 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
             </>
           )}
 
-          {!isArticle ? (
+          {!isUpdatedArt ? (
             <>
               <div className={s.articleHandler}>
                 {!isDisplayArticle ? (
                   <>
-                    <HeaderFields article={article || null} label={label} />
+                    <HeaderFields label={label} />
                     <ArticleEditor />
                   </>
                 ) : (
@@ -352,8 +248,26 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
               <div className={s.mainButtons}>
                 <button
                   type='button'
-                  onClick={() => handleSubmit()}
-                  disabled={loading || editLoading}
+                  onClick={() =>
+                    utils.handleSubmit({
+                      articleElements,
+                      imageData,
+                      ipfs,
+                      title,
+                      description,
+                      author,
+                      setSubmitError,
+                      label,
+                      article,
+                      addArticle,
+                      editArticle,
+                      setIsUpdatedArt,
+                      clearStates,
+                      getArticles,
+                      setArticles,
+                    })
+                  }
+                  disabled={addLoad || editLoad || delLoad}
                   // style={{ backgroundColor: 'teal' }}
                   // hover={{ backgroundColor: 'tomato' }}
                 >
@@ -366,8 +280,9 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
               </div>
               <div className={s.submitErrors}>
                 {submitError && <p>{submitError}</p>}
-                {error && <p>Error: {error.message}</p>}
-                {editError && <p>Error: {editError.message}</p>}
+                {addErr && <p>Error: {addErr.message}</p>}
+                {editErr && <p>Error: {editErr.message}</p>}
+                {delErr && <p>Error: {delErr.message}</p>}
               </div>
             </>
           ) : (
@@ -395,7 +310,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
           </div>
         </div>
       )}
-    </AddArticleContext.Provider>
+    </ArticleHandlerContext.Provider>
   );
 };
 

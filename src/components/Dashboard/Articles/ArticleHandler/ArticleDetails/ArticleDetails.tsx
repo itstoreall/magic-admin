@@ -25,8 +25,6 @@ const ArticleDetails = (props: any) => {
     articleElements,
   } = props;
 
-  console.log('author', author);
-
   const { viewport } = useViewport();
   const { width, height } = useProportion(
     900,
