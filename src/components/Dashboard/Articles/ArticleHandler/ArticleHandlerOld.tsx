@@ -45,8 +45,6 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   const [isReset, setIsReset] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
 
-  console.log('articleElements', articleElements);
-
   const {
     label,
     setArticles,

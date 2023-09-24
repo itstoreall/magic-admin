@@ -32,7 +32,7 @@ export type GlobalContent = {
   access: IAccess | null;
   setAccess: (access: IAccess | null) => void;
   articles: any[];
-  setArticles: (articles: any[]) => void;
+  setArticles: (articles: IArticle[]) => void;
   isLoading: boolean;
   setIsLoading: (b: boolean) => void;
 

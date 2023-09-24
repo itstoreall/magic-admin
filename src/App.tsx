@@ -12,8 +12,8 @@ const App = () => {
   const [articles, setArticles] = useState<IArticle[]>([]);
 
   // ------- ArticleHandler:
-  const [isDeletedArt, setIsDeletedArt] = useState<boolean>(false);
   const [isCreatedArt, setIsCreatedArt] = useState<boolean>(false);
+  const [isDeletedArt, setIsDeletedArt] = useState<boolean>(false);
 
   const serverUrl = process.env.REACT_APP_APOLLO_CLIENT_URL;
 

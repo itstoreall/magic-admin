@@ -1,13 +1,14 @@
 @import '../../../../../styles/mixins';
 
 .articleEditor {
-  @include padding(15px 15px 25px);
+  @include padding(0 15px 20px);
   @include marginB(20px);
   border: 1px solid $middleDark;
   border-radius: 6px;
 
   @include minWidth($tablet) {
-    @include padding(20px);
+    // @include padding(20px);
+    @include padding(0 20px 25px);
   }
 
   .infoText {
@@ -46,7 +47,7 @@
             margin-bottom: 8px;
             max-width: calc(100% - 20px);
             @include color($light);
-            border-bottom: 1px solid $middleGrey;
+            border-bottom: 1px solid $middleDark;
             border-radius: 0;
           }
 
@@ -166,8 +167,12 @@
         @include marginB(10px);
         max-width: calc(100% - 20px);
         @include color($light);
-        border-bottom: 1px solid $middleGrey;
+        border-bottom: 1px solid $middleDark;
         border-radius: 0;
+
+        &::placeholder {
+          color: $middleDark;
+        }
       }
 
       &.textarea {
@@ -175,9 +180,13 @@
         max-width: calc(100% - 22px);
         height: 300px;
         @include color($middleLight);
-        border: 1px solid $middleGrey;
+        border: 1px solid $middleDark;
         border-radius: 6px;
         resize: none;
+
+        &::placeholder {
+          color: $middleDark;
+        }
 
         @include minWidth($tablet) {
           height: 150px;

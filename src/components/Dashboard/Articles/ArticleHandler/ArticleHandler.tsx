@@ -33,20 +33,16 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   const [author, setAuthor] = useState<string>('');
   const [imageData, setImageData] = useState<string>('');
   const [ipfs, setIpfs] = useState<string>('');
-
   const [textareaValue, setTextareaValue] = useState('');
   const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [articleElements, setArticleElements] = useState<IArticleElement[]>([]);
+
   const [isDisplayArticle, setIsDisplayArticle] = useState<boolean>(false);
   const [isPreview, setIsPreview] = useState<boolean>(false);
-  const [articleElements, setArticleElements] = useState<IArticleElement[]>([]);
   const [submitError, setSubmitError] = useState<string>('');
-
-  // ---
 
   const [isReset, setIsReset] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-
-  console.log('articleElements', articleElements);
 
   const {
     label,
@@ -61,12 +57,14 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   const handleClickReset = () => setIsReset(!isReset);
   const handleClickDelete = () => setIsDelete(!isDelete);
 
-  const [addArticle, { loading, error }] = useMutation(ADD_ARTICLE);
-  const [editArticle, { loading: editLoading, error: editError }] =
+  const [addArticle, { loading: addLoad, error: addErr }] =
+    useMutation(ADD_ARTICLE);
+  const [editArticle, { loading: editLoad, error: editErr }] =
     useMutation(EDIT_ARTICLE);
+  const [deleteArticle, { loading: delLoad, error: delErr }] =
+    useMutation(DELETE_ARTICLE);
 
   const { refetch: getArticles } = useQuery(GET_ARTICLES);
-  const [deleteArticle] = useMutation(DELETE_ARTICLE);
 
   const clearStates = () => {
     setImageData('');
@@ -80,10 +78,6 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     isPreview && setIsPreview(false);
     isDisplayArticle && setIsDisplayArticle(false);
   };
-
-  // useEffect(() => {
-  //   console.log('author =-=-=->>>', author);
-  // }, [author]);
 
   useEffect(() => {
     localStorage.removeItem(fls_edit);
@@ -109,7 +103,6 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   }, [label]);
 
   useEffect(() => {
-    console.log(1);
     if (label === 'add') {
       if (title?.length || description?.length) {
         localStorage.setItem(
@@ -161,69 +154,6 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDisplayArticle]);
 
-  // const handleSubmit = async () => {
-  //   const text = JSON.stringify({ articleElements });
-
-  //   const articleInput = {
-  //     image: imageData,
-  //     ipfs: ipfs,
-  //     title: title,
-  //     description: description,
-  //     author: author,
-  //     text: text,
-  //     tags: ['magic'],
-  //   };
-
-  //   let isSubmitError: boolean = false;
-
-  //   console.log('articleInput', articleInput);
-
-  //   // eslint-disable-next-line array-callback-return
-  //   Object.entries(articleInput).find(el => {
-  //     if (el[0] !== 'ipfs' && !el[1]) isSubmitError = true;
-  //     console.log(el[0]);
-  //     console.log(el[0] !== 'ipfs', !el[1]);
-
-  //     if (el[1].includes('articleElements')) {
-  //       if (!articleElements) isSubmitError = true;
-  //     }
-  //   });
-
-  //   if (!isSubmitError) {
-  //     setSubmitError('');
-  //   } else return setSubmitError('Check that it is filled in correctly');
-
-  //   console.log('isSubmitError', isSubmitError);
-  //   console.log('');
-
-  //   // /*
-  //   try {
-  //     label === 'add'
-  //       ? utils.addArticleRequest(
-  //           articleInput,
-  //           addArticle,
-  //           setIsCreatedArt,
-  //           clearStates,
-  //           getArticles,
-  //           setArticles
-  //         )
-  //       : label === 'edit'
-  //       ? utils.editArticleRequest(
-  //           articleInput,
-  //           article,
-  //           editArticle,
-  //           setIsCreatedArt,
-  //           clearStates,
-  //           getArticles,
-  //           setArticles
-  //         )
-  //       : null;
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  //   // */
-  // };
-
   return (
     <ArticleHandlerContext.Provider
       value={{
@@ -273,13 +203,13 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                       <div className={s.deleteButtonWrap}>
                         <Button
                           fn={() =>
-                            utils.deleteArticleRequest(
+                            utils.deleteArticleRequest({
                               article,
                               deleteArticle,
                               setIsDeletedArt,
                               getArticles,
-                              setArticles
-                            )
+                              setArticles,
+                            })
                           }
                         >
                           Delete
@@ -319,7 +249,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                 <button
                   type='button'
                   onClick={() =>
-                    utils.handleSubmit(
+                    utils.handleSubmit({
                       articleElements,
                       imageData,
                       ipfs,
@@ -334,10 +264,10 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                       setIsCreatedArt,
                       clearStates,
                       getArticles,
-                      setArticles
-                    )
+                      setArticles,
+                    })
                   }
-                  disabled={loading || editLoading}
+                  disabled={addLoad || editLoad || delLoad}
                   // style={{ backgroundColor: 'teal' }}
                   // hover={{ backgroundColor: 'tomato' }}
                 >
@@ -350,8 +280,9 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
               </div>
               <div className={s.submitErrors}>
                 {submitError && <p>{submitError}</p>}
-                {error && <p>Error: {error.message}</p>}
-                {editError && <p>Error: {editError.message}</p>}
+                {addErr && <p>Error: {addErr.message}</p>}
+                {editErr && <p>Error: {editErr.message}</p>}
+                {delErr && <p>Error: {delErr.message}</p>}
               </div>
             </>
           ) : (

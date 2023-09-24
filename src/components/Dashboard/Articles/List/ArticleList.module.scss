@@ -4,12 +4,7 @@
 .articleList {
   padding-top: 30px;
   margin: 0 auto;
-  width: 94%;
   max-width: 960px;
-
-  @include minWidth($tablet) {
-    width: 96%;
-  }
 
   .list {
     list-style: none;
