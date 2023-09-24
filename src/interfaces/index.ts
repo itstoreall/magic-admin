@@ -35,6 +35,12 @@ export type GlobalContent = {
   setArticles: (articles: any[]) => void;
   isLoading: boolean;
   setIsLoading: (b: boolean) => void;
+
+  // ------- ArticleHandler:
+  isDeletedArt: boolean;
+  setIsDeletedArt: (b: boolean) => void;
+  isCreatedArt: boolean;
+  setIsCreatedArt: (b: boolean) => void;
 };
 
 export interface IContainerProps {
@@ -63,7 +69,7 @@ export interface ISelectOption {
 // ----------------- Article Handler
 
 export interface IArticleHandler {
-  article?: IArticle | null;
+  // article?: IArticle | null;
   label: string;
 }
 
@@ -73,8 +79,6 @@ export interface IArticleElement {
 }
 
 export interface IAddArticleContext {
-  isArticle: boolean;
-  setIsArticle: (b: boolean) => void;
   imageData: string;
   setImageData: (s: string) => void;
   title: string;

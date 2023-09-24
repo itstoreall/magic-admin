@@ -7,18 +7,33 @@ const AuthorPanel = () => {
   const { addNewArticleBtn, articleListBtn } = cfg.button;
   // const { addNewArticleTitle } = cfg.title;
 
-  const { setLabel } = useGlobalContext();
+  const {
+    setLabel,
+    isCreatedArt,
+    setIsCreatedArt,
+    isDeletedArt,
+    setIsDeletedArt,
+  } = useGlobalContext();
+
+  const handleLabel = (str: string) => {
+    isCreatedArt && setIsCreatedArt(false);
+    isDeletedArt && setIsDeletedArt(false);
+    setLabel(str);
+  };
+
+  console.log('isCreatedArt', isCreatedArt);
+  console.log('isDeletedArt', isDeletedArt);
 
   return (
     <div className={`${s.authorPanel} ${s['dark']}`}>
       <h3 className={s.title}>Dashboard</h3>
 
       <div className={s.formWrap}>
-        <button className={s.button} onClick={() => setLabel('add')}>
+        <button className={s.button} onClick={() => handleLabel('add')}>
           {addNewArticleBtn}
         </button>
 
-        <button className={s.button} onClick={() => setLabel('list')}>
+        <button className={s.button} onClick={() => handleLabel('list')}>
           {articleListBtn}
         </button>
       </div>

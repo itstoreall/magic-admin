@@ -27,35 +27,38 @@ const fls_edit = constants.ARTICLE_HEADER_FIELDS_EDIT;
 const art_edit = constants.ARTICLE_ELEMENTS_EDIT;
 
 const ArticleHandler = ({ article }: IEditArticleProps) => {
-  const [isArticle, setIsArticle] = useState<boolean>(false);
-  const [imageData, setImageData] = useState<string>('');
-  const [ipfs, setIpfs] = useState<string>('');
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [author, setAuthor] = useState<string>('');
-  const [submitError, setSubmitError] = useState<string>('');
+  const [imageData, setImageData] = useState<string>('');
+  const [ipfs, setIpfs] = useState<string>('');
 
   const [textareaValue, setTextareaValue] = useState('');
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [isDisplayArticle, setIsDisplayArticle] = useState<boolean>(false);
   const [isPreview, setIsPreview] = useState<boolean>(false);
   const [articleElements, setArticleElements] = useState<IArticleElement[]>([]);
+  const [submitError, setSubmitError] = useState<string>('');
 
   // ---
 
   const [isReset, setIsReset] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [isDeleted, setIsDeleted] = useState<boolean>(false);
 
-  const handleClickReset = () => {
-    setIsReset(!isReset);
-  };
+  console.log('articleElements', articleElements);
 
-  const handleClickDelete = () => {
-    setIsDelete(!isDelete);
-  };
+  const {
+    label,
+    setArticles,
+    access,
+    isDeletedArt,
+    setIsDeletedArt,
+    isCreatedArt,
+    setIsCreatedArt,
+  } = useGlobalContext();
 
-  const { label, setArticles, access } = useGlobalContext();
+  const handleClickReset = () => setIsReset(!isReset);
+  const handleClickDelete = () => setIsDelete(!isDelete);
 
   const [addArticle, { loading, error }] = useMutation(ADD_ARTICLE);
   const [editArticle, { loading: editLoading, error: editError }] =
@@ -73,6 +76,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     setEditIndex(null);
     setTextareaValue('');
     setArticleElements([]);
+    isPreview && setIsPreview(false);
   };
 
   useEffect(() => {
@@ -170,7 +174,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     console.log('addArticle:', title);
 
     if (title) {
-      setIsArticle(true);
+      setIsCreatedArt(true);
       clearStates();
       updateArticles();
     }
@@ -192,7 +196,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     console.log('Article edited:', data.editArticle);
 
     if (data.editArticle) {
-      setIsArticle(true);
+      setIsCreatedArt(true);
       clearStates();
       updateArticles();
     }
@@ -208,8 +212,6 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
       title: title,
       description: description,
       author: author,
-      // author:
-      //   access && label === 'add' ? access?.author : article && article?.author,
       text: text,
       tags: ['magic'],
     };
@@ -261,7 +263,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
 
       console.log('deleteArticle:', deleted);
 
-      setIsDeleted(deleted);
+      setIsDeletedArt(deleted);
       updateArticles();
     } catch (e) {
       console.error(e);
@@ -271,8 +273,8 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   return (
     <AddArticleContext.Provider
       value={{
-        isArticle,
-        setIsArticle,
+        // isArticle,
+        // setIsArticle,
         imageData,
         setImageData,
         title,
@@ -295,9 +297,9 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
         setSubmitError,
       }}
     >
-      {!isDeleted ? (
+      {!isDeletedArt ? (
         <div className={`${s.articleHandlerWrap} ${s['dark']}`}>
-          {!isDisplayArticle && !isArticle && (
+          {!isDisplayArticle && !isCreatedArt && (
             <>
               {label === 'add' ? (
                 <div
@@ -327,12 +329,12 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
             </>
           )}
 
-          {!isArticle ? (
+          {!isCreatedArt ? (
             <>
               <div className={s.articleHandler}>
                 {!isDisplayArticle ? (
                   <>
-                    <HeaderFields article={article || null} label={label} />
+                    <HeaderFields label={label} />
                     <ArticleEditor />
                   </>
                 ) : (

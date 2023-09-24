@@ -10,6 +10,12 @@ export const GlobalContext = createContext<GlobalContent>({
   setAccess: () => null,
   isLoading: false,
   setIsLoading: () => false,
+
+  // ------- ArticleHandler:
+  isDeletedArt: false,
+  setIsDeletedArt: () => false,
+  isCreatedArt: false,
+  setIsCreatedArt: () => false,
 });
 
 export const useGlobalContext = () => useContext(GlobalContext);

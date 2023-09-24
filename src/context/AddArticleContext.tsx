@@ -2,8 +2,6 @@ import { IAddArticleContext } from '../interfaces';
 import { createContext, useContext } from 'react';
 
 export const AddArticleContext = createContext<IAddArticleContext>({
-  isArticle: false,
-  setIsArticle: () => false,
   imageData: '',
   setImageData: () => '',
   title: '',
