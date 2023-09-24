@@ -78,7 +78,7 @@ export interface IArticleElement {
   text: string;
 }
 
-export interface IAddArticleContext {
+export interface IArticleHandlerContext {
   imageData: string;
   setImageData: (s: string) => void;
   title: string;

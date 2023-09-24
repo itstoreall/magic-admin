@@ -1,5 +1,5 @@
 import { IArticleHandler } from '../../../../../interfaces';
-import { useAddArticleContext } from '../../../../../context/AddArticleContext';
+import { useArticleHandlerContext } from '../../../../../context/ArticleHandlerContext';
 import s from './HeaderFields.module.scss';
 import ImageUploader from '../ImageUploader';
 import { useGlobalContext } from '../../../../../context/GlobalContext';
@@ -12,7 +12,7 @@ const HeaderFields = ({ label }: IArticleHandler) => {
     setDescription,
     submitError,
     setSubmitError,
-  } = useAddArticleContext();
+  } = useArticleHandlerContext();
 
   const { isCreatedArt, setIsCreatedArt } = useGlobalContext();
 

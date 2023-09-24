@@ -5,7 +5,7 @@ import {
   MoveElement,
 } from '../../../../../types';
 import { colorWhite, middleDark } from '../../../../../theme';
-import { useAddArticleContext } from '../../../../../context/AddArticleContext';
+import { useArticleHandlerContext } from '../../../../../context/ArticleHandlerContext';
 import useViewport from '../../../../../hooks/useViewport';
 import s from './ArticleEditor.module.scss';
 import Button from '../../../../Button';
@@ -30,7 +30,7 @@ const ArticleEditor = () => {
     setArticleElements,
     submitError,
     setSubmitError,
-  } = useAddArticleContext();
+  } = useArticleHandlerContext();
 
   const cleanStates = () => {
     setAction(null);

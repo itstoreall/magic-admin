@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { IEditArticleProps } from '../../../../interfaces/editArticles';
-import { IArticleElement } from '../../../../interfaces';
+import { IArticleElement, IArticleInput } from '../../../../interfaces';
 import { useGlobalContext } from '../../../../context/GlobalContext';
 import { ArticleHandlerContext } from '../../../../context/ArticleHandlerContext';
 import ADD_ARTICLE from '../../../../gql/addArticle';
@@ -20,7 +20,6 @@ import HeaderFields from './HeaderFields';
 import ArticleEditor from './ArticleEditor';
 import ArticleDetails from './ArticleDetails';
 import Success from '../../../../assets/icons/Success';
-import * as utils from './utils';
 
 const fls_add = constants.ARTICLE_HEADER_FIELDS_ADD;
 const art_add = constants.ARTICLE_ELEMENTS_ADD;
@@ -66,7 +65,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     useMutation(EDIT_ARTICLE);
 
   const { refetch: getArticles } = useQuery(GET_ARTICLES);
-  const [deleteArticle] = useMutation(DELETE_ARTICLE);
+  const [DeleteArticle] = useMutation(DELETE_ARTICLE);
 
   const clearStates = () => {
     setImageData('');
@@ -78,12 +77,11 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     setTextareaValue('');
     setArticleElements([]);
     isPreview && setIsPreview(false);
-    isDisplayArticle && setIsDisplayArticle(false);
   };
 
-  // useEffect(() => {
-  //   console.log('author =-=-=->>>', author);
-  // }, [author]);
+  useEffect(() => {
+    console.log('author =-=-=->>>', author);
+  }, [author]);
 
   useEffect(() => {
     localStorage.removeItem(fls_edit);
@@ -93,6 +91,9 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     if (label === 'add') {
       const lsFields = JSON.parse(localStorage.getItem(fls_add) || 'null');
       const lsElements = JSON.parse(localStorage.getItem(art_add) || 'null');
+
+      // console.log(2, 'label:', label);
+      // console.log(2, 'lsFields:', lsFields);
 
       access && !author && setAuthor(access?.author);
 
@@ -109,7 +110,6 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   }, [label]);
 
   useEffect(() => {
-    console.log(1);
     if (label === 'add') {
       if (title?.length || description?.length) {
         localStorage.setItem(
@@ -117,13 +117,9 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
           JSON.stringify({ title, description, author })
         );
       }
-
-      if (articleElements?.length) {
-        localStorage.setItem(art_add, JSON.stringify({ articleElements }));
-      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, description, articleElements]);
+  }, [title, description]);
 
   useEffect(() => {
     if (label === 'add' && isReset) {
@@ -161,72 +157,124 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDisplayArticle]);
 
-  // const handleSubmit = async () => {
-  //   const text = JSON.stringify({ articleElements });
+  const updateArticles = async () => {
+    const updatedArticles = await getArticles();
+    const { articles } = updatedArticles.data;
+    articles && setArticles(articles);
+  };
 
-  //   const articleInput = {
-  //     image: imageData,
-  //     ipfs: ipfs,
-  //     title: title,
-  //     description: description,
-  //     author: author,
-  //     text: text,
-  //     tags: ['magic'],
-  //   };
+  const addArticleRequest = async (articleInput: IArticleInput) => {
+    console.log('articleInput for add -->', articleInput);
 
-  //   let isSubmitError: boolean = false;
+    // /*
+    const { data } = await addArticle({ variables: { input: articleInput } });
 
-  //   console.log('articleInput', articleInput);
+    const { title } = data.addArticle;
 
-  //   // eslint-disable-next-line array-callback-return
-  //   Object.entries(articleInput).find(el => {
-  //     if (el[0] !== 'ipfs' && !el[1]) isSubmitError = true;
-  //     console.log(el[0]);
-  //     console.log(el[0] !== 'ipfs', !el[1]);
+    console.log('addArticle:', title);
 
-  //     if (el[1].includes('articleElements')) {
-  //       if (!articleElements) isSubmitError = true;
-  //     }
-  //   });
+    if (title) {
+      setIsCreatedArt(true);
+      clearStates();
+      updateArticles();
+    }
+    // */
+  };
 
-  //   if (!isSubmitError) {
-  //     setSubmitError('');
-  //   } else return setSubmitError('Check that it is filled in correctly');
+  const editArticleRequest = async (articleInput: IArticleInput) => {
+    const id = article ? article.id : null;
 
-  //   console.log('isSubmitError', isSubmitError);
-  //   console.log('');
+    if (articleInput.image.includes('https')) {
+      articleInput.image = '';
+    }
 
-  //   // /*
-  //   try {
-  //     label === 'add'
-  //       ? utils.addArticleRequest(
-  //           articleInput,
-  //           addArticle,
-  //           setIsCreatedArt,
-  //           clearStates,
-  //           getArticles,
-  //           setArticles
-  //         )
-  //       : label === 'edit'
-  //       ? utils.editArticleRequest(
-  //           articleInput,
-  //           article,
-  //           editArticle,
-  //           setIsCreatedArt,
-  //           clearStates,
-  //           getArticles,
-  //           setArticles
-  //         )
-  //       : null;
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  //   // */
-  // };
+    console.log('articleInput for edit -->', articleInput);
+
+    // /*
+    const { data } = await editArticle({ variables: { id, articleInput } });
+
+    console.log('Article edited:', data.editArticle);
+
+    if (data.editArticle) {
+      setIsCreatedArt(true);
+      clearStates();
+      updateArticles();
+    }
+    // */
+  };
+
+  const handleSubmit = async () => {
+    const text = JSON.stringify({ articleElements });
+
+    const articleInput = {
+      image: imageData,
+      ipfs: ipfs,
+      title: title,
+      description: description,
+      author: author,
+      text: text,
+      tags: ['magic'],
+    };
+
+    let isSubmitError: boolean = false;
+
+    // eslint-disable-next-line array-callback-return
+    Object.entries(articleInput).find(el => {
+      if (el[0] !== 'ipfs' && !el[1]) isSubmitError = true;
+      console.log(el[0]);
+      console.log(el[0] !== 'ipfs', !el[1]);
+
+      if (el[1].includes('articleElements')) {
+        if (!articleElements) isSubmitError = true;
+      }
+    });
+
+    if (!isSubmitError) {
+      setSubmitError('');
+    } else return setSubmitError('Check that it is filled in correctly');
+
+    console.log('isSubmitError', isSubmitError);
+    console.log('');
+
+    // /*
+    try {
+      label === 'add'
+        ? addArticleRequest(articleInput)
+        : label === 'edit'
+        ? editArticleRequest(articleInput)
+        : null;
+    } catch (e) {
+      console.error(e);
+    }
+    // */
+  };
+
+  const handleDelete = async () => {
+    if (!article) return;
+
+    try {
+      const { data } = await DeleteArticle({
+        variables: {
+          id: article.id,
+        },
+      });
+
+      const deleted = data?.deleteArticle;
+
+      console.log('deleteArticle:', deleted);
+
+      setIsDeletedArt(deleted);
+      updateArticles();
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <ArticleHandlerContext.Provider
       value={{
+        // isArticle,
+        // setIsArticle,
         imageData,
         setImageData,
         title,
@@ -271,19 +319,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                     <div>
                       <p className={s.deleteText}>Delete this article?</p>
                       <div className={s.deleteButtonWrap}>
-                        <Button
-                          fn={() =>
-                            utils.deleteArticleRequest(
-                              article,
-                              deleteArticle,
-                              setIsDeletedArt,
-                              getArticles,
-                              setArticles
-                            )
-                          }
-                        >
-                          Delete
-                        </Button>
+                        <Button fn={() => handleDelete()}>Delete</Button>
                         <Button fn={handleClickDelete}>Cancel</Button>
                       </div>
                     </div>
@@ -318,25 +354,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
               <div className={s.mainButtons}>
                 <button
                   type='button'
-                  onClick={() =>
-                    utils.handleSubmit(
-                      articleElements,
-                      imageData,
-                      ipfs,
-                      title,
-                      description,
-                      author,
-                      setSubmitError,
-                      label,
-                      article,
-                      addArticle,
-                      editArticle,
-                      setIsCreatedArt,
-                      clearStates,
-                      getArticles,
-                      setArticles
-                    )
-                  }
+                  onClick={() => handleSubmit()}
                   disabled={loading || editLoading}
                   // style={{ backgroundColor: 'teal' }}
                   // hover={{ backgroundColor: 'tomato' }}
