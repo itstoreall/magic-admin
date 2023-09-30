@@ -6,14 +6,15 @@ import Admin from './components/Admin';
 import Header from './components/Header/Header';
 
 const App = () => {
-  const [label, setLabel] = useState<string>('list');
   const [access, setAccess] = useState<IAccess | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [articles, setArticles] = useState<IArticle[]>([]);
 
   // ------- ArticleHandler:
+  const [label, setLabel] = useState<string>('list');
   const [isUpdatedArt, setIsUpdatedArt] = useState<boolean>(false);
   const [isDeletedArt, setIsDeletedArt] = useState<boolean>(false);
+  const [isPreview, setIsPreview] = useState<boolean>(false);
 
   const serverUrl = process.env.REACT_APP_APOLLO_CLIENT_URL;
 
@@ -25,8 +26,6 @@ const App = () => {
   return (
     <GlobalContext.Provider
       value={{
-        label,
-        setLabel,
         articles,
         setArticles,
         access,
@@ -37,6 +36,10 @@ const App = () => {
         setIsDeletedArt,
         isUpdatedArt,
         setIsUpdatedArt,
+        label,
+        setLabel,
+        isPreview,
+        setIsPreview,
       }}
     >
       <ApolloProvider client={client}>

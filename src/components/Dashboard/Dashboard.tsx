@@ -14,17 +14,27 @@ const Dashboard = () => {
 
   const handleOpenDetails = (art: IArticle) => setDetails(art);
 
-  const { label, access } = useGlobalContext();
+  const { label, access, isPreview } = useGlobalContext();
 
-  console.log('lable', label);
+  const DashboardPanels = () => {
+    return (
+      <>
+        {!isPreview && (
+          <>
+            {access?.author === masterKey && <MasterAdminPanel />}
+
+            <AuthorPanel />
+          </>
+        )}
+      </>
+    );
+  };
 
   return (
     <div className={s.dashboard}>
       {access && (
         <section className={s.mainSection}>
-          {access?.author === masterKey && <MasterAdminPanel />}
-
-          <AuthorPanel />
+          <DashboardPanels />
 
           {label === 'list' ? (
             <ArticleList handleOpenDetails={handleOpenDetails} />

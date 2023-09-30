@@ -8,7 +8,7 @@
   @include z(1);
   // background-color: pink;
 
-  @include minWidth($tablet) {
+  @include mediaScreen('min', $tablet) {
     @include left(auto);
     max-width: 322px;
   }

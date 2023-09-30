@@ -27,8 +27,6 @@ export interface IArticle extends IArticleInput {
 }
 
 export type GlobalContent = {
-  label: string;
-  setLabel: (str: string) => void;
   access: IAccess | null;
   setAccess: (access: IAccess | null) => void;
   articles: any[];
@@ -37,10 +35,14 @@ export type GlobalContent = {
   setIsLoading: (b: boolean) => void;
 
   // ------- ArticleHandler:
+  label: string;
+  setLabel: (str: string) => void;
   isDeletedArt: boolean;
   setIsDeletedArt: (b: boolean) => void;
   isUpdatedArt: boolean;
   setIsUpdatedArt: (b: boolean) => void;
+  isPreview: boolean;
+  setIsPreview: (b: boolean) => void;
 };
 
 export interface IContainerProps {
@@ -91,10 +93,10 @@ export interface IArticleHandlerContext {
   setTextareaValue: (s: string) => void;
   editIndex: number | null;
   setEditIndex: (n: number | null) => void;
-  isDisplayArticle: boolean;
-  setIsDisplayArticle: (b: boolean) => void;
-  isPreview: boolean;
-  setIsPreview: (b: boolean) => void;
+  // isDisplayArticle: boolean;
+  // setIsDisplayArticle: (b: boolean) => void;
+  // isPreview: boolean;
+  // setIsPreview: (b: boolean) => void;
   articleElements: IArticleElement[];
   setArticleElements: Dispatch<SetStateAction<IArticleElement[]>>;
   submitError: string;

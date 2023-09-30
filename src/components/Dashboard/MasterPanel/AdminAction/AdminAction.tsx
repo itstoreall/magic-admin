@@ -98,11 +98,7 @@ const AdminAction = ({ formContent, title }: IAddAuthorProps) => {
   };
 
   const getBlogs = async (token: string) => {
-    console.log(4);
-
     const { data } = await getAllBlogs({ variables: { token } });
-
-    console.log(44);
 
     if (data) {
       const cleanedData = removeDataTypename(data.getAllBlogs);

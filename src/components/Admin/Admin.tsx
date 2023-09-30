@@ -20,7 +20,7 @@ const AdminPage = () => {
     try {
       const { data } = await isAdmin({ variables: { token, blog } });
 
-      console.log(1, 'data', data);
+      // console.log(1, 'data', data);
 
       setAccess({
         isAdmin: data.isAdmin.isAdmin,
@@ -49,7 +49,7 @@ const AdminPage = () => {
 
   if (!access) return <Spinner />;
 
-  access && console.log('access', access);
+  // access && console.log('access', access);
 
   return <section>{access.isAdmin ? <Dashboard /> : <Login />}</section>;
 };

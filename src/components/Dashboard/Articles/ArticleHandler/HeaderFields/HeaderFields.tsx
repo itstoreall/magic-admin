@@ -33,9 +33,9 @@ const HeaderFields = ({ label }: IArticleHandler) => {
       ) : (
         <p className={`${s.infoText}`}>
           {label === 'add'
-            ? 'Fill in all fields and add an image'
+            ? 'Preview'
             : label === 'edit'
-            ? 'Title and description'
+            ? 'Preview'
             : 'Report a bug to the developer'}
         </p>
       )}
@@ -48,7 +48,7 @@ const HeaderFields = ({ label }: IArticleHandler) => {
             value={title}
             onChange={e => handleInput(e)}
             name='title'
-            placeholder='Article title'
+            placeholder='Title'
           />
           <textarea
             className={`${s.field} ${s.textarea}`}

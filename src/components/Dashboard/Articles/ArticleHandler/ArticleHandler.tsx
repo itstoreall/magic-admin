@@ -36,9 +36,6 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   const [textareaValue, setTextareaValue] = useState('');
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [articleElements, setArticleElements] = useState<IArticleElement[]>([]);
-
-  const [isDisplayArticle, setIsDisplayArticle] = useState<boolean>(false);
-  const [isPreview, setIsPreview] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<string>('');
 
   const [isReset, setIsReset] = useState(false);
@@ -52,6 +49,8 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     setIsDeletedArt,
     isUpdatedArt,
     setIsUpdatedArt,
+    isPreview,
+    setIsPreview,
   } = useGlobalContext();
 
   const handleClickReset = () => setIsReset(!isReset);
@@ -76,7 +75,6 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     setTextareaValue('');
     setArticleElements([]);
     isPreview && setIsPreview(false);
-    isDisplayArticle && setIsDisplayArticle(false);
   };
 
   useEffect(() => {
@@ -145,14 +143,13 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
 
   useEffect(() => {
     if (label === 'edit') {
-      if (isDisplayArticle) {
-        setIsPreview(true);
+      if (isPreview) {
         localStorage.setItem(fls_edit, JSON.stringify({ title, description }));
         localStorage.setItem(art_edit, JSON.stringify({ articleElements }));
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDisplayArticle]);
+  }, [isPreview]);
 
   return (
     <ArticleHandlerContext.Provider
@@ -169,10 +166,6 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
         setTextareaValue,
         editIndex,
         setEditIndex,
-        isDisplayArticle,
-        setIsDisplayArticle,
-        isPreview,
-        setIsPreview,
         articleElements,
         setArticleElements,
         submitError,
@@ -181,7 +174,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     >
       {!isDeletedArt ? (
         <div className={`${s.articleHandlerWrap} ${s['dark']}`}>
-          {!isDisplayArticle && !isUpdatedArt && (
+          {!isPreview && !isUpdatedArt && (
             <>
               {label === 'add' ? (
                 <div
@@ -226,7 +219,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
           {!isUpdatedArt ? (
             <>
               <div className={s.articleHandler}>
-                {!isDisplayArticle ? (
+                {!isPreview ? (
                   <>
                     <HeaderFields label={label} />
                     <ArticleEditor />
@@ -274,8 +267,8 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                   Publish
                 </button>
 
-                <button onClick={() => setIsDisplayArticle(!isDisplayArticle)}>
-                  {isDisplayArticle ? 'Editor' : 'Preview'}
+                <button onClick={() => setIsPreview(!isPreview)}>
+                  {isPreview ? 'Editor' : 'Preview'}
                 </button>
               </div>
               <div className={s.submitErrors}>
