@@ -10,9 +10,9 @@ import Spinner from '../../../Loading/Spinner';
 import ImageHandler from './ImageHandler';
 
 const ArticleList = ({ handleOpenDetails }: IArticleListProps) => {
-  const { articles, setLabel, setArticles } = useGlobalContext();
+  const { access, articles, setLabel, setArticles } = useGlobalContext();
 
-  const [isAdmin, { loading }] = useLazyQuery(GET_ARTICLES);
+  const [getArticles, { loading }] = useLazyQuery(GET_ARTICLES);
 
   const imgFilter = () => (true ? 50 : 0); // 'dark' theme
 
@@ -23,7 +23,7 @@ const ArticleList = ({ handleOpenDetails }: IArticleListProps) => {
 
   const fetchArticles = async () => {
     try {
-      const { data } = await isAdmin();
+      const { data } = await getArticles({ variables: { blog: access?.blog } });
       if (data) setArticles(removeDataTypename(data.articles) as IArticle[]);
     } catch (e) {
       console.error(e);

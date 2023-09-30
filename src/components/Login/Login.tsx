@@ -16,8 +16,6 @@ const options = opts
   ? opts.split(' ').map(el => ({ value: el, label: setUpperFirstChar(el) }))
   : [];
 
-// console.log('options', options);
-
 const Login = () => {
   const [blog, setBlog] = useState<ISO | null>(null);
   const [login, setLogin] = useState<string>('');
@@ -63,18 +61,11 @@ const Login = () => {
           variables: { input: AccessInput },
         });
 
-        console.log(7, AccessInput);
-
-        console.log(1, 'sent data', AccessInput);
-
         const { token, name, blogs } = data.updateAdmin;
 
         if (data && adm) {
-          console.log(1, 'data:', data);
-
           if (blogs.includes(blog?.value)) {
             const curBlog = blogs[blogs.indexOf(blog?.value)];
-            console.log(1, 'curBlog:', curBlog);
 
             localStorage.setItem(adm, JSON.stringify({ token, blog: curBlog }));
 

@@ -175,8 +175,6 @@ export const handleSubmit = async (args: ISubmit) => {
     setArticles,
   } = args;
 
-  console.log(999, articleElements);
-
   const text = JSON.stringify({ articleElements });
 
   const articleInput = {
@@ -189,27 +187,19 @@ export const handleSubmit = async (args: ISubmit) => {
     tags: ['magic'],
   };
 
-  let isSubmitError: boolean = false;
-
-  console.log('articleInput', articleInput);
-
-  // eslint-disable-next-line array-callback-return
-  Object.entries(articleInput).find(el => {
-    if (el[0] !== 'ipfs' && !el[1]) isSubmitError = true;
-    console.log(el[0]);
-    console.log(el[0] !== 'ipfs', !el[1]);
-
-    if (el[1].includes('articleElements')) {
-      if (!articleElements) isSubmitError = true;
-    }
+  const isSubmitError = Object.entries(articleInput).find(el => {
+    if (el[0] !== 'ipfs' && !el[1]) return true;
+    if (el[1].includes('Elements') && !el[1].includes('paragraph')) return true;
+    if (!articleElements?.length) return true;
+    return false;
   });
 
   if (!isSubmitError) {
     setSubmitError('');
   } else return setSubmitError('Check that it is filled in correctly');
 
-  console.log('isSubmitError', isSubmitError);
-  console.log('');
+  // console.log('isSubmitError', isSubmitError);
+  // console.log('');
 
   // /*
   try {

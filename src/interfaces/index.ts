@@ -93,10 +93,6 @@ export interface IArticleHandlerContext {
   setTextareaValue: (s: string) => void;
   editIndex: number | null;
   setEditIndex: (n: number | null) => void;
-  // isDisplayArticle: boolean;
-  // setIsDisplayArticle: (b: boolean) => void;
-  // isPreview: boolean;
-  // setIsPreview: (b: boolean) => void;
   articleElements: IArticleElement[];
   setArticleElements: Dispatch<SetStateAction<IArticleElement[]>>;
   submitError: string;
