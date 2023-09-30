@@ -75,7 +75,7 @@
   @include flexY(center);
   height: 40vh;
 
-  @include minWidth($tablet) {
+  @include mediaScreen('min', $tablet) {
     height: 50vh;
   }
 

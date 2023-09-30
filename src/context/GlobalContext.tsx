@@ -2,8 +2,6 @@ import { GlobalContent } from '../interfaces';
 import { createContext, useContext } from 'react';
 
 export const GlobalContext = createContext<GlobalContent>({
-  label: 'list',
-  setLabel: () => 'list',
   articles: [],
   setArticles: () => {},
   access: null,
@@ -12,10 +10,14 @@ export const GlobalContext = createContext<GlobalContent>({
   setIsLoading: () => false,
 
   // ------- ArticleHandler:
+  label: 'list',
+  setLabel: () => 'list',
   isDeletedArt: false,
   setIsDeletedArt: () => false,
   isUpdatedArt: false,
   setIsUpdatedArt: () => false,
+  isPreview: false,
+  setIsPreview: () => false,
 });
 
 export const useGlobalContext = () => useContext(GlobalContext);

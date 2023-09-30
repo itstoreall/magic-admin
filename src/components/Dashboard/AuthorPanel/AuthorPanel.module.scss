@@ -14,12 +14,12 @@
       @include marginB(20px);
       @include width(100%);
 
-      @include minWidth($tablet) {
+      @include mediaScreen('min', $tablet) {
         @include width(auto);
       }
 
       &:not(:last-child) {
-        @include marginR(20px);
+        @include marginR(10px);
       }
     }
   }
