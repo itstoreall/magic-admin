@@ -12,10 +12,10 @@
     @include margin(0);
     @include marginB(-20px);
 
-    @include minWidth($tablet) {
+    @include mediaScreen('min', $tablet) {
       @include flexWrap(wrap);
 
-      @include maxWidth($desktop - 1) {
+      @include mediaScreen('max', $desktop - 1) {
         justify-content: space-between;
       }
     }
@@ -32,11 +32,11 @@
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
       }
 
-      @include minWidth($tablet) {
+      @include mediaScreen('min', $tablet) {
         @include width(49%);
       }
 
-      @include minWidth($desktop) {
+      @include mediaScreen('min', $desktop) {
         @include width(32%);
 
         &:not(:nth-child(3n + 3)) {

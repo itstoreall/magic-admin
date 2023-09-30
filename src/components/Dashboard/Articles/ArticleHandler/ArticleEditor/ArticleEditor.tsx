@@ -141,10 +141,9 @@ const ArticleEditor = () => {
 
   return (
     <div className={`${s.articleEditor}`}>
+      <p className={`${s.infoText}`}>{'Article editor'}</p>
       {articleElements?.length ? (
         <>
-          <p className={`${s.infoText}`}>{'Article editor'}</p>
-
           <ul className={`${s.fildList}`}>
             {articleElements.map((el, index) => (
               <li
@@ -333,7 +332,9 @@ const ArticleEditor = () => {
       ) : null}
 
       <div className={s.addElement}>
-        <p className={`${s.infoText}`}>{'Article content'}</p>
+        {/* {!articleElements?.length && (
+          <p className={`${s.infoText}`}>{'Article content'}</p>
+        )} */}
 
         {element && action === 'add' && (
           <>

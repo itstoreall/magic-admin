@@ -206,19 +206,19 @@
 
 // ------- @media
 
-@mixin minWidth($width) {
-  @media screen and (min-width: $width) {
-    @content;
+@mixin mediaScreen($var, $w) {
+  @if $var == 'min' {
+    @media screen and (min-width: $w) {
+      @content;
+    }
+  } @else if $var == 'max' {
+    @media screen and (max-width: $w) {
+      @content;
+    }
   }
 }
 
-@mixin maxWidth($width) {
-  @media screen and (max-width: $width) {
-    @content;
-  }
-}
-
-@mixin widthRange($minWidth, $maxWidth) {
+@mixin mediaScreenRange($minWidth, $maxWidth) {
   @media screen and (min-width: $minWidth) and (max-width: $maxWidth) {
     @content;
   }

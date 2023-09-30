@@ -9,12 +9,12 @@
     @include fontSize(28px);
     @include color($light);
 
-    @include minWidth($tablet) {
+    @include mediaScreen('min', $tablet) {
       @include width(80%);
       @include fontSize(32px);
     }
 
-    @include minWidth($desktop) {
+    @include mediaScreen('min', $desktop) {
       @include width(80%);
       @include fontSize(36px);
     }
@@ -25,12 +25,12 @@
     line-height: 1.4;
     @include color($middleLight);
 
-    @include minWidth($tablet) {
+    @include mediaScreen('min', $tablet) {
       @include width(90%);
       @include fontSize(18px);
     }
 
-    @include minWidth($desktop) {
+    @include mediaScreen('min', $desktop) {
       @include width(90%);
       @include fontSize(20px);
     }
@@ -43,12 +43,12 @@
     @include fontSize(14px);
     color: $middleGrey;
 
-    @include minWidth($tablet) {
+    @include mediaScreen('min', $tablet) {
       @include flexX(flex-start);
     }
 
     .author {
-      @include minWidth($tablet) {
+      @include mediaScreen('min', $tablet) {
         @include marginR(40px);
       }
     }
@@ -78,11 +78,11 @@
         @include paddingT(10px);
       }
 
-      @include minWidth($tablet) {
+      @include mediaScreen('min', $tablet) {
         @include fontSize(22px);
       }
 
-      @include minWidth($desktop) {
+      @include mediaScreen('min', $desktop) {
         @include fontSize(24px);
       }
     }
@@ -97,11 +97,11 @@
       @include fontSize(14px);
       line-height: 1.4;
 
-      @include minWidth($tablet) {
+      @include mediaScreen('min', $tablet) {
         @include fontSize(16px);
       }
 
-      @include minWidth($desktop) {
+      @include mediaScreen('min', $desktop) {
         @include fontSize(18px);
       }
     }

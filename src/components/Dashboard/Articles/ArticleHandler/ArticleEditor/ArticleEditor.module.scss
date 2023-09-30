@@ -6,7 +6,7 @@
   border: 1px solid $middleDark;
   border-radius: 6px;
 
-  @include minWidth($tablet) {
+  @include mediaScreen('min', $tablet) {
     // @include padding(20px);
     @include padding(0 20px 25px);
   }
@@ -60,11 +60,11 @@
             border-radius: 6px;
             resize: none;
 
-            @include minWidth($tablet) {
+            @include mediaScreen('min', $tablet) {
               height: 150px;
             }
 
-            @include minWidth($desktop) {
+            @include mediaScreen('min', $desktop) {
               height: 120px;
             }
           }
@@ -112,11 +112,11 @@
                 @include color($middleLight);
               }
 
-              @include minWidth($tablet) {
+              @include mediaScreen('min', $tablet) {
                 @include width(630px);
               }
 
-              @include minWidth($desktop) {
+              @include mediaScreen('min', $desktop) {
                 @include width(800px);
               }
             }
@@ -188,11 +188,11 @@
           color: $middleDark;
         }
 
-        @include minWidth($tablet) {
+        @include mediaScreen('min', $tablet) {
           height: 150px;
         }
 
-        @include minWidth($desktop) {
+        @include mediaScreen('min', $desktop) {
           height: 120px;
         }
       }
@@ -217,11 +217,22 @@
   }
 
   .addElementButtons {
+    @include mediaScreen('max', 319px) {
+      @include flexWrap(wrap);
+
+      > button {
+        @include marginB(10px);
+        @include width(100%);
+      }
+    }
+
     > button {
       @include contrastSolidButton();
 
-      &:nth-child(1) {
-        margin-right: 10px;
+      @include mediaScreen('min', 320px) {
+        &:nth-child(1) {
+          @include marginR(10px);
+        }
       }
     }
   }

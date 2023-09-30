@@ -8,8 +8,8 @@ const authorPanelConfig = {
     articleListTitle: 'Article list',
   },
   button: {
-    addNewArticleBtn: 'Create new article',
-    articleListBtn: 'Article list',
+    addNewArticleBtn: 'Create',
+    articleListBtn: 'Articles',
   },
   submitButton: {
     add: 'Add',

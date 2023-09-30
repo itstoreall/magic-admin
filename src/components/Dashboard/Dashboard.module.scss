@@ -12,15 +12,15 @@
     @include margin(0 auto);
     @include marginB(10px);
 
-    @include minWidth($mobile) {
+    @include mediaScreen('min', $mobile) {
       max-width: $mobile;
     }
 
-    @include minWidth($tablet) {
+    @include mediaScreen('min', $tablet) {
       max-width: $tablet;
     }
 
-    @include minWidth($desktop) {
+    @include mediaScreen('min', $desktop) {
       max-width: $desktop - 60;
     }
   }
