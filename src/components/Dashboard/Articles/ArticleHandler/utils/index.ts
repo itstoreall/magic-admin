@@ -82,10 +82,10 @@ export const updateArticles = async (args: IUpdate) => {
   articles && args.setArticles(articles);
 };
 
-export const addArticleRequest = async (args: IAdd) => {
+export const addArticleRequest = async (blog: string, args: IAdd) => {
   // /*
   const { data } = await args.addArticle({
-    variables: { input: args.articleInput },
+    variables: { blog, input: args.articleInput },
   });
 
   const { title } = data.addArticle;
@@ -156,7 +156,7 @@ export const deleteArticleRequest = async (args: IDel) => {
   }
 };
 
-export const handleSubmit = async (args: ISubmit) => {
+export const handleSubmit = async (blog: string, args: ISubmit) => {
   const {
     articleElements,
     imageData,
@@ -204,7 +204,7 @@ export const handleSubmit = async (args: ISubmit) => {
   // /*
   try {
     if (label === 'add')
-      addArticleRequest({
+      addArticleRequest(blog, {
         articleInput,
         addArticle,
         setIsUpdatedArt,

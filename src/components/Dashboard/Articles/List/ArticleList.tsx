@@ -8,6 +8,7 @@ import { removeDataTypename } from '../../../../utils/removeDataTypename';
 import s from './ArticleList.module.scss';
 import Spinner from '../../../Loading/Spinner';
 import ImageHandler from './ImageHandler';
+// import useFetchArticleById from '../../../../hooks/useFetchArticleById';
 
 const ArticleList = ({ handleOpenDetails }: IArticleListProps) => {
   const { access, articles, setLabel, setArticles } = useGlobalContext();
@@ -29,6 +30,9 @@ const ArticleList = ({ handleOpenDetails }: IArticleListProps) => {
       console.error(e);
     }
   };
+
+  // const res = useFetchArticleById('astraia', '64bd3c406a886bf9a12e6a66');
+  // console.log('----->', res.data);
 
   const showDetails = (art: IArticle) => {
     setLabel('edit');

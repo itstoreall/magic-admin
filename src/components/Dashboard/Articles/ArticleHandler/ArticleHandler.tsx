@@ -247,7 +247,8 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                 <button
                   type='button'
                   onClick={() =>
-                    utils.handleSubmit({
+                    access &&
+                    utils.handleSubmit(access.blog, {
                       articleElements,
                       imageData,
                       ipfs,
