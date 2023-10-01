@@ -201,7 +201,8 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                       <div className={s.deleteButtonWrap}>
                         <Button
                           fn={() =>
-                            utils.deleteArticleRequest({
+                            access &&
+                            utils.deleteArticleRequest(access.blog, {
                               article,
                               deleteArticle,
                               setIsDeletedArt,

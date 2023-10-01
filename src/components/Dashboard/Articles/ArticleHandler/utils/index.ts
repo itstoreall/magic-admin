@@ -132,12 +132,13 @@ export const editArticleRequest = async (args: IEdit) => {
   // */
 };
 
-export const deleteArticleRequest = async (args: IDel) => {
+export const deleteArticleRequest = async (blog: string, args: IDel) => {
   if (!args.article) return;
 
   try {
     const { data } = await args.deleteArticle({
       variables: {
+        blog,
         id: args.article.id,
       },
     });
