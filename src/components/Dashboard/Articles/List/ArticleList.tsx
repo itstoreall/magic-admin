@@ -8,11 +8,12 @@ import { removeDataTypename } from '../../../../utils/removeDataTypename';
 import s from './ArticleList.module.scss';
 import Spinner from '../../../Loading/Spinner';
 import ImageHandler from './ImageHandler';
+// import useFetchArticleById from '../../../../hooks/useFetchArticleById';
 
 const ArticleList = ({ handleOpenDetails }: IArticleListProps) => {
-  const { articles, setLabel, setArticles } = useGlobalContext();
+  const { access, articles, setLabel, setArticles } = useGlobalContext();
 
-  const [isAdmin, { loading }] = useLazyQuery(GET_ARTICLES);
+  const [getArticles, { loading }] = useLazyQuery(GET_ARTICLES);
 
   const imgFilter = () => (true ? 50 : 0); // 'dark' theme
 
@@ -23,12 +24,15 @@ const ArticleList = ({ handleOpenDetails }: IArticleListProps) => {
 
   const fetchArticles = async () => {
     try {
-      const { data } = await isAdmin();
+      const { data } = await getArticles({ variables: { blog: access?.blog } });
       if (data) setArticles(removeDataTypename(data.articles) as IArticle[]);
     } catch (e) {
       console.error(e);
     }
   };
+
+  // const res = useFetchArticleById('astraia', '64bd3c406a886bf9a12e6a66');
+  // console.log('----->', res.data);
 
   const showDetails = (art: IArticle) => {
     setLabel('edit');

@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 const GET_ARTICLE_BY_ID = gql`
-  query GetArticleById($id: ID!) {
-    getArticleById(ID: $id) {
+  query GetArticleById($blog: String!, $id: ID!) {
+    getArticleById(blog: $blog, ID: $id) {
       id
       title
       description
