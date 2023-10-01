@@ -63,7 +63,9 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   const [deleteArticle, { loading: delLoad, error: delErr }] =
     useMutation(DELETE_ARTICLE);
 
-  const { refetch: getArticles } = useQuery(GET_ARTICLES);
+  const { refetch: getArticles } = useQuery(GET_ARTICLES, {
+    variables: { blog: access?.blog },
+  });
 
   const clearStates = () => {
     setImageData('');
@@ -112,15 +114,18 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
       if (articleElements?.length) {
         localStorage.setItem(art_add, JSON.stringify({ articleElements }));
       }
+
+      access && !author && setAuthor(access?.author);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [title, description, articleElements]);
 
   useEffect(() => {
-    if (label === 'add' && isReset) {
+    if (label === 'add') {
       localStorage.removeItem(fls_add);
       localStorage.removeItem(art_add);
       clearStates();
+      access && !author && setAuthor(access?.author);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReset]);
@@ -196,7 +201,8 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                       <div className={s.deleteButtonWrap}>
                         <Button
                           fn={() =>
-                            utils.deleteArticleRequest({
+                            access &&
+                            utils.deleteArticleRequest(access.blog, {
                               article,
                               deleteArticle,
                               setIsDeletedArt,
@@ -242,7 +248,8 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                 <button
                   type='button'
                   onClick={() =>
-                    utils.handleSubmit({
+                    access &&
+                    utils.handleSubmit(access.blog, {
                       articleElements,
                       imageData,
                       ipfs,

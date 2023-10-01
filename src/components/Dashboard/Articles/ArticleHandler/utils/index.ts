@@ -82,10 +82,10 @@ export const updateArticles = async (args: IUpdate) => {
   articles && args.setArticles(articles);
 };
 
-export const addArticleRequest = async (args: IAdd) => {
+export const addArticleRequest = async (blog: string, args: IAdd) => {
   // /*
   const { data } = await args.addArticle({
-    variables: { input: args.articleInput },
+    variables: { blog, input: args.articleInput },
   });
 
   const { title } = data.addArticle;
@@ -132,12 +132,13 @@ export const editArticleRequest = async (args: IEdit) => {
   // */
 };
 
-export const deleteArticleRequest = async (args: IDel) => {
+export const deleteArticleRequest = async (blog: string, args: IDel) => {
   if (!args.article) return;
 
   try {
     const { data } = await args.deleteArticle({
       variables: {
+        blog,
         id: args.article.id,
       },
     });
@@ -156,7 +157,7 @@ export const deleteArticleRequest = async (args: IDel) => {
   }
 };
 
-export const handleSubmit = async (args: ISubmit) => {
+export const handleSubmit = async (blog: string, args: ISubmit) => {
   const {
     articleElements,
     imageData,
@@ -175,8 +176,6 @@ export const handleSubmit = async (args: ISubmit) => {
     setArticles,
   } = args;
 
-  console.log(999, articleElements);
-
   const text = JSON.stringify({ articleElements });
 
   const articleInput = {
@@ -189,32 +188,24 @@ export const handleSubmit = async (args: ISubmit) => {
     tags: ['magic'],
   };
 
-  let isSubmitError: boolean = false;
-
-  console.log('articleInput', articleInput);
-
-  // eslint-disable-next-line array-callback-return
-  Object.entries(articleInput).find(el => {
-    if (el[0] !== 'ipfs' && !el[1]) isSubmitError = true;
-    console.log(el[0]);
-    console.log(el[0] !== 'ipfs', !el[1]);
-
-    if (el[1].includes('articleElements')) {
-      if (!articleElements) isSubmitError = true;
-    }
+  const isSubmitError = Object.entries(articleInput).find(el => {
+    if (el[0] !== 'ipfs' && !el[1]) return true;
+    if (el[1].includes('Elements') && !el[1].includes('paragraph')) return true;
+    if (!articleElements?.length) return true;
+    return false;
   });
 
   if (!isSubmitError) {
     setSubmitError('');
   } else return setSubmitError('Check that it is filled in correctly');
 
-  console.log('isSubmitError', isSubmitError);
-  console.log('');
+  // console.log('isSubmitError', isSubmitError);
+  // console.log('');
 
   // /*
   try {
     if (label === 'add')
-      addArticleRequest({
+      addArticleRequest(blog, {
         articleInput,
         addArticle,
         setIsUpdatedArt,
