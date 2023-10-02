@@ -23,18 +23,52 @@
       min-height: 45px;
       color: $middleDark;
 
-      .value {
-        color: $paleColor;
+      .infoWrap {
+        .refToSite {
+          text-decoration: none;
+        }
 
-        &.button {
-          cursor: pointer;
+        .value {
+          color: $paleColor;
+
+          &.button {
+            cursor: pointer;
+          }
+        }
+      }
+
+      &.admin {
+        .infoWrap .value {
+          color: $reactColor;
         }
       }
     }
-    .admin {
-      .value {
-        color: $reactColor;
-      }
-    }
+    // .admin {
+    //   .value {
+    //     color: $reactColor;
+    //   }
+    // }
   }
 }
+
+// .infoWrap {
+//   .refToSite {
+//     text-decoration: none;
+
+//     .value {
+//       color: $paleColor;
+
+//       &.button {
+//         cursor: pointer;
+//       }
+//     }
+//   }
+
+//   .value {
+//     color: $paleColor;
+
+//     &.button {
+//       cursor: pointer;
+//     }
+//   }
+// }

@@ -22,3 +22,6 @@ export const MONTHS = [
   'ноя',
   'дек',
 ];
+
+export const SITE_ASTRAIA = 'https://astraia.storeall.com.ua/';
+export const SITE_HEALTHY = 'https://healthy.storeall.com.ua/';
