@@ -105,7 +105,7 @@ export const addArticleRequest = async (blog: string, args: IAdd) => {
   // */
 };
 
-export const editArticleRequest = async (args: IEdit) => {
+export const editArticleRequest = async (blog: string, args: IEdit) => {
   const id = args.article ? args.article.id : null;
 
   if (args.articleInput.image.includes('https')) {
@@ -114,7 +114,7 @@ export const editArticleRequest = async (args: IEdit) => {
 
   // /*
   const { data } = await args.editArticle({
-    variables: { id, articleInput: args.articleInput },
+    variables: { blog, id, articleInput: args.articleInput },
   });
 
   console.log('Article edited:', data.editArticle);
@@ -215,7 +215,7 @@ export const handleSubmit = async (blog: string, args: ISubmit) => {
       });
 
     if (label === 'edit')
-      editArticleRequest({
+      editArticleRequest(blog, {
         articleInput,
         article,
         editArticle,
