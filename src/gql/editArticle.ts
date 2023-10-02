@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 const EDIT_ARTICLE = gql`
-  mutation EditArticle($id: ID!, $articleInput: ArticleInput) {
-    editArticle(ID: $id, articleInput: $articleInput)
+  mutation EditArticle($blog: String!, $id: ID!, $articleInput: ArticleInput) {
+    editArticle(blog: $blog, ID: $id, articleInput: $articleInput)
   }
 `;
 
