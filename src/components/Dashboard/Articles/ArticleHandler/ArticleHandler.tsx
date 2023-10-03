@@ -85,6 +85,8 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     clearStates();
 
     if (label === 'add') {
+      setImageData('');
+
       const lsFields = JSON.parse(localStorage.getItem(fls_add) || 'null');
       const lsElements = JSON.parse(localStorage.getItem(art_add) || 'null');
 
@@ -121,7 +123,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   }, [title, description, articleElements]);
 
   useEffect(() => {
-    if (label === 'add') {
+    if (label === 'add' && isReset) {
       localStorage.removeItem(fls_add);
       localStorage.removeItem(art_add);
       clearStates();
