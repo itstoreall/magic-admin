@@ -112,8 +112,6 @@ export const editArticleRequest = async (blog: string, args: IEdit) => {
     args.articleInput.image = '';
   }
 
-  console.log('articleInput', args.articleInput);
-
   // /*
   const { data } = await args.editArticle({
     variables: { blog, id, articleInput: args.articleInput },
