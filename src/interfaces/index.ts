@@ -22,7 +22,6 @@ export interface IArticleHandlerInput extends IArticleInput {
 
 export interface IArticle extends IArticleInput {
   id: string;
-  views: string | null;
   timestamp: string;
 }
 
