@@ -119,8 +119,6 @@ export const editArticleRequest = async (blog: string, args: IEdit) => {
     variables: { blog, id, articleInput: args.articleInput },
   });
 
-  console.log('Article edited:', data.editArticle);
-
   if (data.editArticle) {
     args.setIsUpdatedArt(true);
     args.clearStates();
