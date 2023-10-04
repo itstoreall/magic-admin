@@ -84,6 +84,8 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     localStorage.removeItem(art_edit);
     clearStates();
 
+    console.log('article', article);
+
     if (label === 'add') {
       setImageData('');
 
