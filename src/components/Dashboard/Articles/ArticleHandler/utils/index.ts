@@ -117,8 +117,6 @@ export const editArticleRequest = async (blog: string, args: IEdit) => {
     variables: { blog, id, articleInput: args.articleInput },
   });
 
-  console.log('Article edited:', data.editArticle);
-
   if (data.editArticle) {
     args.setIsUpdatedArt(true);
     args.clearStates();
@@ -188,6 +186,11 @@ export const handleSubmit = async (blog: string, args: ISubmit) => {
     tags: ['magic'],
   };
 
+  const addArticleInput = {
+    ...articleInput,
+    views: '1',
+  };
+
   const isSubmitError = Object.entries(articleInput).find(el => {
     if (el[0] !== 'ipfs' && !el[1]) return true;
     if (el[1].includes('Elements') && !el[1].includes('paragraph')) return true;
@@ -206,7 +209,7 @@ export const handleSubmit = async (blog: string, args: ISubmit) => {
   try {
     if (label === 'add')
       addArticleRequest(blog, {
-        articleInput,
+        articleInput: addArticleInput,
         addArticle,
         setIsUpdatedArt,
         clearStates,
