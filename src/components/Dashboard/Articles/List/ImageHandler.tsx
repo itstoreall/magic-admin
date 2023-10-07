@@ -1,12 +1,17 @@
 import { IImageHandlerProps } from '../../../../interfaces/articleList';
-import { IPFS_WEB3_STORAGE } from '../../../../constants';
+import fns from '../../../../constants';
 import defaultImage from '../../../../assets/images/defaultImage.jpg';
+import { useGlobalContext } from '../../../../context/GlobalContext';
 
-const ipfs = IPFS_WEB3_STORAGE;
+// const ipfs = IPFS_WEB3_STORAGE;
 
 const ImageHandler = ({ cid, alt, grayscale }: IImageHandlerProps) => {
+  const { access } = useGlobalContext();
+
   const setImageSrc = (cid: string) =>
-    cid ? `https://${cid}.${ipfs}` : defaultImage;
+    cid
+      ? `https://${cid}.${fns.getIpfsUrl(access?.blog ? access?.blog : '')}`
+      : defaultImage;
 
   return (
     <img
