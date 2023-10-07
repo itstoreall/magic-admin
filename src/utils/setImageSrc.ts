@@ -1,9 +1,9 @@
-import * as constants from '../constants';
+import fns, { DEFAULT_PUBLIC_IMAGE } from '../constants';
 
-const defaultImage = constants.DEFAULT_PUBLIC_IMAGE;
-const web3StorageIpfs = constants.IPFS_WEB3_STORAGE;
+const defaultImage = DEFAULT_PUBLIC_IMAGE;
+// const web3StorageIpfs = constants.IPFS_WEB3_STORAGE;
 
-const setImageSrc = (cid: string) =>
-  cid ? `https://${cid}.${web3StorageIpfs}` : defaultImage;
+const setImageSrc = (blog: string, cid: string) =>
+  cid ? `https://${cid}.${fns.getIpfsUrl(blog)}` : defaultImage;
 
 export default setImageSrc;

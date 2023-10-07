@@ -139,7 +139,11 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
       if (articleElements) {
         setTitle(article.title);
         setDescription(article.description);
-        setImageData(article.ipfs ? setImageSrc(article.ipfs) : '');
+        setImageData(
+          access?.blog && article.ipfs
+            ? setImageSrc(access?.blog, article.ipfs)
+            : ''
+        );
         setIpfs(article.ipfs);
         setArticleElements(articleElements);
         setAuthor(article?.author);
