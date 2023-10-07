@@ -1,6 +1,7 @@
 import useProportion from '../../../../../hooks/useProportion';
-import s from './ArticleDetails.module.scss';
+import { useGlobalContext } from '../../../../../context/GlobalContext';
 import * as constants from '../../../../../constants';
+import s from './ArticleDetails.module.scss';
 import useViewport from '../../../../../hooks/useViewport';
 import setImageSrc from '../../../../../utils/setImageSrc';
 
@@ -25,6 +26,7 @@ const ArticleDetails = (props: any) => {
     articleElements,
   } = props;
 
+  const { access } = useGlobalContext();
   const { viewport } = useViewport();
   const { width, height } = useProportion(
     900,
@@ -47,7 +49,11 @@ const ArticleDetails = (props: any) => {
 
           <div className={s.thumb}>
             <img
-              src={imageData ? imageData : setImageSrc(ipfs)}
+              src={
+                imageData
+                  ? imageData
+                  : setImageSrc(access?.blog ? access?.blog : '', ipfs)
+              }
               alt='Uploaded'
               width={width}
               height={height}
