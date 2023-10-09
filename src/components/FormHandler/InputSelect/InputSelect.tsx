@@ -31,20 +31,20 @@ const InputSelect = ({
       outline: 'none',
       border: 'none',
       borderRadius: 0,
-      borderBottom: `1px solid ${theme.middleGrey}`,
+      borderBottom: `1px solid ${theme.middleDark}`,
       backgroundColor: state.isFocused
         ? theme.reactBackground
         : theme.reactBackground,
       cursor: 'pointer',
       '&:hover': {
-        borderBottomColor: theme.middleGrey,
+        borderBottomColor: theme.middleDark,
       },
     }),
     input: (base, state) => ({
       ...base,
       outline: state.isMulti ? theme.reactBackground : theme.reactBackground,
       color: theme.colorWhite,
-      caretColor: theme.middleGrey,
+      caretColor: theme.middleDark,
     }),
     singleValue: base => ({
       ...base,
