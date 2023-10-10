@@ -3,8 +3,6 @@ import fns from '../../../../constants';
 import defaultImage from '../../../../assets/images/defaultImage.jpg';
 import { useGlobalContext } from '../../../../context/GlobalContext';
 
-// const ipfs = IPFS_WEB3_STORAGE;
-
 const ImageHandler = ({ cid, alt, grayscale }: IImageHandlerProps) => {
   const { access } = useGlobalContext();
 
