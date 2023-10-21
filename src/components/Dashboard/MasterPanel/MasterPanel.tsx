@@ -6,11 +6,22 @@ import s from './MasterPanel.module.scss';
 const MasterAdminPanel = () => {
   const [formContent, setFormContent] = useState<string>('');
 
-  const { addNewAuthor, delAuthorFromBlog, addAuthorToBlog } = cfg.content;
-  const { addNewAuthorBtn, delAuthorFromBlogBtn, addAuthorToBlogBtn } =
-    cfg.button;
-  const { addNewAuthorTitle, delAuthorFromBlogTitle, addAuthorToBlogTitle } =
-    cfg.title;
+  const { addNewAuthor, delAuthorFromBlog, addAuthorToBlog, updateBlogTags } =
+    cfg.content;
+
+  const {
+    addNewAuthorBtn,
+    delAuthorFromBlogBtn,
+    addAuthorToBlogBtn,
+    updateBlogTagsBtn,
+  } = cfg.button;
+
+  const {
+    addNewAuthorTitle,
+    delAuthorFromBlogTitle,
+    addAuthorToBlogTitle,
+    updateBlogTagsTilte,
+  } = cfg.title;
 
   const formModalHandler = (content: string) => {
     setFormContent(
@@ -32,7 +43,11 @@ const MasterAdminPanel = () => {
           </button>
 
           {formContent === addNewAuthor && (
-            <AdminAction formContent={formContent} title={addNewAuthorTitle} />
+            <AdminAction
+              formContent={formContent}
+              title={addNewAuthorTitle}
+              closeForm={setFormContent}
+            />
           )}
         </div>
 
@@ -48,6 +63,7 @@ const MasterAdminPanel = () => {
             <AdminAction
               formContent={formContent}
               title={delAuthorFromBlogTitle}
+              closeForm={setFormContent}
             />
           )}
         </div>
@@ -64,6 +80,24 @@ const MasterAdminPanel = () => {
             <AdminAction
               formContent={formContent}
               title={addAuthorToBlogTitle}
+              closeForm={setFormContent}
+            />
+          )}
+        </div>
+
+        <div className={s.formBlock}>
+          <button
+            className={s.button}
+            onClick={() => formModalHandler(updateBlogTags)}
+          >
+            {updateBlogTagsBtn}
+          </button>
+
+          {formContent === updateBlogTags && (
+            <AdminAction
+              formContent={formContent}
+              title={updateBlogTagsTilte}
+              closeForm={setFormContent}
             />
           )}
         </div>

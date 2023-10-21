@@ -8,6 +8,7 @@ import Button from '../../../../Button';
 export interface IAddAuthorToBlogProps {
   handleSubmit(e: React.FormEvent): void;
   title: string;
+  closeForm: (s: string) => void;
   isSubmitError: boolean;
   apolloError: ApolloError | undefined;
   isSuccess: boolean;
@@ -21,6 +22,7 @@ export interface IAddAuthorToBlogProps {
 const AddAuthorToBlog = ({
   handleSubmit,
   title,
+  closeForm,
   isSubmitError,
   apolloError,
   isSuccess,
@@ -36,6 +38,7 @@ const AddAuthorToBlog = ({
         <FormHandler
           handleSubmit={handleSubmit}
           title={title}
+          closeForm={closeForm}
           isSubmitError={isSubmitError}
           apolloError={apolloError || null}
           isSuccess={isSuccess}

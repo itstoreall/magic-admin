@@ -6,27 +6,36 @@
   @include left(0);
   @include width(100%);
   @include z(1);
-  // background-color: pink;
 
   @include mediaScreen('min', $tablet) {
     @include left(auto);
     max-width: 322px;
   }
 
-  .form {
+  .formBlock {
+    position: relative;
     @include padding(25px 20px 30px);
     @include margin(0 auto);
     text-align: center;
-    border: 1px solid $middleGrey;
+    border: 1px solid $middleDark;
     background-color: $reactBackground;
     border-radius: 6px;
     max-width: 280px;
+
+    .closeButton {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+    }
 
     .title {
       @include display(block);
       @include marginB(20px);
       @include fontSW(18px, 600);
-      @include color($middleGrey);
+      @include color($middleDark);
     }
   }
 

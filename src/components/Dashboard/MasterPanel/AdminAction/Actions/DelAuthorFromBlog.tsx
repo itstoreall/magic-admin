@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 export interface IDelAuthorFromBlogProps {
   handleSubmit(e: React.FormEvent): void;
   title: string;
+  closeForm: (s: string) => void;
   isSubmitError: boolean;
   apolloError: ApolloError | undefined;
   isSuccess: boolean;
@@ -27,6 +28,7 @@ export interface IDelAuthorFromBlogCurrentOpts {
 const DelAuthorFromBlog = ({
   handleSubmit,
   title,
+  closeForm,
   isSubmitError,
   apolloError,
   isSuccess,
@@ -55,6 +57,7 @@ const DelAuthorFromBlog = ({
         <FormHandler
           handleSubmit={handleSubmit}
           title={title}
+          closeForm={closeForm}
           isSubmitError={isSubmitError}
           apolloError={apolloError || null}
           isSuccess={isSuccess}

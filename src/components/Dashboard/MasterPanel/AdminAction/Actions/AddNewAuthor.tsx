@@ -10,6 +10,7 @@ import cfg from '../../config/masterPanel.config';
 export interface IAddNewAuthorProps {
   handleSubmit(e: React.FormEvent): void;
   title: string;
+  closeForm: (s: string) => void;
   isSubmitError: boolean;
   apolloError: ApolloError | null;
   isSuccess: boolean;
@@ -25,6 +26,7 @@ export interface IAddNewAuthorProps {
 const AddNewAuthor = ({
   handleSubmit,
   title,
+  closeForm,
   isSubmitError,
   apolloError,
   isSuccess,
@@ -40,6 +42,7 @@ const AddNewAuthor = ({
     <FormHandler
       handleSubmit={handleSubmit}
       title={title}
+      closeForm={closeForm}
       isSubmitError={isSubmitError}
       apolloError={apolloError || null}
       isSuccess={isSuccess}

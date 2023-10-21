@@ -18,23 +18,23 @@
     @include marginB(20px);
     font-family: Arial, sans-serif;
     @include fontSize(16px);
-    color: $middleDark;
+    color: $colorWhite;
     background-color: transparent;
     border: none;
     @include transition($s04);
     outline: none;
-    border-bottom: 1px solid $middleGrey;
-    caret-color: $middleGrey;
+    border-bottom: 1px solid $middleDark;
+    caret-color: $middleDark;
     border-radius: 0;
 
     &::placeholder {
-      color: $middleGreyHover;
+      color: $middleDark;
     }
 
     &:-webkit-autofill {
       box-shadow: 0 0 0 50px $reactBackground inset;
-      -webkit-text-fill-color: $middleDark;
-      caret-color: $middleGrey;
+      -webkit-text-fill-color: $colorWhite;
+      caret-color: $middleDark;
     }
 
     &::-moz-placeholder {

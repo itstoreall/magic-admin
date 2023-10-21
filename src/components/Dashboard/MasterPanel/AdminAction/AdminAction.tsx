@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import GET_ALL_ADMINS from '../../../../gql/getAllAdmins';
 import GET_ALL_BLOGS from '../../../../gql/getAllBlogs';
+import GET_BLOG_TAGS from '../../../../gql/getBlogTags';
 import ADD_NEW_AUTHOR from '../../../../gql/addNewAuthor';
 import DELETE_AUTHOR_FROM_BLOG from '../../../../gql/deleteAuthorFromBlog';
 import ADD_AUTHOR_TO_BLOG from '../../../../gql/addAuthorToBlog';
@@ -12,15 +13,20 @@ import cfg from '../config/masterPanel.config';
 import AddNewAuthor from './Actions/AddNewAuthor';
 import DelAuthorFromBlog from './Actions/DelAuthorFromBlog';
 import AddAuthorToBlog from './Actions/AddAuthorToBlog';
+import UpdateBlogTags from './Actions/UpdateBlogTags';
 import { removeDataTypename } from '../../../../utils/removeDataTypename';
+import getLocalStorageItem from '../../../../utils/getLocalStorageItem';
 
 const GAA = GET_ALL_ADMINS;
 const GAB = GET_ALL_BLOGS;
+const GBT = GET_BLOG_TAGS;
 const ANA = ADD_NEW_AUTHOR;
 const DAFB = DELETE_AUTHOR_FROM_BLOG;
 const AATB = ADD_AUTHOR_TO_BLOG;
 
 // export type AddAuthorToBlog = ISO;
+
+export type BlogTags = string[];
 
 export interface IDelAuthorFromBlog {
   admins: ISO[];
@@ -38,9 +44,10 @@ export interface IAllBlogsRes {
   authors: string[];
 }
 
-export interface IAddAuthorProps {
+export interface IAdminActionProps {
   formContent: string;
   title: string;
+  closeForm: (s: string) => void;
 }
 
 // export interface IDataTypename {
@@ -51,7 +58,7 @@ export interface IAddAuthorProps {
 const opts = process.env.REACT_APP_OPTIONS;
 const adm = process.env.REACT_APP_ADMIN_ACCESS;
 
-const AdminAction = ({ formContent, title }: IAddAuthorProps) => {
+const AdminAction = ({ formContent, title, closeForm }: IAdminActionProps) => {
   // const [content, setContent] = useState<string>('');
   const [blog, setBlog] = useState<ISO | null>(null);
   const [authorName, setAuthorName] = useState<string>('');
@@ -64,30 +71,47 @@ const AdminAction = ({ formContent, title }: IAddAuthorProps) => {
 
   const [allAdmins, setAllAdmins] = useState<IAllAdmsRes[] | null>(null);
   const [allBlogs, setAllBlogs] = useState<IAllBlogsRes[] | null>(null);
+  // const [allBlogTags, setAllBlogTags] = useState<BlogTags | null>(null);
 
   const [getAllAdmins] = useLazyQuery(GAA);
   const [getAllBlogs] = useLazyQuery(GAB);
+  const [getBlogTags] = useLazyQuery(GBT);
   const [addAdmin, { error: createError }] = useMutation(ANA);
   const [deleteAuthorFromBlog, { error: delError }] = useMutation(DAFB);
   const [addAuthorToBlogGql, { error: addError }] = useMutation(AATB);
 
-  const { addNewAuthor, delAuthorFromBlog, addAuthorToBlog } = cfg.content;
+  const { addNewAuthor, delAuthorFromBlog, addAuthorToBlog, updateBlogTags } =
+    cfg.content;
+
+  const dAFB = cfg.content.delAuthorFromBlog;
+  const aATB = cfg.content.addAuthorToBlog;
+  const uBT = cfg.content.updateBlogTags;
 
   useEffect(() => {
-    const dAFB = cfg.content.delAuthorFromBlog;
-    const aATB = cfg.content.addAuthorToBlog;
+    if (!adm) return;
 
-    if ((formContent === dAFB || formContent === aATB) && adm) {
+    if (formContent === dAFB || formContent === aATB) {
       const ls = JSON.parse(localStorage.getItem(adm) || 'null');
       ls && getAdmins(ls.token);
     }
 
-    if (formContent === aATB && adm) {
+    if (formContent === aATB || formContent === uBT) {
       const ls = JSON.parse(localStorage.getItem(adm) || 'null');
       ls && getBlogs(ls.token);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formContent]);
+
+  useEffect(() => {
+    if (!adm) return;
+
+    if (formContent === uBT) {
+      const ls = getLocalStorageItem(adm);
+      // console.log('blogSelect ls', blogSelect, ls);
+      ls && blogSelect && getTagsByBlog(ls.token, blogSelect.value);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blogSelect]);
 
   const getAdmins = async (token: string) => {
     const { data } = await getAllAdmins({ variables: { token } });
@@ -103,6 +127,20 @@ const AdminAction = ({ formContent, title }: IAddAuthorProps) => {
     if (data) {
       const cleanedData = removeDataTypename(data.getAllBlogs);
       data && setAllBlogs(cleanedData as IAllBlogsRes[]);
+    }
+  };
+
+  const getTagsByBlog = async (token: string, blog: string) => {
+    const { data } = await getBlogTags({
+      variables: { token, blog },
+    });
+
+    console.log('data', data, blogSelect);
+
+    if (data) {
+      // console.log('data ->>>>', data.getBlogTags.tags);
+      // const cleanedData = removeDataTypename(data.getBlogTags);
+      // data && setBlogTags(cleanedData as BlogTags);
     }
   };
 
@@ -261,9 +299,20 @@ const AdminAction = ({ formContent, title }: IAddAuthorProps) => {
 
       return { admins, blogs };
     }
+
+    if (formContent === updateBlogTags) {
+      const blogs = allBlogs?.reduce((acc: ISO[], adm) => {
+        acc = [...acc, { value: adm.title, label: adm.title }];
+        return acc;
+      }, []);
+
+      return { blogs };
+    }
   };
 
   // if (addLoading) return <Spinner />;
+
+  // console.log('formContent', formContent);
 
   return (
     <>
@@ -271,6 +320,7 @@ const AdminAction = ({ formContent, title }: IAddAuthorProps) => {
         <AddNewAuthor
           handleSubmit={handleSubmit}
           title={title}
+          closeForm={closeForm}
           isSubmitError={isSubmitError}
           apolloError={createError || null}
           isSuccess={isSuccess}
@@ -286,6 +336,7 @@ const AdminAction = ({ formContent, title }: IAddAuthorProps) => {
         <DelAuthorFromBlog
           handleSubmit={handleSubmit}
           title={title}
+          closeForm={closeForm}
           isSubmitError={isSubmitError}
           apolloError={delError}
           isSuccess={isSuccess}
@@ -295,10 +346,11 @@ const AdminAction = ({ formContent, title }: IAddAuthorProps) => {
           authorSelect={authorSelect}
           setAuthorSelect={setAuthorSelect}
         />
-      ) : (
+      ) : formContent === addAuthorToBlog ? (
         <AddAuthorToBlog
           handleSubmit={handleSubmit}
           title={title}
+          closeForm={closeForm}
           isSubmitError={isSubmitError}
           apolloError={addError}
           isSuccess={isSuccess}
@@ -308,7 +360,21 @@ const AdminAction = ({ formContent, title }: IAddAuthorProps) => {
           authorSelect={authorSelect}
           setAuthorSelect={setAuthorSelect}
         />
-      )}
+      ) : formContent === updateBlogTags ? (
+        <UpdateBlogTags
+          handleSubmit={handleSubmit}
+          title={title}
+          closeForm={closeForm}
+          isSubmitError={isSubmitError}
+          apolloError={addError}
+          isSuccess={isSuccess}
+          options={setSelectOptions()}
+          blogSelect={blogSelect}
+          setBlogSelect={setBlogSelect}
+          authorSelect={authorSelect}
+          setAuthorSelect={setAuthorSelect}
+        />
+      ) : null}
     </>
   );
 };

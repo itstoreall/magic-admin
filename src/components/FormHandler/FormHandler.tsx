@@ -8,13 +8,15 @@ const FormHandler = ({
   children,
   handleSubmit,
   title,
+  closeForm,
   isSubmitError,
   apolloError,
   isSuccess,
 }: IFormHandlerProps) => {
   return (
     <div className={`${s.formWrap}`}>
-      <div className={s.form}>
+      <div className={s.formBlock}>
+        <span className={s.closeButton} onClick={() => closeForm('')} />
         <span className={s.title}>{title}</span>
 
         {isSuccess ? (

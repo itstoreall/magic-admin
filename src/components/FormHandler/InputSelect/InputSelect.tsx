@@ -56,7 +56,7 @@ const InputSelect = ({
     }),
     placeholder: (base, state) => ({
       ...base,
-      color: state.isFocused ? theme.middleGreyHover : theme.middleGreyHover,
+      color: state.isFocused ? theme.middleDark : theme.middleDark,
     }),
     indicatorSeparator: base => ({
       ...base,
@@ -64,7 +64,10 @@ const InputSelect = ({
     }),
     dropdownIndicator: base => ({
       ...base,
-      color: theme.middleGreyHover,
+      color: theme.middleDark,
+      '&:hover': {
+        color: theme.middleGreyHover,
+      },
     }),
     menu: base => ({
       ...base,
@@ -86,7 +89,9 @@ const InputSelect = ({
       margin: '0px',
       fontSize: '16px',
       outline: 'none',
-      backgroundColor: state.isSelected ? theme.middleGrey : theme.middleGrey,
+      backgroundColor: state.isSelected
+        ? theme.middleGreyHover
+        : theme.middleGreyHover,
       '&:active': {
         backgroundColor: theme.reactBackground,
       },
