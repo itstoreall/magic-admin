@@ -43,13 +43,13 @@ const InputSelect = ({
     input: (base, state) => ({
       ...base,
       outline: state.isMulti ? theme.reactBackground : theme.reactBackground,
-      color: theme.colorWhite,
+      color: theme.light,
       caretColor: theme.middleDark,
     }),
     singleValue: base => ({
       ...base,
       outline: 'none',
-      color: theme.colorWhite,
+      color: theme.light,
     }),
     valueContainer: base => ({
       ...base,

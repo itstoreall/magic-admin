@@ -71,7 +71,7 @@ const AdminAction = ({ formContent, title, closeForm }: IAdminActionProps) => {
 
   const [allAdmins, setAllAdmins] = useState<IAllAdmsRes[] | null>(null);
   const [allBlogs, setAllBlogs] = useState<IAllBlogsRes[] | null>(null);
-  // const [allBlogTags, setAllBlogTags] = useState<BlogTags | null>(null);
+  const [blogTags, setBlogTags] = useState<BlogTags>([]);
 
   const [getAllAdmins] = useLazyQuery(GAA);
   const [getAllBlogs] = useLazyQuery(GAB);
@@ -135,12 +135,11 @@ const AdminAction = ({ formContent, title, closeForm }: IAdminActionProps) => {
       variables: { token, blog },
     });
 
-    console.log('data', data, blogSelect);
+    // console.log('data', data, blogSelect);
 
     if (data) {
       // console.log('data ->>>>', data.getBlogTags.tags);
-      // const cleanedData = removeDataTypename(data.getBlogTags);
-      // data && setBlogTags(cleanedData as BlogTags);
+      setBlogTags(data.getBlogTags.tags);
     }
   };
 
@@ -293,7 +292,8 @@ const AdminAction = ({ formContent, title, closeForm }: IAdminActionProps) => {
       }, []);
 
       const blogs = allBlogs?.reduce((acc: ISO[], adm) => {
-        acc = [...acc, { value: adm.title, label: adm.title }];
+        const optionTitle = setUpperFirstChar(adm.title);
+        acc = [...acc, { value: adm.title, label: optionTitle }];
         return acc;
       }, []);
 
@@ -302,7 +302,8 @@ const AdminAction = ({ formContent, title, closeForm }: IAdminActionProps) => {
 
     if (formContent === updateBlogTags) {
       const blogs = allBlogs?.reduce((acc: ISO[], adm) => {
-        acc = [...acc, { value: adm.title, label: adm.title }];
+        const optionTitle = setUpperFirstChar(adm.title);
+        acc = [...acc, { value: adm.title, label: optionTitle }];
         return acc;
       }, []);
 
@@ -371,8 +372,7 @@ const AdminAction = ({ formContent, title, closeForm }: IAdminActionProps) => {
           options={setSelectOptions()}
           blogSelect={blogSelect}
           setBlogSelect={setBlogSelect}
-          authorSelect={authorSelect}
-          setAuthorSelect={setAuthorSelect}
+          blogTags={blogTags}
         />
       ) : null}
     </>

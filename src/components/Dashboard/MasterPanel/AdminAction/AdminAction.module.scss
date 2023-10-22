@@ -1,1 +1,104 @@
 @import '../../../../styles/mixins';
+@import '../../../../theme/index';
+
+.blogTagsWrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: 10px;
+  border: 1px solid $middleDark;
+  border-radius: 6px;
+  gap: 10px;
+
+  > span {
+    font-size: 12px;
+    text-transform: uppercase;
+
+    &.tagBox {
+      display: flex;
+      align-items: center;
+      padding: 2px 5px;
+      height: 16px;
+      border: 1px solid $middleDark;
+      border-radius: 3px;
+
+      .tag {
+        margin-right: 5px;
+        color: $middleDark;
+
+        &.new {
+          color: $middleGreyHover;
+        }
+      }
+
+      input.tagInput {
+        position: absolute;
+        margin-right: 5px;
+        font-family: inherit;
+        font-size: 12px;
+        color: $light;
+        text-transform: uppercase;
+        background-color: transparent;
+        border: none;
+        padding: 0;
+
+        &:focus {
+          outline: none;
+        }
+
+        &.error {
+          color: $colorRed;
+        }
+      }
+
+      .inputValueDublicate {
+        font-size: 12px;
+        margin-right: 5px;
+        text-align: start;
+        min-width: 35px;
+        color: transparent;
+      }
+
+      .tagButton {
+        display: block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        opacity: 0.6;
+
+        &.remove {
+          background-color: $paleColor;
+          opacity: 0.3;
+
+          &.new {
+            opacity: 0.6;
+          }
+        }
+
+        &.add {
+          background-color: $colorGreen;
+        }
+
+        &.is {
+          background-color: $contrastDarkHover;
+        }
+
+        &:hover {
+          cursor: pointer;
+          opacity: 1;
+        }
+      }
+    }
+
+    &.noTags {
+      display: flex;
+      align-items: center;
+      color: $middleDark;
+      height: 22px;
+    }
+
+    // &.addTagButton {
+    //   background-color: $colorGreen;
+    // }
+  }
+}
