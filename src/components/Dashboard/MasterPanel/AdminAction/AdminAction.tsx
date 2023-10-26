@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import GET_ALL_ADMINS from '../../../../gql/getAllAdmins';
 import GET_ALL_BLOGS from '../../../../gql/getAllBlogs';
@@ -16,6 +16,7 @@ import AddAuthorToBlog from './Actions/AddAuthorToBlog';
 import UpdateBlogTags from './Actions/UpdateBlogTags';
 import { removeDataTypename } from '../../../../utils/removeDataTypename';
 import getLocalStorageItem from '../../../../utils/getLocalStorageItem';
+import s from './AdminAction.module.scss';
 
 const GAA = GET_ALL_ADMINS;
 const GAB = GET_ALL_BLOGS;
@@ -59,7 +60,6 @@ const opts = process.env.REACT_APP_OPTIONS;
 const adm = process.env.REACT_APP_ADMIN_ACCESS;
 
 const AdminAction = ({ formContent, title, closeForm }: IAdminActionProps) => {
-  // const [content, setContent] = useState<string>('');
   const [blog, setBlog] = useState<ISO | null>(null);
   const [authorName, setAuthorName] = useState<string>('');
   const [blogSelect, setBlogSelect] = useState<ISO | null>(null);
@@ -87,8 +87,10 @@ const AdminAction = ({ formContent, title, closeForm }: IAdminActionProps) => {
   const aATB = cfg.content.addAuthorToBlog;
   const uBT = cfg.content.updateBlogTags;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!adm) return;
+
+    clearStates();
 
     if (formContent === dAFB || formContent === aATB) {
       const ls = JSON.parse(localStorage.getItem(adm) || 'null');
@@ -107,11 +109,16 @@ const AdminAction = ({ formContent, title, closeForm }: IAdminActionProps) => {
 
     if (formContent === uBT) {
       const ls = getLocalStorageItem(adm);
-      // console.log('blogSelect ls', blogSelect, ls);
       ls && blogSelect && getTagsByBlog(ls.token, blogSelect.value);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blogSelect]);
+
+  const clearStates = () => {
+    blogSelect && setBlogSelect(null);
+    authorSelect && setAuthorSelect(null);
+    blogTags?.length && setBlogTags([]);
+  };
 
   const getAdmins = async (token: string) => {
     const { data } = await getAllAdmins({ variables: { token } });
@@ -132,7 +139,7 @@ const AdminAction = ({ formContent, title, closeForm }: IAdminActionProps) => {
 
   const getTagsByBlog = async (token: string, blog: string) => {
     const { data } = await getBlogTags({
-      variables: { token, blog },
+      variables: { token, blog }
     });
 
     // console.log('data', data, blogSelect);
@@ -146,7 +153,7 @@ const AdminAction = ({ formContent, title, closeForm }: IAdminActionProps) => {
   const createAdmin = async (AddAuthorInput: any) => {
     try {
       const { data } = await addAdmin({
-        variables: { input: AddAuthorInput },
+        variables: { input: AddAuthorInput }
       });
 
       console.log(1, 'sent data', AddAuthorInput);
@@ -172,7 +179,7 @@ const AdminAction = ({ formContent, title, closeForm }: IAdminActionProps) => {
   const removeAuthor = async (DelAuthorInput: any) => {
     try {
       const { data } = await deleteAuthorFromBlog({
-        variables: { input: DelAuthorInput },
+        variables: { input: DelAuthorInput }
       });
 
       console.log(1, 'sent data', DelAuthorInput);
@@ -190,7 +197,7 @@ const AdminAction = ({ formContent, title, closeForm }: IAdminActionProps) => {
   const addAuthor = async (AddAuthorInput: any) => {
     try {
       const { data } = await addAuthorToBlogGql({
-        variables: { input: AddAuthorInput },
+        variables: { input: AddAuthorInput }
       });
 
       console.log(1, 'sent data', AddAuthorInput);
@@ -223,19 +230,19 @@ const AdminAction = ({ formContent, title, closeForm }: IAdminActionProps) => {
         blog: blog?.value,
         author: authorName,
         credentials: { login, password },
-        token: ls.token || '',
+        token: ls.token || ''
       };
 
       const DelAuthorInput = {
         blog: blogSelect?.value,
         author: authorSelect?.value,
-        token: ls.token || '',
+        token: ls.token || ''
       };
 
       const AddAuthorInput = {
         blog: blogSelect?.value,
         author: authorSelect?.value,
-        token: ls.token || '',
+        token: ls.token || ''
       };
 
       const curInput =
@@ -313,10 +320,8 @@ const AdminAction = ({ formContent, title, closeForm }: IAdminActionProps) => {
 
   // if (addLoading) return <Spinner />;
 
-  // console.log('formContent', formContent);
-
   return (
-    <>
+    <div className={s.actionsWrap}>
       {formContent === addNewAuthor ? (
         <AddNewAuthor
           handleSubmit={handleSubmit}
@@ -375,7 +380,7 @@ const AdminAction = ({ formContent, title, closeForm }: IAdminActionProps) => {
           blogTags={blogTags}
         />
       ) : null}
-    </>
+    </div>
   );
 };
 

@@ -1,6 +1,17 @@
 @import '../../../../styles/mixins';
 @import '../../../../theme/index';
 
+.actionsWrap {
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+
+  > div {
+    pointer-events: auto;
+  }
+}
+
 .blogTagsWrap {
   display: flex;
   flex-wrap: wrap;

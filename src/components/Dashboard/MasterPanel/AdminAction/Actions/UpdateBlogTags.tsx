@@ -31,24 +31,21 @@ const UpdateBlogTags = ({
   options,
   blogSelect,
   setBlogSelect,
-  blogTags,
+  blogTags
 }: IUpdateBlogTagsProps) => {
   const [localTags, setLocalTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string | null>(null);
   const [inputValueWidth, setInputValueWidth] = useState<number>(20);
   const [isErr, setIsErr] = useState<boolean>(false);
 
-  // console.log(11, blogSelect);
-
   const contentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const ref = contentRef.current;
-    ref && console.log('ref', ref.clientWidth);
     ref && setInputValueWidth(ref?.clientWidth);
   });
 
-  console.log('inputValueWidth', inputValueWidth);
+  // console.log('inputValueWidth', inputValueWidth);
 
   useEffect(() => {
     setLocalTags(blogTags);
@@ -74,7 +71,8 @@ const UpdateBlogTags = ({
     isErr && setIsErr(false);
   };
 
-  console.log('localTags ---->', localTags);
+  // console.log('blogTags:', blogTags);
+  // console.log('localTags ---->', localTags);
 
   const isReadyToSubmit = () => inputValue && inputValue?.length > 1;
   const isNewTag = (tag: string) => (blogTags.includes(tag) ? '' : 'new');
