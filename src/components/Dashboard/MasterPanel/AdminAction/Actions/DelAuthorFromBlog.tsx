@@ -1,4 +1,4 @@
-import { ApolloError } from '@apollo/client';
+// import { ApolloError } from '@apollo/client';
 import FormHandler from '../../../../FormHandler';
 import InputSelect from '../../../../FormHandler/InputSelect';
 import Button from '../../../../Button';
@@ -11,7 +11,9 @@ export interface IDelAuthorFromBlogProps {
   title: string;
   closeForm: (s: string) => void;
   isSubmitError: boolean;
-  apolloError: ApolloError | undefined;
+  apolloError: string;
+  // apolloError: ApolloError | undefined;
+  apolloLoading: boolean;
   isSuccess: boolean;
   options: any;
   authorSelect: ISelectOption | null;
@@ -31,12 +33,13 @@ const DelAuthorFromBlog = ({
   closeForm,
   isSubmitError,
   apolloError,
+  apolloLoading,
   isSuccess,
   options,
   authorSelect,
   setAuthorSelect,
   blogSelect,
-  setBlogSelect,
+  setBlogSelect
 }: IDelAuthorFromBlogProps) => {
   const [currentOpts, setCurrentOpts] = useState<ISelectOption[]>([]);
 
@@ -59,7 +62,7 @@ const DelAuthorFromBlog = ({
           title={title}
           closeForm={closeForm}
           isSubmitError={isSubmitError}
-          apolloError={apolloError || null}
+          apolloError={apolloError}
           isSuccess={isSuccess}
         >
           <InputSelect
@@ -76,10 +79,7 @@ const DelAuthorFromBlog = ({
             placeholder={currentOpts.length ? 'Blog' : '...'}
           />
 
-          <Button
-            type={'submit'}
-            // disabled={loading}
-          >
+          <Button type={'submit'} disabled={apolloLoading}>
             {cfg.submitButton.delete}
           </Button>
         </FormHandler>

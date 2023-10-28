@@ -11,7 +11,7 @@ const FormHandler = ({
   closeForm,
   isSubmitError,
   apolloError,
-  isSuccess,
+  isSuccess
 }: IFormHandlerProps) => {
   return (
     <div className={`${s.formWrap}`}>
@@ -30,9 +30,9 @@ const FormHandler = ({
 
       {apolloError && (
         <p className={s.submitError}>
-          {apolloError.message === 'Access denied!'
+          {apolloError === 'Access denied!'
             ? 'Wrong login or password!'
-            : `${apolloError.message}`}
+            : `${apolloError}`}
         </p>
       )}
     </div>

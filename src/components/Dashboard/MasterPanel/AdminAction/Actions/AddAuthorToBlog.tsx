@@ -1,4 +1,4 @@
-import { ApolloError } from '@apollo/client';
+// import { ApolloError } from '@apollo/client';
 import { ISelectOption } from '../../../../../interfaces';
 import cfg from '../../config/masterPanel.config';
 import FormHandler from '../../../../FormHandler';
@@ -10,7 +10,9 @@ export interface IAddAuthorToBlogProps {
   title: string;
   closeForm: (s: string) => void;
   isSubmitError: boolean;
-  apolloError: ApolloError | undefined;
+  apolloError: string;
+  // apolloError: ApolloError | undefined;
+  apolloLoading: boolean;
   isSuccess: boolean;
   options: any;
   authorSelect: ISelectOption | null;
@@ -25,12 +27,13 @@ const AddAuthorToBlog = ({
   closeForm,
   isSubmitError,
   apolloError,
+  apolloLoading,
   isSuccess,
   options,
   authorSelect,
   setAuthorSelect,
   blogSelect,
-  setBlogSelect,
+  setBlogSelect
 }: IAddAuthorToBlogProps) => {
   return (
     <>
@@ -40,7 +43,7 @@ const AddAuthorToBlog = ({
           title={title}
           closeForm={closeForm}
           isSubmitError={isSubmitError}
-          apolloError={apolloError || null}
+          apolloError={apolloError}
           isSuccess={isSuccess}
         >
           <InputSelect
@@ -57,10 +60,7 @@ const AddAuthorToBlog = ({
             placeholder={'Blog'}
           />
 
-          <Button
-            type={'submit'}
-            // disabled={loading}
-          >
+          <Button type={'submit'} disabled={apolloLoading}>
             {cfg.submitButton.add}
           </Button>
         </FormHandler>

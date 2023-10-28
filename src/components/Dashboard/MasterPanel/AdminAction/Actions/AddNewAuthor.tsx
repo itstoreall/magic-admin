@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import { ApolloError } from '@apollo/client';
+// import { ApolloError } from '@apollo/client';
 import FormHandler from '../../../../FormHandler';
 import InputSelect from '../../../../FormHandler/InputSelect';
 import Input from '../../../../FormHandler/Input';
@@ -12,7 +12,9 @@ export interface IAddNewAuthorProps {
   title: string;
   closeForm: (s: string) => void;
   isSubmitError: boolean;
-  apolloError: ApolloError | null;
+  apolloError: string;
+  // apolloError: ApolloError | null;
+  apolloLoading: boolean;
   isSuccess: boolean;
   options: any;
   blog: ISelectOption | null;
@@ -29,6 +31,7 @@ const AddNewAuthor = ({
   closeForm,
   isSubmitError,
   apolloError,
+  apolloLoading,
   isSuccess,
   options,
   blog,
@@ -36,7 +39,7 @@ const AddNewAuthor = ({
   authorName,
   handleInput,
   login,
-  password,
+  password
 }: IAddNewAuthorProps) => {
   return (
     <FormHandler
@@ -44,7 +47,7 @@ const AddNewAuthor = ({
       title={title}
       closeForm={closeForm}
       isSubmitError={isSubmitError}
-      apolloError={apolloError || null}
+      apolloError={apolloError}
       isSuccess={isSuccess}
     >
       <InputSelect
@@ -78,10 +81,7 @@ const AddNewAuthor = ({
         handleInput={handleInput}
       />
 
-      <Button
-        type={'submit'}
-        // disabled={loading}
-      >
+      <Button type={'submit'} disabled={apolloLoading}>
         {cfg.submitButton.add}
       </Button>
     </FormHandler>

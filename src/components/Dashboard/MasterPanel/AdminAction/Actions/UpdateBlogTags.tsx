@@ -1,24 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ApolloError } from '@apollo/client';
+// import { ApolloError } from '@apollo/client';
 import { ISelectOption } from '../../../../../interfaces';
 import cfg from '../../config/masterPanel.config';
 import FormHandler from '../../../../FormHandler';
 import InputSelect from '../../../../FormHandler/InputSelect';
+import { useEffect, useRef, useState } from 'react';
 import Button from '../../../../Button';
 import s from '../AdminAction.module.scss';
-import { useEffect, useRef, useState } from 'react';
+import { BlogTagsType } from '../../types';
 
 export interface IUpdateBlogTagsProps {
   handleSubmit(e: React.FormEvent): void;
   title: string;
   closeForm: (s: string) => void;
   isSubmitError: boolean;
-  apolloError: ApolloError | undefined;
+  apolloError: string;
+  // apolloError: ApolloError | undefined;
+  apolloLoading: boolean;
   isSuccess: boolean;
   options: any;
   blogSelect: ISelectOption | null;
   setBlogSelect(opt: ISelectOption | null): void;
-  blogTags: string[];
+  blogTags: BlogTagsType;
+  localTags: BlogTagsType;
+  setLocalTags: (s: BlogTagsType) => void;
 }
 
 const UpdateBlogTags = ({
@@ -27,13 +32,15 @@ const UpdateBlogTags = ({
   closeForm,
   isSubmitError,
   apolloError,
+  apolloLoading,
   isSuccess,
   options,
   blogSelect,
   setBlogSelect,
-  blogTags
+  blogTags,
+  localTags,
+  setLocalTags
 }: IUpdateBlogTagsProps) => {
-  const [localTags, setLocalTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string | null>(null);
   const [inputValueWidth, setInputValueWidth] = useState<number>(20);
   const [isErr, setIsErr] = useState<boolean>(false);
@@ -129,7 +136,7 @@ const UpdateBlogTags = ({
           title={title}
           closeForm={closeForm}
           isSubmitError={isSubmitError}
-          apolloError={apolloError || null}
+          apolloError={apolloError}
           isSuccess={isSuccess}
         >
           <InputSelect
@@ -153,10 +160,7 @@ const UpdateBlogTags = ({
             )}
           </div>
 
-          <Button
-            type={'submit'}
-            // disabled={loading}
-          >
+          <Button type={'submit'} disabled={apolloLoading}>
             {cfg.submitButton.add}
           </Button>
         </FormHandler>

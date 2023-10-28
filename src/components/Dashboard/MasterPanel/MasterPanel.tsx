@@ -53,7 +53,8 @@ const MasterAdminPanel = () => {
           width: '100%',
           maxWidth: '322px',
           transform: 'translate(-50%, -50%)',
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          zIndex: 1
         }}
       >
         <AdminAction
