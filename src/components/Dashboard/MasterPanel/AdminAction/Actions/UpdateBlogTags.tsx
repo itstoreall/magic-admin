@@ -7,7 +7,7 @@ import InputSelect from '../../../../FormHandler/InputSelect';
 import { useEffect, useRef, useState } from 'react';
 import Button from '../../../../Button';
 import s from '../AdminAction.module.scss';
-import { BlogTagsType } from '../../types';
+// import { BlogTagsType } from '../../types';
 
 export interface IUpdateBlogTagsProps {
   handleSubmit(e: React.FormEvent): void;
@@ -21,9 +21,9 @@ export interface IUpdateBlogTagsProps {
   options: any;
   blogSelect: ISelectOption | null;
   setBlogSelect(opt: ISelectOption | null): void;
-  blogTags: BlogTagsType;
-  localTags: BlogTagsType;
-  setLocalTags: (s: BlogTagsType) => void;
+  blogTags: string[];
+  localTags: string[];
+  setLocalTags: (arr: string[]) => void;
 }
 
 const UpdateBlogTags = ({

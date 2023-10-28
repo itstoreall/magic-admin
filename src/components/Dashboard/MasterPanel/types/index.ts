@@ -1,7 +1,5 @@
 import { ISelectOption } from '../../../../interfaces';
 
-export type BlogTagsType = string[];
-
 export interface IDelAuthorFromBlog {
   admins: ISelectOption[];
   blogs: { [key: string]: ISelectOption[] };
