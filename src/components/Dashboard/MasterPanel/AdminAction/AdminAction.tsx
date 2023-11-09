@@ -99,7 +99,6 @@ const AdminAction = ({
 
     if (formContent === uBT) {
       const ls = getLocalStorageItem(adm);
-      console.log('---- rrr --->', blogSelect);
       ls && blogSelect && getTagsByBlog(ls.token, blogSelect.value);
       // ls && blogSelect && refetch();
     }
@@ -109,10 +108,6 @@ const AdminAction = ({
   useEffect(() => {
     apolloError && setErrMessage(apolloError);
   }, [apolloError]);
-
-  console.log('');
-  // console.log('apolloError', apolloError);
-  console.log('loading', loading);
 
   // ------ actions:
 
@@ -196,119 +191,6 @@ const AdminAction = ({
 
     errMessage && setErrMessage('');
   };
-
-  // console.log(2, blogSelect);
-  // console.log(2, blogTags);
-
-  // const getAdmins = async (token: string) => {
-  //   const { data } = await getAllAdmins({ variables: { token } });
-  //   if (data) {
-  //     const cleanedData = removeDataTypename(data.getAllAdmins);
-  //     data && setAllAdmins(cleanedData as t.IAllAdmsRes[]);
-  //   }
-  // };
-
-  // const getBlogs = async (token: string) => {
-  //   const { data } = await getAllBlogs({ variables: { token } });
-
-  //   if (data) {
-  //     const cleanedData = removeDataTypename(data.getAllBlogs);
-  //     data && setAllBlogs(cleanedData as t.IAllBlogsRes[]);
-  //   }
-  // };
-
-  // const getTagsByBlog = async (token: string, blog: string) => {
-  //   const { data } = await getBlogTags({
-  //     variables: { token, blog }
-  //   });
-
-  //   // console.log('data', data, blogSelect);
-
-  //   if (data) {
-  //     // console.log('data ->>>>', data.getBlogTags.tags);
-  //     setBlogTags(data.getBlogTags.tags);
-  //   }
-  // };
-
-  // const createAdmin = async (input: any) => {
-  //   try {
-  //     const { data } = await addAdmin({
-  //       variables: { input }
-  //     });
-
-  //     console.log(1, 'sent data', input);
-
-  //     if (data) {
-  //       console.log(1, 'got addNewAuthor data:', data);
-
-  //       const { name, blogs, coauthors } = data.addNewAuthor;
-
-  //       if (
-  //         authorName === name &&
-  //         blogs.includes(blog?.value) &&
-  //         coauthors.includes(name)
-  //       ) {
-  //         setIsSuccess(true);
-  //       }
-  //     }
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
-
-  // const removeAuthor = async (input: any) => {
-  //   try {
-  //     const { data } = await delAuthor({
-  //       variables: { input }
-  //     });
-
-  //     console.log(1, 'sent data', input);
-
-  //     if (data) {
-  //       console.log(1, 'got delAuthorFromBlog res:', data.deleteAuthorFromBlog);
-
-  //       data.deleteAuthorFromBlog && setIsSuccess(true);
-  //     }
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
-
-  // const addAuthor = async (input: any) => {
-  //   try {
-  //     const { data } = await addAuthorGql({
-  //       variables: { input }
-  //     });
-
-  //     console.log(1, 'sent data', input);
-
-  //     if (data) {
-  //       console.log(1, 'got addAuthorToBlog res:', data.addAuthorToBlog);
-
-  //       data.addAuthorToBlog && setIsSuccess(true);
-  //     }
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
-
-  // const updateTags = async (input: any) => {
-  //   try {
-  //     const { data } = await updTags({
-  //       variables: { input }
-  //     });
-
-  //     console.log(1, 'sent data', input);
-
-  //     if (data) {
-  //       console.log(1, 'got updateBlogTags res:', data.addAuthorToBlog);
-
-  //       data.addAuthorToBlog && setIsSuccess(true);
-  //     }
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
 
   const handleInput = (event: any) => {
     const { name, value } = event.target;
