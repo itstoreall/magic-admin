@@ -29,7 +29,7 @@ const DAFB = DELETE_AUTHOR_FROM_BLOG;
 const AATB = ADD_AUTHOR_TO_BLOG;
 const UBT = UPDATE_BLOG_TAGS;
 
-const useAdminActions = () => {
+const useActions = () => {
   const [errMessage, setErrMessage] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -99,4 +99,4 @@ const useAdminActions = () => {
   return { action: handleActions, refetch, error: errMessage, loading };
 };
 
-export default useAdminActions;
+export default useActions;

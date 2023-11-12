@@ -4,7 +4,9 @@ import { useMutation, useQuery } from '@apollo/client';
 import { IEditArticleProps } from '../../../../interfaces/editArticles';
 import { IArticleElement } from '../../../../interfaces';
 import { useGlobalContext } from '../../../../context/GlobalContext';
+import useActions from '../../../../hooks/useActions';
 import { ArticleHandlerContext } from '../../../../context/ArticleHandlerContext';
+import { actionLabels } from '../../../../config';
 import ADD_ARTICLE from '../../../../gql/addArticle';
 import EDIT_ARTICLE from '../../../../gql/editArticle';
 import GET_ARTICLES from '../../../../gql/getArticles';
@@ -17,15 +19,18 @@ import Delete from '../../../../assets/icons/Delete';
 import { middleDark, colorGreen } from '../../../../theme';
 import Reset from '../../../../assets/icons/Reset';
 import HeaderFields from './HeaderFields';
+// import Tags from './Tags';
 import ArticleEditor from './ArticleEditor';
 import ArticleDetails from './ArticleDetails';
 import Success from '../../../../assets/icons/Success';
 import * as utils from './utils';
+import getLocalStorageItem from '../../../../utils/getLocalStorageItem';
 
 const fls_add = constants.ARTICLE_HEADER_FIELDS_ADD;
 const art_add = constants.ARTICLE_ELEMENTS_ADD;
 const fls_edit = constants.ARTICLE_HEADER_FIELDS_EDIT;
 const art_edit = constants.ARTICLE_ELEMENTS_EDIT;
+const adm = process.env.REACT_APP_ADMIN_ACCESS;
 
 const ArticleHandler = ({ article }: IEditArticleProps) => {
   const [title, setTitle] = useState<string>('');
@@ -33,10 +38,13 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   const [author, setAuthor] = useState<string>('');
   const [imageData, setImageData] = useState<string>('');
   const [ipfs, setIpfs] = useState<string>('');
+  const [tags, setTags] = useState<string[] | null>(null);
   const [textareaValue, setTextareaValue] = useState('');
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [articleElements, setArticleElements] = useState<IArticleElement[]>([]);
   const [submitError, setSubmitError] = useState<string>('');
+
+  console.log(11, tags);
 
   const [isReset, setIsReset] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
@@ -50,8 +58,10 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     isUpdatedArt,
     setIsUpdatedArt,
     isPreview,
-    setIsPreview,
+    setIsPreview
   } = useGlobalContext();
+
+  const { action } = useActions(); // refetch, error: apolloError, loading
 
   const handleClickReset = () => setIsReset(!isReset);
   const handleClickDelete = () => setIsDelete(!isDelete);
@@ -64,8 +74,24 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     useMutation(DELETE_ARTICLE);
 
   const { refetch: getArticles } = useQuery(GET_ARTICLES, {
-    variables: { blog: access?.blog },
+    variables: { blog: access?.blog }
   });
+
+  const getTagsByBlog = async () => {
+    if (!adm) return;
+    const ls = getLocalStorageItem(adm);
+    const data = await action(actionLabels.getBlogTags, {
+      token: ls.token,
+      blog: ls.blog
+    });
+
+    if (data) return setTags(data.getBlogTags);
+  };
+
+  useEffect(() => {
+    getTagsByBlog();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const clearStates = () => {
     setImageData('');
@@ -180,7 +206,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
         articleElements,
         setArticleElements,
         submitError,
-        setSubmitError,
+        setSubmitError
       }}
     >
       {!isDeletedArt ? (
@@ -213,7 +239,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                               deleteArticle,
                               setIsDeletedArt,
                               getArticles,
-                              setArticles,
+                              setArticles
                             })
                           }
                         >
@@ -234,6 +260,34 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                 {!isPreview ? (
                   <>
                     <HeaderFields label={label} />
+                    {/* <Tags
+                      tags={[
+                        'dwedwdwdwe',
+                        'dwedw',
+                        'dwedwde',
+                        'dwedwdwdwedwdwe',
+                        'dwe',
+                        'dwedwdw',
+                        'dwedwdwdwedwdwe',
+                        'dwedwdwdwedw',
+                        'dwedwdwe',
+                        'dwwdwe',
+                        'dwedwdwdwefff',
+                        'dwedwdwdwc',
+                        'dwedwd',
+                        'dwewdwe',
+                        'dwedwwdwe',
+                        'dwewe',
+                        'dwedwdwd',
+                        'dwedwdwdwe',
+                        'dwedwdwdwedwdwe',
+                        'dwedwdwdwef',
+                        'dwedwdw',
+                        'dwedwdwdweff',
+                        'dwedwdwdw'
+                      ]}
+                    /> */}
+                    {/* <Tags tags={tags ? tags : null} /> */}
                     <ArticleEditor />
                   </>
                 ) : (
@@ -270,7 +324,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                       setIsUpdatedArt,
                       clearStates,
                       getArticles,
-                      setArticles,
+                      setArticles
                     })
                   }
                   disabled={addLoad || editLoad || delLoad}

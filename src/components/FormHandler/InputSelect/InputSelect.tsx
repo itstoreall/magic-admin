@@ -13,7 +13,7 @@ const InputSelect = ({
   options,
   selectedValue,
   setSelectedValue,
-  placeholder,
+  placeholder
 }: IISP) => {
   const handleChange = (selectedOption: ISO | null) => {
     setSelectedValue(selectedOption);
@@ -22,7 +22,7 @@ const InputSelect = ({
   const customSelectStyles: StylesConfig<ISO, false> = {
     container: base => ({
       ...base,
-      marginBottom: '20px',
+      marginBottom: '20px'
     }),
     control: (base, state) => ({
       ...base,
@@ -37,37 +37,37 @@ const InputSelect = ({
         : theme.reactBackground,
       cursor: 'pointer',
       '&:hover': {
-        borderBottomColor: theme.middleDark,
-      },
+        borderBottomColor: theme.middleDark
+      }
     }),
     input: (base, state) => ({
       ...base,
       outline: state.isMulti ? theme.reactBackground : theme.reactBackground,
       color: theme.light,
-      caretColor: theme.middleDark,
+      caretColor: theme.middleDark
     }),
     singleValue: base => ({
       ...base,
       outline: 'none',
-      color: theme.light,
+      color: theme.light
     }),
     valueContainer: base => ({
-      ...base,
+      ...base
     }),
     placeholder: (base, state) => ({
       ...base,
-      color: state.isFocused ? theme.middleDark : theme.middleDark,
+      color: state.isFocused ? theme.middleDark : theme.middleDark
     }),
     indicatorSeparator: base => ({
       ...base,
-      backgroundColor: theme.reactBackground,
+      backgroundColor: theme.reactBackground
     }),
     dropdownIndicator: base => ({
       ...base,
       color: theme.middleDark,
       '&:hover': {
-        color: theme.middleGreyHover,
-      },
+        color: theme.middleGreyHover
+      }
     }),
     menu: base => ({
       ...base,
@@ -76,12 +76,12 @@ const InputSelect = ({
       boxShadow: 'none',
       borderRadius: 0,
       opacity: 1,
-      backgroundColor: 'transparance',
+      backgroundColor: 'transparance'
     }),
     menuList: base => ({
       ...base,
       padding: 0,
-      backgroundColor: theme.reactBackground,
+      backgroundColor: theme.reactBackground
     }),
     option: (base, state) => ({
       ...base,
@@ -93,18 +93,18 @@ const InputSelect = ({
         ? theme.middleGreyHover
         : theme.middleGreyHover,
       '&:active': {
-        backgroundColor: theme.reactBackground,
+        backgroundColor: theme.reactBackground
       },
       color: state.isSelected ? theme.reactBackground : theme.reactBackground,
       textAlign: 'left',
       cursor: 'pointer',
       '&:not(:last-child)': {
-        borderBottom: `1px solid ${theme.reactBackground}`,
+        borderBottom: `1px solid ${theme.reactBackground}`
       },
       '&:hover': {
-        backgroundColor: theme.contrastDark,
-      },
-    }),
+        backgroundColor: theme.contrastDark
+      }
+    })
   };
 
   return (
@@ -115,7 +115,7 @@ const InputSelect = ({
       onChange={handleChange}
       value={selectedValue}
       components={{
-        NoOptionsMessage: NoOptions,
+        NoOptionsMessage: NoOptions
       }}
       // isDisabled={true}
     />

@@ -1,8 +1,9 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
-import useAdminActions from '../../../../hooks/useAdminActions';
+import useActions from '../../../../hooks/useActions';
 import { ISelectOption as ISO } from '../../../../interfaces';
 import setUpperFirstChar from '../../../../utils/setUpperFirstChar';
 // import Spinner from '../../../Loading/Spinner';
+import { actionLabels } from '../../../../config';
 import cfg from '../config/masterPanel.config';
 import AddNewAuthor from './Actions/AddNewAuthor';
 import DelAuthorFromBlog from './Actions/DelAuthorFromBlog';
@@ -12,16 +13,6 @@ import UpdateBlogTags from './Actions/UpdateBlogTags';
 import getLocalStorageItem from '../../../../utils/getLocalStorageItem';
 import s from './AdminAction.module.scss';
 import * as t from '../types';
-
-const actionLabels = {
-  getAllAdmins: 'get_all_admins',
-  getAllBlogs: 'get_all_blogs',
-  getBlogTags: 'get_blog_tags',
-  addAdmin: 'add_admin',
-  delAuthor: 'delete_author',
-  addAuthor: 'add_author',
-  updateTags: 'update_tags'
-};
 
 const opts = process.env.REACT_APP_OPTIONS;
 const adm = process.env.REACT_APP_ADMIN_ACCESS;
@@ -47,7 +38,7 @@ const AdminAction = ({
   const [blogTags, setBlogTags] = useState<string[]>([]);
   const [localTags, setLocalTags] = useState<string[]>([]);
 
-  const { action, refetch, error: apolloError, loading } = useAdminActions();
+  const { action, refetch, error: apolloError, loading } = useActions();
 
   /*
   console.log('');

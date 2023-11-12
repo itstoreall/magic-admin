@@ -1,0 +1,47 @@
+@import '../../../../../styles/vars';
+@import '../../../../../styles/_mixins';
+
+.tagsBlock {
+  @include marginB(20px);
+  @include padding(15px 15px 20px);
+  @include border(1px solid $middleDark);
+  border-radius: 6px;
+
+  @include mediaScreen('min', $tablet) {
+    @include display(flex);
+    @include padding(20px);
+  }
+
+  .selectWrap {
+    width: 100%;
+
+    @include mediaScreen('max', $tablet - 0.1) {
+      @include marginB(20px);
+    }
+
+    @include mediaScreen('min', $tablet) {
+      @include marginR(20px);
+      max-width: 250px;
+    }
+
+    > div {
+      margin-bottom: 0;
+    }
+  }
+
+  .tagsWrap {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    > span.tagBox {
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+
+      > span.tag {
+        color: $middleLight;
+      }
+    }
+  }
+}
