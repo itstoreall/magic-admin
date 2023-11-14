@@ -21,7 +21,7 @@
 
     @include mediaScreen('min', $tablet) {
       @include marginR(20px);
-      max-width: 250px;
+      max-width: 220px;
     }
 
     > div {
@@ -35,12 +35,33 @@
     flex-wrap: wrap;
 
     > span.tagBox {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      text-transform: uppercase;
+
       &:not(:last-child) {
-        margin-right: 10px;
+        margin-right: 15px;
       }
 
       > span.tag {
         color: $middleLight;
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      > span.closeButton {
+        display: block;
+        width: 10px;
+        height: 10px;
+        background-color: $paleColor;
+        border-radius: 50%;
+        opacity: 0.6;
+
+        &:hover {
+          cursor: pointer;
+          opacity: 1;
+        }
       }
     }
   }

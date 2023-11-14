@@ -19,7 +19,7 @@ import Delete from '../../../../assets/icons/Delete';
 import { middleDark, colorGreen } from '../../../../theme';
 import Reset from '../../../../assets/icons/Reset';
 import HeaderFields from './HeaderFields';
-// import Tags from './Tags';
+import Tags from './Tags';
 import ArticleEditor from './ArticleEditor';
 import ArticleDetails from './ArticleDetails';
 import Success from '../../../../assets/icons/Success';
@@ -39,6 +39,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   const [imageData, setImageData] = useState<string>('');
   const [ipfs, setIpfs] = useState<string>('');
   const [tags, setTags] = useState<string[] | null>(null);
+  const [localTags, setLocalTags] = useState<string[] | null>(null);
   const [textareaValue, setTextareaValue] = useState('');
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [articleElements, setArticleElements] = useState<IArticleElement[]>([]);
@@ -287,7 +288,11 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                         'dwedwdwdw'
                       ]}
                     /> */}
-                    {/* <Tags tags={tags ? tags : null} /> */}
+                    <Tags
+                      tags={tags ? tags : null}
+                      localTags={localTags}
+                      setLocalTags={setLocalTags}
+                    />
                     <ArticleEditor />
                   </>
                 ) : (
