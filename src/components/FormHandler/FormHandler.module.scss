@@ -26,9 +26,27 @@
       @include position(absolute);
       top: 0;
       right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 25px;
       height: 25px;
       cursor: pointer;
+
+      &::after {
+        content: '';
+        display: block;
+        width: 10px;
+        height: 10px;
+        background-color: $paleColor;
+        border-radius: 50%;
+        opacity: 0.6;
+      }
+
+      &:hover::after {
+        cursor: pointer;
+        opacity: 1;
+      }
     }
 
     .title {
