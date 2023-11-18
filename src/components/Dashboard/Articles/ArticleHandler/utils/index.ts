@@ -92,6 +92,7 @@ export const handleSubmit = async (blog: string, args: ISubmit) => {
     ipfs,
     title,
     description,
+    tags,
     author,
     setSubmitError,
     label,
@@ -111,9 +112,9 @@ export const handleSubmit = async (blog: string, args: ISubmit) => {
     ipfs: ipfs,
     title: title,
     description: description,
+    tags: tags,
     author: author,
-    text: text,
-    tags: ['magic']
+    text: text
   };
 
   const addArticleInput = {

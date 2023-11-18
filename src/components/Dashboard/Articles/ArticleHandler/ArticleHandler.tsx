@@ -45,7 +45,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   const [articleElements, setArticleElements] = useState<IArticleElement[]>([]);
   const [submitError, setSubmitError] = useState<string>('');
 
-  console.log(11, tags);
+  // console.log(11, tags);
 
   const [isReset, setIsReset] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
@@ -261,38 +261,13 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                 {!isPreview ? (
                   <>
                     <HeaderFields label={label} />
-                    {/* <Tags
-                      tags={[
-                        'dwedwdwdwe',
-                        'dwedw',
-                        'dwedwde',
-                        'dwedwdwdwedwdwe',
-                        'dwe',
-                        'dwedwdw',
-                        'dwedwdwdwedwdwe',
-                        'dwedwdwdwedw',
-                        'dwedwdwe',
-                        'dwwdwe',
-                        'dwedwdwdwefff',
-                        'dwedwdwdwc',
-                        'dwedwd',
-                        'dwewdwe',
-                        'dwedwwdwe',
-                        'dwewe',
-                        'dwedwdwd',
-                        'dwedwdwdwe',
-                        'dwedwdwdwedwdwe',
-                        'dwedwdwdwef',
-                        'dwedwdw',
-                        'dwedwdwdweff',
-                        'dwedwdwdw'
-                      ]}
-                    /> */}
+
                     <Tags
                       tags={tags ? tags : null}
                       localTags={localTags}
                       setLocalTags={setLocalTags}
                     />
+
                     <ArticleEditor />
                   </>
                 ) : (
@@ -320,6 +295,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                       ipfs,
                       title,
                       description,
+                      tags: localTags || [],
                       author,
                       setSubmitError,
                       label,

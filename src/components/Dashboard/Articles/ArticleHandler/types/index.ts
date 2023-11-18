@@ -55,6 +55,7 @@ export interface ISubmit extends IOne {
   ipfs: string;
   title: string;
   description: string;
+  tags: string[];
   author: string;
   setSubmitError(s: string): void;
   label: string;
