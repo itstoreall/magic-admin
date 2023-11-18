@@ -5,10 +5,13 @@ import setUpperFirstChar from '../../../../../utils/setUpperFirstChar';
 import { SelectOption } from '../../../../../types';
 
 type TagsProps = {
-  tags: string[] | null;
+  blogTags: string[] | null;
+  articleTags: string[] | null;
   localTags: string[] | null;
   setLocalTags: (s: string[]) => void;
 };
+
+type OptionsType = SetStateAction<SelectOption[] | null>;
 
 const labels = {
   init: 'init',
@@ -16,16 +19,25 @@ const labels = {
   remove: 'remove'
 };
 
-const Tags = ({ tags, localTags, setLocalTags }: TagsProps) => {
+const Tags = ({
+  blogTags,
+  articleTags,
+  localTags,
+  setLocalTags
+}: TagsProps) => {
   const [options, setOptions] = useState<SelectOption[] | null>(null);
   const [selectedOption, setSelectedOption] = useState<SelectOption | null>(
     null
   );
 
   useEffect(() => {
-    tags && updateOptions(labels.init, tags, '');
+    if (blogTags && articleTags) {
+      blogTags && updateOptions(labels.init, blogTags, '');
+      setLocalTags(articleTags);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tags]);
+  }, [blogTags, articleTags]);
 
   useEffect(() => {
     if (selectedOption) {
@@ -34,7 +46,7 @@ const Tags = ({ tags, localTags, setLocalTags }: TagsProps) => {
         : [selectedOption?.value];
 
       setLocalTags(currentTags);
-      tags && updateOptions(labels.select, tags, selectedOption?.value);
+      blogTags && updateOptions(labels.select, blogTags, selectedOption?.value);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedOption]);
@@ -44,21 +56,25 @@ const Tags = ({ tags, localTags, setLocalTags }: TagsProps) => {
     tagArr: string[],
     selectedTag: string
   ) => {
-    const options: SetStateAction<SelectOption[] | null> = [];
+    const options: OptionsType = [];
 
-    if (!tags) return;
+    if (!blogTags) return;
+
+    console.log('articleTags', articleTags);
 
     if (label === labels.init || label === labels.select) {
       tagArr.forEach(tag => {
+        if (label === labels.init && articleTags?.includes(tag)) return;
         if (localTags?.includes(tag)) return;
         if (tag === selectedTag) return;
+
         const optionTitle = setUpperFirstChar(tag);
         options.push({ value: tag, label: optionTitle });
       });
     }
 
     if (label === labels.remove) {
-      tags.forEach(tag => {
+      blogTags.forEach(tag => {
         if (tagArr?.includes(tag)) return;
         const optionTitle = setUpperFirstChar(tag);
         options.push({ value: tag, label: optionTitle });
@@ -72,7 +88,7 @@ const Tags = ({ tags, localTags, setLocalTags }: TagsProps) => {
   const removeTagFromLocals = (tag: string) => {
     const options: SetStateAction<SelectOption[] | null> = [];
 
-    if (localTags && tags && options) {
+    if (localTags && blogTags && options) {
       const updatedLocalTags = localTags.filter(el => el !== tag);
       setLocalTags(updatedLocalTags);
       updateOptions('remove', updatedLocalTags, '');

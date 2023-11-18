@@ -38,7 +38,8 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   const [author, setAuthor] = useState<string>('');
   const [imageData, setImageData] = useState<string>('');
   const [ipfs, setIpfs] = useState<string>('');
-  const [tags, setTags] = useState<string[] | null>(null);
+  const [blogTags, setBlogTags] = useState<string[] | null>(null);
+  const [articleTags, setArticleTags] = useState<string[] | null>(null);
   const [localTags, setLocalTags] = useState<string[] | null>(null);
   const [textareaValue, setTextareaValue] = useState('');
   const [editIndex, setEditIndex] = useState<number | null>(null);
@@ -86,11 +87,12 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
       blog: ls.blog
     });
 
-    if (data) return setTags(data.getBlogTags);
+    if (data) return setBlogTags(data.getBlogTags);
   };
 
   useEffect(() => {
     getTagsByBlog();
+    article && setArticleTags(article?.tags);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -99,6 +101,8 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     setIpfs('');
     setTitle('');
     setDescription('');
+    setBlogTags(null);
+    setLocalTags(null);
     setAuthor('');
     setEditIndex(null);
     setTextareaValue('');
@@ -263,7 +267,8 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                     <HeaderFields label={label} />
 
                     <Tags
-                      tags={tags ? tags : null}
+                      blogTags={blogTags}
+                      articleTags={articleTags}
                       localTags={localTags}
                       setLocalTags={setLocalTags}
                     />
