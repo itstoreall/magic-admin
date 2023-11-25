@@ -1,17 +1,26 @@
 import { SetStateAction, useEffect, useState } from 'react';
-import s from './Tags.module.scss';
-import InputSelect from '../../../../FormHandler/InputSelect';
 import setUpperFirstChar from '../../../../../utils/setUpperFirstChar';
+import InputSelect from '../../../../FormHandler/InputSelect';
 import { SelectOption } from '../../../../../types';
+import * as t from './types';
+import s from './Tags.module.scss';
 
-type TagsProps = {
-  blogTags: string[] | null;
-  articleTags: string[] | null;
-  localTags: string[] | null;
-  setLocalTags: (s: string[]) => void;
-};
+// type TagsProps = {
+//   blogTags: string[] | null;
+//   articleTags: string[] | null;
+//   localTags: string[] | null;
+//   setLocalTags: (s: string[]) => void;
+// };
 
-type OptionsType = SetStateAction<SelectOption[] | null>;
+// type OptionsType = SetStateAction<SelectOption[] | null>;
+
+// type UpdateOptionsArgs = {
+//   label: string;
+//   updatedTags: string[];
+//   selectedTag: string;
+// };
+
+// type UpdateOptions = (args: UpdateOptionsArgs) => void;
 
 const labels = {
   init: 'init',
@@ -19,23 +28,24 @@ const labels = {
   remove: 'remove'
 };
 
-const Tags = ({
-  blogTags,
-  articleTags,
-  localTags,
-  setLocalTags
-}: TagsProps) => {
+const Tags = (props: t.TagsProps) => {
   const [options, setOptions] = useState<SelectOption[] | null>(null);
   const [selectedOption, setSelectedOption] = useState<SelectOption | null>(
     null
   );
 
+  const { blogTags, articleTags, localTags, setLocalTags } = props;
+
   useEffect(() => {
     if (blogTags && articleTags) {
-      blogTags && updateOptions(labels.init, blogTags, '');
-      setLocalTags(articleTags);
+      blogTags &&
+        updateOptions({
+          label: labels.init,
+          updatedTags: blogTags,
+          selectedTag: ''
+        });
+      !localTags && setLocalTags(articleTags);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blogTags, articleTags]);
 
@@ -46,25 +56,30 @@ const Tags = ({
         : [selectedOption?.value];
 
       setLocalTags(currentTags);
-      blogTags && updateOptions(labels.select, blogTags, selectedOption?.value);
+
+      blogTags &&
+        updateOptions({
+          label: labels.select,
+          updatedTags: blogTags,
+          selectedTag: selectedOption?.value
+        });
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedOption]);
 
-  const updateOptions = (
-    label: string,
-    tagArr: string[],
-    selectedTag: string
-  ) => {
-    const options: OptionsType = [];
+  const updateOptions: t.UpdateOptions = args => {
+    const { label, updatedTags, selectedTag } = args;
+    const options: t.OptionsType = [];
+
+    console.log('updatedTags', updatedTags);
 
     if (!blogTags) return;
 
-    console.log('articleTags', articleTags);
-
     if (label === labels.init || label === labels.select) {
-      tagArr.forEach(tag => {
-        if (label === labels.init && articleTags?.includes(tag)) return;
+      updatedTags.forEach(tag => {
+        if (!localTags && label === labels.init && articleTags?.includes(tag))
+          return;
         if (localTags?.includes(tag)) return;
         if (tag === selectedTag) return;
 
@@ -75,7 +90,7 @@ const Tags = ({
 
     if (label === labels.remove) {
       blogTags.forEach(tag => {
-        if (tagArr?.includes(tag)) return;
+        if (updatedTags?.includes(tag)) return;
         const optionTitle = setUpperFirstChar(tag);
         options.push({ value: tag, label: optionTitle });
       });
@@ -89,22 +104,50 @@ const Tags = ({
     const options: SetStateAction<SelectOption[] | null> = [];
 
     if (localTags && blogTags && options) {
-      const updatedLocalTags = localTags.filter(el => el !== tag);
-      setLocalTags(updatedLocalTags);
-      updateOptions('remove', updatedLocalTags, '');
+      const updatedTags = localTags.filter(el => el !== tag);
+      setLocalTags(updatedTags);
+      console.log('updatedTags', updatedTags);
+      updateOptions({ label: 'remove', updatedTags, selectedTag: '' });
     }
   };
 
   return (
     <>
-      {options && (
+      {options ? (
         <div className={s.tagsBlock}>
           <div className={s.selectWrap}>
             <InputSelect
               options={options}
               selectedValue={selectedOption}
               setSelectedValue={setSelectedOption}
-              placeholder='Tag'
+              placeholder={!options?.length ? 'No tags' : 'Tag'}
+              disabled={!options?.length ? true : false}
+            />
+          </div>
+
+          {localTags && (
+            <div className={s.tagsWrap}>
+              {localTags.map((tag: string, idx: number) => (
+                <span key={idx} className={s.tagBox}>
+                  <span className={s.tag}>{tag}</span>
+                  <span
+                    className={s.closeButton}
+                    onClick={() => removeTagFromLocals(tag)}
+                  />
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className={s.tagsBlock}>
+          <div className={s.selectWrap}>
+            <InputSelect
+              options={[]}
+              selectedValue={selectedOption}
+              setSelectedValue={setSelectedOption}
+              placeholder={'Tag'}
+              disabled={false}
             />
           </div>
 

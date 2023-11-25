@@ -70,6 +70,7 @@ const DelAuthorFromBlog = ({
             selectedValue={authorSelect}
             setSelectedValue={setAuthorSelect}
             placeholder={'Author'}
+            disabled={false}
           />
 
           <InputSelect
@@ -77,6 +78,7 @@ const DelAuthorFromBlog = ({
             selectedValue={blogSelect}
             setSelectedValue={setBlogSelect}
             placeholder={currentOpts.length ? 'Blog' : '...'}
+            disabled={false}
           />
 
           <Button type={'submit'} disabled={apolloLoading}>

@@ -55,6 +55,7 @@ const AddNewAuthor = ({
         selectedValue={blog}
         setSelectedValue={setBlog}
         placeholder={'Blog'}
+        disabled={false}
       />
 
       <Input

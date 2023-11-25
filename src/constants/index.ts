@@ -2,6 +2,7 @@ export const ARTICLE_HEADER_FIELDS_ADD = '*_add_article_header_fields';
 export const ARTICLE_ELEMENTS_ADD = '*_add_article_elements';
 export const ARTICLE_HEADER_FIELDS_EDIT = '**_edit_article_header_fields';
 export const ARTICLE_ELEMENTS_EDIT = '**_edit_article_elements';
+// export const ARTICLE_TAGS_EDIT = '**_edit_article_tags';
 
 export const DEFAULT_PUBLIC_IMAGE = '/defaultPublicImg.jpg';
 export const IPFS_WEB3_STORAGE_DEFAULT_CID =
@@ -19,7 +20,7 @@ export const MONTHS = [
   'сен',
   'окт',
   'ноя',
-  'дек',
+  'дек'
 ];
 
 export const SITE_ASTRAIA = 'https://astraia.storeall.com.ua/';
@@ -41,7 +42,7 @@ const getIpfsUrl = (blog: string) => {
 };
 
 const fns = {
-  getIpfsUrl,
+  getIpfsUrl
 };
 
 export default fns;

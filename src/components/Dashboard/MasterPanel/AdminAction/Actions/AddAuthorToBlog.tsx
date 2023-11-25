@@ -51,6 +51,7 @@ const AddAuthorToBlog = ({
             selectedValue={authorSelect}
             setSelectedValue={setAuthorSelect}
             placeholder={'Author'}
+            disabled={false}
           />
 
           <InputSelect
@@ -58,6 +59,7 @@ const AddAuthorToBlog = ({
             selectedValue={blogSelect}
             setSelectedValue={setBlogSelect}
             placeholder={'Blog'}
+            disabled={false}
           />
 
           <Button type={'submit'} disabled={apolloLoading}>

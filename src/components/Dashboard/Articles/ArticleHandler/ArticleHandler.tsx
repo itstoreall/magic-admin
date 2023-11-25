@@ -30,6 +30,7 @@ const fls_add = constants.ARTICLE_HEADER_FIELDS_ADD;
 const art_add = constants.ARTICLE_ELEMENTS_ADD;
 const fls_edit = constants.ARTICLE_HEADER_FIELDS_EDIT;
 const art_edit = constants.ARTICLE_ELEMENTS_EDIT;
+// const tags_edit = constants.ARTICLE_TAGS_EDIT;
 const adm = process.env.REACT_APP_ADMIN_ACCESS;
 
 const ArticleHandler = ({ article }: IEditArticleProps) => {
@@ -45,8 +46,6 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [articleElements, setArticleElements] = useState<IArticleElement[]>([]);
   const [submitError, setSubmitError] = useState<string>('');
-
-  // console.log(11, tags);
 
   const [isReset, setIsReset] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
@@ -102,6 +101,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     setTitle('');
     setDescription('');
     setBlogTags(null);
+    setArticleTags(null);
     setLocalTags(null);
     setAuthor('');
     setEditIndex(null);
@@ -113,10 +113,13 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   useEffect(() => {
     localStorage.removeItem(fls_edit);
     localStorage.removeItem(art_edit);
+    // localStorage.removeItem(tags_edit);
     clearStates();
 
     if (label === 'add') {
       setImageData('');
+
+      console.log(1);
 
       const lsFields = JSON.parse(localStorage.getItem(fls_add) || 'null');
       const lsElements = JSON.parse(localStorage.getItem(art_add) || 'null');
@@ -176,6 +179,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
             : ''
         );
         setIpfs(article.ipfs);
+        setArticleTags(article.tags);
         setArticleElements(articleElements);
         setAuthor(article?.author);
       }
@@ -188,7 +192,18 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
       if (isPreview) {
         localStorage.setItem(fls_edit, JSON.stringify({ title, description }));
         localStorage.setItem(art_edit, JSON.stringify({ articleElements }));
+        // localStorage.setItem(tags_edit, JSON.stringify({ localTags }));
       }
+
+      /*
+      if (!isPreview) {
+        const lsTags = JSON.parse(localStorage.getItem(tags_edit) || 'null');
+        if (lsTags) {
+          setLocalTags(lsTags?.localTags);
+          console.log(3, lsTags?.localTags);
+        }
+      }
+      */
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPreview]);

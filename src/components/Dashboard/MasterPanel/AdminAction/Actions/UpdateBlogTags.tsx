@@ -144,6 +144,7 @@ const UpdateBlogTags = ({
             selectedValue={blogSelect}
             setSelectedValue={setBlogSelect}
             placeholder={'Blog'}
+            disabled={false}
           />
 
           <div className={s.blogTagsWrap}>

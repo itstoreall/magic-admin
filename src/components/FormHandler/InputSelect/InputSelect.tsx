@@ -13,7 +13,8 @@ const InputSelect = ({
   options,
   selectedValue,
   setSelectedValue,
-  placeholder
+  placeholder,
+  disabled
 }: IISP) => {
   const handleChange = (selectedOption: ISO | null) => {
     setSelectedValue(selectedOption);
@@ -117,7 +118,7 @@ const InputSelect = ({
       components={{
         NoOptionsMessage: NoOptions
       }}
-      // isDisabled={true}
+      isDisabled={disabled}
     />
   );
 };
