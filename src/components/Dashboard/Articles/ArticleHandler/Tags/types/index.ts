@@ -6,13 +6,15 @@ export type TagsProps = {
   articleTags: string[] | null;
   localTags: string[] | null;
   setLocalTags: (s: string[]) => void;
+  isReset: number | null;
+  handleClickReset: (v: number | null) => void;
 };
 
 export type OptionsType = SetStateAction<SelectOption[] | null>;
 
 export type UpdateOptionsArgs = {
   label: string;
-  updatedTags: string[];
+  tags: string[];
   selectedTag: string;
 };
 

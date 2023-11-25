@@ -30,7 +30,7 @@ const fls_add = constants.ARTICLE_HEADER_FIELDS_ADD;
 const art_add = constants.ARTICLE_ELEMENTS_ADD;
 const fls_edit = constants.ARTICLE_HEADER_FIELDS_EDIT;
 const art_edit = constants.ARTICLE_ELEMENTS_EDIT;
-// const tags_edit = constants.ARTICLE_TAGS_EDIT;
+const tags_edit = constants.ARTICLE_TAGS_EDIT;
 const adm = process.env.REACT_APP_ADMIN_ACCESS;
 
 const ArticleHandler = ({ article }: IEditArticleProps) => {
@@ -47,7 +47,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   const [articleElements, setArticleElements] = useState<IArticleElement[]>([]);
   const [submitError, setSubmitError] = useState<string>('');
 
-  const [isReset, setIsReset] = useState(false);
+  const [isReset, setIsReset] = useState<number | null>(null);
   const [isDelete, setIsDelete] = useState(false);
 
   const {
@@ -64,7 +64,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
 
   const { action } = useActions(); // refetch, error: apolloError, loading
 
-  const handleClickReset = () => setIsReset(!isReset);
+  const handleClickReset = (value: number | null) => setIsReset(value);
   const handleClickDelete = () => setIsDelete(!isDelete);
 
   const [addArticle, { loading: addLoad, error: addErr }] =
@@ -100,7 +100,6 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
     setIpfs('');
     setTitle('');
     setDescription('');
-    setBlogTags(null);
     setArticleTags(null);
     setLocalTags(null);
     setAuthor('');
@@ -113,51 +112,50 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   useEffect(() => {
     localStorage.removeItem(fls_edit);
     localStorage.removeItem(art_edit);
-    // localStorage.removeItem(tags_edit);
+    localStorage.removeItem(tags_edit);
     clearStates();
 
-    if (label === 'add') {
-      setImageData('');
+    if (label !== 'add') return;
 
-      console.log(1);
+    setImageData('');
 
-      const lsFields = JSON.parse(localStorage.getItem(fls_add) || 'null');
-      const lsElements = JSON.parse(localStorage.getItem(art_add) || 'null');
+    const lsFields = JSON.parse(localStorage.getItem(fls_add) || 'null');
+    const lsElements = JSON.parse(localStorage.getItem(art_add) || 'null');
 
-      access && !author && setAuthor(access?.author);
+    access && !author && setAuthor(access?.author);
 
-      if (lsFields) {
-        setTitle(lsFields.title);
-        setDescription(lsFields.description);
-      }
+    if (lsFields) {
+      setTitle(lsFields.title);
+      setDescription(lsFields.description);
+    }
 
-      if (lsElements) {
-        setArticleElements(lsElements.articleElements);
-      }
+    if (lsElements) {
+      setArticleElements(lsElements.articleElements);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [label]);
 
   useEffect(() => {
-    if (label === 'add') {
-      if (title?.length || description?.length) {
-        localStorage.setItem(
-          fls_add,
-          JSON.stringify({ title, description, author })
-        );
-      }
+    if (label !== 'add') return;
 
-      if (articleElements?.length) {
-        localStorage.setItem(art_add, JSON.stringify({ articleElements }));
-      }
-
-      access && !author && setAuthor(access?.author);
+    if (title?.length || description?.length) {
+      localStorage.setItem(
+        fls_add,
+        JSON.stringify({ title, description, author })
+      );
     }
+
+    if (articleElements?.length) {
+      localStorage.setItem(art_add, JSON.stringify({ articleElements }));
+    }
+
+    access && !author && setAuthor(access?.author);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [title, description, articleElements]);
 
   useEffect(() => {
-    if (label === 'add' && isReset) {
+    if (label === 'add' && isReset !== null) {
       localStorage.removeItem(fls_add);
       localStorage.removeItem(art_add);
       clearStates();
@@ -188,22 +186,11 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
   }, [article]);
 
   useEffect(() => {
-    if (label === 'edit') {
-      if (isPreview) {
-        localStorage.setItem(fls_edit, JSON.stringify({ title, description }));
-        localStorage.setItem(art_edit, JSON.stringify({ articleElements }));
-        // localStorage.setItem(tags_edit, JSON.stringify({ localTags }));
-      }
+    if (label !== 'edit') return;
 
-      /*
-      if (!isPreview) {
-        const lsTags = JSON.parse(localStorage.getItem(tags_edit) || 'null');
-        if (lsTags) {
-          setLocalTags(lsTags?.localTags);
-          console.log(3, lsTags?.localTags);
-        }
-      }
-      */
+    if (isPreview) {
+      localStorage.setItem(fls_edit, JSON.stringify({ title, description }));
+      localStorage.setItem(art_edit, JSON.stringify({ articleElements }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPreview]);
@@ -236,7 +223,11 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
               {label === 'add' ? (
                 <div
                   className={`${s.actionButton} ${isReset ? s.isReset : ''}`}
-                  onClick={handleClickReset}
+                  onClick={() =>
+                    handleClickReset(
+                      isReset === null ? 1 : isReset === 1 ? 0 : 1
+                    )
+                  }
                 >
                   <Reset fill={middleDark} />
                 </div>
@@ -286,6 +277,8 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                       articleTags={articleTags}
                       localTags={localTags}
                       setLocalTags={setLocalTags}
+                      isReset={isReset}
+                      handleClickReset={handleClickReset}
                     />
 
                     <ArticleEditor />
