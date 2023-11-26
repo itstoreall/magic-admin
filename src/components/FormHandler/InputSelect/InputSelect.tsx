@@ -82,7 +82,14 @@ const InputSelect = ({
     menuList: base => ({
       ...base,
       padding: 0,
-      backgroundColor: theme.reactBackground
+      backgroundColor: theme.reactBackground,
+      maxHeight: '319px',
+      scrollbarWidth: 'none',
+      '-ms-overflow-style': 'none',
+      '&::-webkit-scrollbar': {
+        display: 'none',
+        width: 0
+      }
     }),
     option: (base, state) => ({
       ...base,

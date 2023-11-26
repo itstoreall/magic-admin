@@ -1,0 +1,65 @@
+// --- position:
+
+%extends-position-absolute-top-0-right-0 {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+%extends-position-fixed-full-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100vh;
+}
+
+// --- flex:
+
+%extends-flex-x-center-y-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+%extends-flex-x-between-y-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+%extends-flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+%extends-flex-column-x-center-y-center {
+  @extend %extends-flex-column;
+  justify-content: center;
+  align-items: center;
+}
+
+// ------- transition:
+
+%extends-transition-0_3-ease-out {
+  transition: 0.3s ease-out;
+}
+
+// ------- other:
+
+%extends-hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+  }
+}
+
+%extends-box-shadow-large {
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 7px 20px, rgba(0, 0, 0, 0.1) 0px 6px 6px;
+}
+
+%extends-box-shadow-small {
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}

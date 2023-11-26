@@ -1,6 +1,6 @@
 // import { ApolloError } from '@apollo/client';
-import { ISelectOption } from '../../../../../interfaces';
 import cfg from '../../config/masterPanel.config';
+import { ISelectOption } from '../../../../../interfaces';
 import FormHandler from '../../../../FormHandler';
 import InputSelect from '../../../../FormHandler/InputSelect';
 import Button from '../../../../Button';
@@ -45,6 +45,7 @@ const AddAuthorToBlog = ({
           isSubmitError={isSubmitError}
           apolloError={apolloError}
           isSuccess={isSuccess}
+          formContent={cfg.content.addAuthorToBlog}
         >
           <InputSelect
             options={options.admins}
