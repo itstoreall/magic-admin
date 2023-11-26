@@ -23,7 +23,6 @@
 
   @include mediaScreen('min', $tablet) {
     @include left(auto);
-    // max-width: 322px;
   }
 
   .formBlock {

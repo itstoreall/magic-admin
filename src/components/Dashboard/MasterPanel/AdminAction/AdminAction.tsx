@@ -159,13 +159,6 @@ const AdminAction = ({
     }
   };
 
-  // useEffect(() => {
-  //   addAdminErr && setErrMessage(addAdminErr.message);
-  //   delAuthorErr && setErrMessage(delAuthorErr.message);
-  //   addAuthorErr && setErrMessage(addAuthorErr.message);
-  //   updateTagsErr && setErrMessage(updateTagsErr.message);
-  // }, [addAdminErr, delAuthorErr, addAuthorErr, updateTagsErr]);
-
   const clearStates = () => {
     login && setLogin('');
     password && setPassword('');
@@ -235,8 +228,6 @@ const AdminAction = ({
           ? UpdateBlogTagsInput
           : {};
 
-      // updateBlogTags;
-
       if (Object.values(curInput).some(value => !value)) {
         setIsSubmitError(true);
         return setTimeout(() => setIsSubmitError(false), 3000);
@@ -264,8 +255,6 @@ const AdminAction = ({
       // */
     }
   };
-
-  // console.log(1, 'isSuccess:', isSuccess);
 
   const setSelectOptions = () => {
     if (formContent === addNewAuthor && opts) {
@@ -307,7 +296,6 @@ const AdminAction = ({
 
     if (formContent === updateBlogTags) {
       const blogs = allBlogs?.reduce((acc: ISO[], adm) => {
-        // console.log(0, allBlogs, adm);
         const optionTitle = setUpperFirstChar(adm.title);
         acc = [...acc, { value: adm.title, label: optionTitle }];
         return acc;
@@ -319,18 +307,8 @@ const AdminAction = ({
 
   // if (addLoading) return <Spinner />;
 
-  // console.log('');
-  // console.log('addAdminLoad', addAdminLoad);
-  // console.log('addAdminLoad', addAdminLoad);
-  // console.log('delAuthorLoad', delAuthorLoad);
-  // console.log('addAuthorLoad', addAuthorLoad);
-
   return (
-    <div
-      className={`${s.actionsWrap} ${
-        s[formContent === updateBlogTags ? 'fullScreen' : '']
-      }`}
-    >
+    <div className={`${s.actionsWrap}`}>
       {formContent === addNewAuthor ? (
         <AddNewAuthor
           handleSubmit={handleSubmit}

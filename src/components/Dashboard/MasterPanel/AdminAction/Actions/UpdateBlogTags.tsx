@@ -7,7 +7,6 @@ import InputSelect from '../../../../FormHandler/InputSelect';
 import { useEffect, useRef, useState } from 'react';
 import Button from '../../../../Button';
 import s from '../AdminAction.module.scss';
-// import { BlogTagsType } from '../../types';
 
 export interface IUpdateBlogTagsProps {
   handleSubmit(e: React.FormEvent): void;
@@ -15,7 +14,6 @@ export interface IUpdateBlogTagsProps {
   closeForm: (s: string) => void;
   isSubmitError: boolean;
   apolloError: string;
-  // apolloError: ApolloError | undefined;
   apolloLoading: boolean;
   isSuccess: boolean;
   options: any;
@@ -52,13 +50,9 @@ const UpdateBlogTags = ({
     ref && setInputValueWidth(ref?.clientWidth);
   });
 
-  // console.log('inputValueWidth', inputValueWidth);
-
   useEffect(() => {
     setLocalTags(blogTags);
   }, [blogTags]);
-
-  // console.log('localTags', localTags);
 
   const handleInputValue = (value: string) => {
     isErr && setIsErr(false);
@@ -77,9 +71,6 @@ const UpdateBlogTags = ({
     setInputValue(null);
     isErr && setIsErr(false);
   };
-
-  // console.log('blogTags:', blogTags);
-  // console.log('localTags ---->', localTags);
 
   const isReadyToSubmit = () => inputValue && inputValue?.length > 1;
   const isNewTag = (tag: string) => (blogTags.includes(tag) ? '' : 'new');
