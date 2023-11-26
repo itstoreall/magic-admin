@@ -1,3 +1,4 @@
+import cfg from '../Dashboard/MasterPanel/config/masterPanel.config';
 import { IFormHandlerProps } from '../../interfaces/form';
 import Form from './Form';
 import Success from '../../assets/icons/Success';
@@ -11,10 +12,17 @@ const FormHandler = ({
   closeForm,
   isSubmitError,
   apolloError,
-  isSuccess
+  isSuccess,
+  formContent
 }: IFormHandlerProps) => {
+  const { updateBlogTags } = cfg.content;
+
+  const setContentStyle = () => {
+    return formContent === updateBlogTags ? 'updateTags' : '';
+  };
+
   return (
-    <div className={`${s.formWrap}`}>
+    <div className={`${s.formWrap} ${s[setContentStyle()]}`}>
       <div className={s.formBlock}>
         <span className={s.closeButton} onClick={() => closeForm('')} />
         <span className={s.title}>{title}</span>

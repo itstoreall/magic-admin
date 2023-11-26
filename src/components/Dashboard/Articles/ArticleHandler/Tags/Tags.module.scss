@@ -21,7 +21,7 @@
 
     @include mediaScreen('min', $tablet) {
       @include marginR(20px);
-      max-width: 220px;
+      max-width: 270px;
     }
 
     > div {

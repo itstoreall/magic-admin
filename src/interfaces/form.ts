@@ -13,4 +13,5 @@ export interface IFormHandlerProps extends IFormProps {
   apolloError: string;
   // apolloError: ApolloError | null;
   isSuccess: boolean;
+  formContent: string;
 }

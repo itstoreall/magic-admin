@@ -1,9 +1,9 @@
-@import '../../../../styles/mixins';
-@import '../../../../theme/index';
+@import '../../../../styles/imports';
 
 .actionsWrap {
   min-height: 500px;
   display: flex;
+  justify-content: center;
   align-items: center;
   pointer-events: none;
 
@@ -17,9 +17,12 @@
   flex-wrap: wrap;
   align-items: flex-start;
   padding: 10px;
+  max-height: 350px;
   border: 1px solid $middleDark;
   border-radius: 6px;
   gap: 10px;
+  overflow-y: scroll;
+  @extend %extends-hide-scrollbar;
 
   > span {
     font-size: 12px;

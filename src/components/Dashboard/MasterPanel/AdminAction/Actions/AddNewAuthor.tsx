@@ -1,11 +1,11 @@
 import { ChangeEvent } from 'react';
 // import { ApolloError } from '@apollo/client';
+import cfg from '../../config/masterPanel.config';
 import FormHandler from '../../../../FormHandler';
 import InputSelect from '../../../../FormHandler/InputSelect';
 import Input from '../../../../FormHandler/Input';
 import Button from '../../../../Button';
 import { ISelectOption } from '../../../../../interfaces';
-import cfg from '../../config/masterPanel.config';
 
 export interface IAddNewAuthorProps {
   handleSubmit(e: React.FormEvent): void;
@@ -49,6 +49,7 @@ const AddNewAuthor = ({
       isSubmitError={isSubmitError}
       apolloError={apolloError}
       isSuccess={isSuccess}
+      formContent={cfg.content.addNewAuthor}
     >
       <InputSelect
         options={options}
