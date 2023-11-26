@@ -1,6 +1,8 @@
 import { ChangeEvent, FC, ReactElement, ReactNode } from 'react';
 import { IArticleElement } from '../interfaces';
 
+export type SelectOption = { value: string; label: string };
+
 export type Button = (props: {
   type?: 'button' | 'submit' | 'reset';
   fn?: () => void;

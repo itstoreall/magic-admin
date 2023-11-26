@@ -1,4 +1,4 @@
-import { ApolloError } from '@apollo/client';
+// import { ApolloError } from '@apollo/client';
 import { ISelectOption } from '../../../../../interfaces';
 import cfg from '../../config/masterPanel.config';
 import FormHandler from '../../../../FormHandler';
@@ -8,8 +8,11 @@ import Button from '../../../../Button';
 export interface IAddAuthorToBlogProps {
   handleSubmit(e: React.FormEvent): void;
   title: string;
+  closeForm: (s: string) => void;
   isSubmitError: boolean;
-  apolloError: ApolloError | undefined;
+  apolloError: string;
+  // apolloError: ApolloError | undefined;
+  apolloLoading: boolean;
   isSuccess: boolean;
   options: any;
   authorSelect: ISelectOption | null;
@@ -21,14 +24,16 @@ export interface IAddAuthorToBlogProps {
 const AddAuthorToBlog = ({
   handleSubmit,
   title,
+  closeForm,
   isSubmitError,
   apolloError,
+  apolloLoading,
   isSuccess,
   options,
   authorSelect,
   setAuthorSelect,
   blogSelect,
-  setBlogSelect,
+  setBlogSelect
 }: IAddAuthorToBlogProps) => {
   return (
     <>
@@ -36,8 +41,9 @@ const AddAuthorToBlog = ({
         <FormHandler
           handleSubmit={handleSubmit}
           title={title}
+          closeForm={closeForm}
           isSubmitError={isSubmitError}
-          apolloError={apolloError || null}
+          apolloError={apolloError}
           isSuccess={isSuccess}
         >
           <InputSelect
@@ -45,6 +51,7 @@ const AddAuthorToBlog = ({
             selectedValue={authorSelect}
             setSelectedValue={setAuthorSelect}
             placeholder={'Author'}
+            disabled={false}
           />
 
           <InputSelect
@@ -52,12 +59,10 @@ const AddAuthorToBlog = ({
             selectedValue={blogSelect}
             setSelectedValue={setBlogSelect}
             placeholder={'Blog'}
+            disabled={false}
           />
 
-          <Button
-            type={'submit'}
-            // disabled={loading}
-          >
+          <Button type={'submit'} disabled={apolloLoading}>
             {cfg.submitButton.add}
           </Button>
         </FormHandler>
