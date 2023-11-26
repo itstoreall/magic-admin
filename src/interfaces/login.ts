@@ -5,4 +5,5 @@ export interface IInputSelectProps {
   selectedValue: ISelectOption | null;
   setSelectedValue: (obj: ISelectOption | null) => void;
   placeholder: string;
+  disabled: boolean;
 }

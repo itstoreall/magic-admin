@@ -6,21 +6,63 @@ import s from './MasterPanel.module.scss';
 const MasterAdminPanel = () => {
   const [formContent, setFormContent] = useState<string>('');
 
-  const { addNewAuthor, delAuthorFromBlog, addAuthorToBlog } = cfg.content;
-  const { addNewAuthorBtn, delAuthorFromBlogBtn, addAuthorToBlogBtn } =
-    cfg.button;
-  const { addNewAuthorTitle, delAuthorFromBlogTitle, addAuthorToBlogTitle } =
-    cfg.title;
+  const { addNewAuthor, delAuthorFromBlog, addAuthorToBlog, updateBlogTags } =
+    cfg.content;
 
-  const formModalHandler = (content: string) => {
-    setFormContent(
-      formContent !== content ? content : !formContent ? content : ''
-    );
+  const {
+    addNewAuthorBtn,
+    delAuthorFromBlogBtn,
+    addAuthorToBlogBtn,
+    updateBlogTagsBtn
+  } = cfg.button;
+
+  const {
+    addNewAuthorTitle,
+    delAuthorFromBlogTitle,
+    addAuthorToBlogTitle,
+    updateBlogTagsTitle
+  } = cfg.title;
+
+  const formModalHandler = (cont: string) =>
+    setFormContent(formContent !== cont ? cont : !formContent ? cont : '');
+
+  const actionTitle = () => {
+    switch (formContent) {
+      case addNewAuthor:
+        return addNewAuthorTitle;
+      case delAuthorFromBlog:
+        return delAuthorFromBlogTitle;
+      case addAuthorToBlog:
+        return addAuthorToBlogTitle;
+      case updateBlogTags:
+        return updateBlogTagsTitle;
+      default:
+        return '';
+    }
   };
 
   return (
     <div className={`${s.masterPanel}`}>
       <h3 className={s.title}>Master</h3>
+
+      <div
+        style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          width: '100%',
+          maxWidth: '322px',
+          transform: 'translate(-50%, -50%)',
+          pointerEvents: 'none',
+          zIndex: 1
+        }}
+      >
+        <AdminAction
+          formContent={formContent}
+          title={actionTitle()}
+          closeForm={setFormContent}
+        />
+      </div>
 
       <div className={s.formWrap}>
         <div className={s.formBlock}>
@@ -30,10 +72,6 @@ const MasterAdminPanel = () => {
           >
             {addNewAuthorBtn}
           </button>
-
-          {formContent === addNewAuthor && (
-            <AdminAction formContent={formContent} title={addNewAuthorTitle} />
-          )}
         </div>
 
         <div className={s.formBlock}>
@@ -43,13 +81,6 @@ const MasterAdminPanel = () => {
           >
             {delAuthorFromBlogBtn}
           </button>
-
-          {formContent === delAuthorFromBlog && (
-            <AdminAction
-              formContent={formContent}
-              title={delAuthorFromBlogTitle}
-            />
-          )}
         </div>
 
         <div className={s.formBlock}>
@@ -59,13 +90,15 @@ const MasterAdminPanel = () => {
           >
             {addAuthorToBlogBtn}
           </button>
+        </div>
 
-          {formContent === addAuthorToBlog && (
-            <AdminAction
-              formContent={formContent}
-              title={addAuthorToBlogTitle}
-            />
-          )}
+        <div className={s.formBlock}>
+          <button
+            className={s.button}
+            onClick={() => formModalHandler(updateBlogTags)}
+          >
+            {updateBlogTagsBtn}
+          </button>
         </div>
       </div>
     </div>

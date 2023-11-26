@@ -43,9 +43,9 @@ const Login = () => {
     const AccessInput = {
       credentials: {
         login,
-        password,
+        password
       },
-      blog: blog?.value,
+      blog: blog?.value
     };
     // const AccessInput = { login, password, blog: blog?.value };
 
@@ -58,7 +58,7 @@ const Login = () => {
     if (!isError) {
       try {
         const { data } = await updateAdmin({
-          variables: { input: AccessInput },
+          variables: { input: AccessInput }
         });
 
         const { token, name, blogs } = data.updateAdmin;
@@ -93,6 +93,7 @@ const Login = () => {
             selectedValue={blog}
             setSelectedValue={setBlog}
             placeholder={'Blog'}
+            disabled={false}
           />
 
           <input
