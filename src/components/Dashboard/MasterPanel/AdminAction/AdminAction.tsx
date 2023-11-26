@@ -326,7 +326,11 @@ const AdminAction = ({
   // console.log('addAuthorLoad', addAuthorLoad);
 
   return (
-    <div className={s.actionsWrap}>
+    <div
+      className={`${s.actionsWrap} ${
+        s[formContent === updateBlogTags ? 'fullScreen' : '']
+      }`}
+    >
       {formContent === addNewAuthor ? (
         <AddNewAuthor
           handleSubmit={handleSubmit}

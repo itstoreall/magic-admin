@@ -7,6 +7,17 @@
     // background-color: tomato;
   }
 
+  .adminActionWrap {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    // max-width: 322px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
   .formWrap {
     @include mediaScreen('min', $tablet) {
       @include flex();

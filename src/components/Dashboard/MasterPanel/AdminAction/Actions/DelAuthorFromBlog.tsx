@@ -1,9 +1,9 @@
 // import { ApolloError } from '@apollo/client';
+import cfg from '../../config/masterPanel.config';
 import FormHandler from '../../../../FormHandler';
 import InputSelect from '../../../../FormHandler/InputSelect';
 import Button from '../../../../Button';
 import { ISelectOption } from '../../../../../interfaces';
-import cfg from '../../config/masterPanel.config';
 import { useEffect, useState } from 'react';
 
 export interface IDelAuthorFromBlogProps {
@@ -64,6 +64,7 @@ const DelAuthorFromBlog = ({
           isSubmitError={isSubmitError}
           apolloError={apolloError}
           isSuccess={isSuccess}
+          formContent={cfg.content.delAuthorFromBlog}
         >
           <InputSelect
             options={options.admins}

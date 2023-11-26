@@ -46,16 +46,17 @@ const MasterAdminPanel = () => {
       <h3 className={s.title}>Master</h3>
 
       <div
-        style={{
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          width: '100%',
-          maxWidth: '322px',
-          transform: 'translate(-50%, -50%)',
-          pointerEvents: 'none',
-          zIndex: 1
-        }}
+        className={s.adminActionWrap}
+        // style={{
+        //   position: 'fixed',
+        //   top: '50%',
+        //   left: '50%',
+        //   width: '100%',
+        //   // maxWidth: '322px',
+        //   transform: 'translate(-50%, -50%)',
+        //   pointerEvents: 'none',
+        //   zIndex: 1
+        // }}
       >
         <AdminAction
           formContent={formContent}

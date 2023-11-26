@@ -138,6 +138,7 @@ const UpdateBlogTags = ({
           isSubmitError={isSubmitError}
           apolloError={apolloError}
           isSuccess={isSuccess}
+          formContent={cfg.content.updateBlogTags}
         >
           <InputSelect
             options={options.blogs}

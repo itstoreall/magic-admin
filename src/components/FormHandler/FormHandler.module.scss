@@ -7,9 +7,23 @@
   @include width(100%);
   @include z(1);
 
+  // ----- Update Tags Form:
+
+  &.updateTags {
+    .formBlock {
+      @include mediaScreen('min', $tablet) {
+        max-width: 660px;
+      }
+
+      @include mediaScreen('min', $desktop) {
+        max-width: 800px;
+      }
+    }
+  }
+
   @include mediaScreen('min', $tablet) {
     @include left(auto);
-    max-width: 322px;
+    // max-width: 322px;
   }
 
   .formBlock {
