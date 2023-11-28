@@ -29,6 +29,7 @@
     text-transform: uppercase;
 
     &.tagBox {
+      position: relative;
       display: flex;
       align-items: center;
       padding: 2px 5px;
@@ -47,6 +48,7 @@
 
       input.tagInput {
         position: absolute;
+        top: 3px;
         margin-right: 5px;
         font-family: inherit;
         font-size: 12px;
