@@ -1,3 +1,10 @@
+// /*
+const ImageUploader = () => <></>;
+
+export default ImageUploader;
+// */
+
+/*
 import { useArticleHandlerContext } from '../../../../../context/ArticleHandlerContext';
 import useProportion from '../../../../../hooks/useProportion';
 import s from './ImageUploader.module.scss';
@@ -42,3 +49,4 @@ const ImageUploader = () => {
 };
 
 export default ImageUploader;
+// */
