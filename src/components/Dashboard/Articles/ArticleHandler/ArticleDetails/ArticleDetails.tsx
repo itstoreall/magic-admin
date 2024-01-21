@@ -5,6 +5,8 @@ import s from './ArticleDetails.module.scss';
 import useViewport from '../../../../../hooks/useViewport';
 import setImageSrc from '../../../../../utils/setImageSrc';
 
+const healthCid = constants.IPFS_DEFAULT_HEALTHY_CID;
+
 const convertDate = (timestamp: string) => {
   const today = 'Сегодня';
   const date = timestamp ? timestamp.split('-') : today;
@@ -16,6 +18,7 @@ const convertDate = (timestamp: string) => {
 
 const ArticleDetails = (props: any) => {
   const {
+    label,
     imageData,
     ipfs,
     title,
@@ -23,7 +26,7 @@ const ArticleDetails = (props: any) => {
     author,
     id,
     timestamp,
-    articleElements,
+    articleElements
   } = props;
 
   const { access } = useGlobalContext();
@@ -52,7 +55,10 @@ const ArticleDetails = (props: any) => {
               src={
                 imageData
                   ? imageData
-                  : setImageSrc(access?.blog ? access?.blog : '', ipfs)
+                  : setImageSrc(
+                      access?.blog ? access?.blog : '',
+                      label === 'edit' ? ipfs : healthCid
+                    )
               }
               alt='Uploaded'
               width={width}
