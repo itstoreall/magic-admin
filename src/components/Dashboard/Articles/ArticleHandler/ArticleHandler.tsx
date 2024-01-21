@@ -286,6 +286,7 @@ const ArticleHandler = ({ article }: IEditArticleProps) => {
                 ) : (
                   <div className={s.articlePreview}>
                     <ArticleDetails
+                      label={label}
                       imageData={imageData}
                       title={title}
                       description={description}
