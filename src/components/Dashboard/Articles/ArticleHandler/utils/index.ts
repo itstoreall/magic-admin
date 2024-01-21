@@ -6,6 +6,8 @@ const art_add = constants.ARTICLE_ELEMENTS_ADD;
 const fls_edit = constants.ARTICLE_HEADER_FIELDS_EDIT;
 const art_edit = constants.ARTICLE_ELEMENTS_EDIT;
 
+const healthy_cid = constants.IPFS_DEFAULT_HEALTHY_CID;
+
 export const updateArticles = async (args: IUpdate) => {
   const updatedArticles = await args.getArticles();
   const { articles } = updatedArticles.data;
@@ -88,7 +90,7 @@ export const deleteArticleRequest = async (blog: string, args: IDel) => {
 export const handleSubmit = async (blog: string, args: ISubmit) => {
   const {
     articleElements,
-    imageData,
+    // imageData,
     ipfs,
     title,
     description,
@@ -107,8 +109,11 @@ export const handleSubmit = async (blog: string, args: ISubmit) => {
 
   const text = JSON.stringify({ articleElements });
 
+  console.log('label', label);
+
   const articleInput = {
-    image: imageData,
+    // image: imageData,
+    image: label === 'add' ? healthy_cid : ipfs,
     ipfs: ipfs,
     title: title,
     description: description,
@@ -125,6 +130,7 @@ export const handleSubmit = async (blog: string, args: ISubmit) => {
   console.log('articleInput', articleInput);
 
   const isSubmitError = Object.entries(articleInput).find(el => {
+    // if (el[0] === 'image' && !el[1]) return false;
     if (el[0] !== 'ipfs' && !el[1]) return true;
     if (el[1].includes('Elements') && !el[1].includes('paragraph')) return true;
     if (!articleElements?.length) return true;
@@ -133,7 +139,7 @@ export const handleSubmit = async (blog: string, args: ISubmit) => {
 
   if (!isSubmitError) {
     setSubmitError('');
-  } else return setSubmitError('Check that it is filled in correctly');
+  } else return setSubmitError('Check the correctness of the filling');
 
   // console.log('isSubmitError', isSubmitError);
   // console.log('');
